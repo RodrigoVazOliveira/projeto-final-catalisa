@@ -1,8 +1,6 @@
 package br.com.zup.zupayments.services;
 
-import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.models.PedidoDeCompra;
-import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
