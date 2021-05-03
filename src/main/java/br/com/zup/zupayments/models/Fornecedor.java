@@ -25,14 +25,18 @@ public class Fornecedor {
 
     private String cep;
 
+    private String telefone;
+
+    private String email;
+
     private CategoriaDeCusto categoriaDeCusto;
 
     public Fornecedor() {
     }
 
-    public Fornecedor(String cnpjOuCpf, String razaoSocial, String logradouro,
-                      Integer numero, String bairro, String cidade,
-                      String estado, String cep, CategoriaDeCusto categoriaDeCusto) {
+    public Fornecedor(String cnpjOuCpf, String razaoSocial, String logradouro, Integer numero,
+                      String bairro, String cidade, String estado, String cep, String telefone,
+                      String email, CategoriaDeCusto categoriaDeCusto) {
         CnpjOuCpf = cnpjOuCpf;
         RazaoSocial = razaoSocial;
         this.logradouro = logradouro;
@@ -41,6 +45,8 @@ public class Fornecedor {
         this.cidade = cidade;
         this.estado = estado;
         this.cep = cep;
+        this.telefone = telefone;
+        this.email = email;
         this.categoriaDeCusto = categoriaDeCusto;
     }
 
@@ -106,6 +112,22 @@ public class Fornecedor {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public CategoriaDeCusto getCategoriaDeCusto() {
