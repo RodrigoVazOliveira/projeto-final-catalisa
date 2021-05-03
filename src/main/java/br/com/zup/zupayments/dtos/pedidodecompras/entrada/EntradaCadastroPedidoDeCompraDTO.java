@@ -1,6 +1,9 @@
 package br.com.zup.zupayments.dtos.pedidodecompras.entrada;
 
 import br.com.zup.zupayments.models.FormaDePagamento;
+import br.com.zup.zupayments.models.Fornecedor;
+import br.com.zup.zupayments.models.PedidoDeCompra;
+import br.com.zup.zupayments.models.Responsavel;
 
 import java.time.LocalDate;
 
@@ -12,7 +15,7 @@ public class EntradaCadastroPedidoDeCompraDTO {
     private String emailResponsavel;
     private LocalDate dataLimiteEnvio;
     private FormaDePagamento formaDePagamento;
-    private String CnpjOuCpf;
+    private String cnpjOuCpf;
 
     public EntradaCadastroPedidoDeCompraDTO() {
     }
@@ -27,7 +30,7 @@ public class EntradaCadastroPedidoDeCompraDTO {
         this.emailResponsavel = emailResponsavel;
         this.dataLimiteEnvio = dataLimiteEnvio;
         this.formaDePagamento = formaDePagamento;
-        CnpjOuCpf = cnpjOuCpf;
+        this.cnpjOuCpf = cnpjOuCpf;
     }
 
     public LocalDate getDataDeVencimento() {
@@ -79,10 +82,24 @@ public class EntradaCadastroPedidoDeCompraDTO {
     }
 
     public String getCnpjOuCpf() {
-        return CnpjOuCpf;
+        return cnpjOuCpf;
     }
 
     public void setCnpjOuCpf(String cnpjOuCpf) {
-        CnpjOuCpf = cnpjOuCpf;
+        this.cnpjOuCpf = cnpjOuCpf;
+    }
+
+    public PedidoDeCompra converterDtoParaModelo() {
+        return new PedidoDeCompra(
+                null,
+                dataDeVencimento,
+                valorAproximado,
+                dataDePagamento,
+                new Responsavel(emailResponsavel, null, null),
+                dataLimiteEnvio,
+                formaDePagamento,
+                new Fornecedor(cnpjOuCpf, null, null, null, null,
+                        null, null, null, null, null, null)
+        );
     }
 }
