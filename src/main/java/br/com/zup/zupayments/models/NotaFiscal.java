@@ -2,6 +2,7 @@ package br.com.zup.zupayments.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "notas_fiscais")
@@ -21,7 +22,7 @@ public class NotaFiscal {
     private LocalDate dataDeEmissao;
 
     @ManyToMany
-    private PedidoDeCompra pedidoDeCompra;
+    private List<PedidoDeCompra> pedidoDeCompra;
 
     private LocalDate dataDeEnvio;
 
@@ -31,9 +32,7 @@ public class NotaFiscal {
     public NotaFiscal() {
     }
 
-    public NotaFiscal(Long id, Long numeroDaNota, Fornecedor fornecedor, Double valorAPagar,
-                      LocalDate dataDeEmissao, PedidoDeCompra pedidoDeCompra, LocalDate dataDeEnvio,
-                      Responsavel responsavel) {
+    public NotaFiscal(Long id, Long numeroDaNota, Fornecedor fornecedor, Double valorAPagar, LocalDate dataDeEmissao, List<PedidoDeCompra> pedidoDeCompra, LocalDate dataDeEnvio, Responsavel responsavel) {
         this.id = id;
         this.numeroDaNota = numeroDaNota;
         this.fornecedor = fornecedor;
@@ -84,11 +83,11 @@ public class NotaFiscal {
         this.dataDeEmissao = dataDeEmissao;
     }
 
-    public PedidoDeCompra getPedidoDeCompra() {
+    public List<PedidoDeCompra> getPedidoDeCompra() {
         return pedidoDeCompra;
     }
 
-    public void setPedidoDeCompra(PedidoDeCompra pedidoDeCompra) {
+    public void setPedidoDeCompra(List<PedidoDeCompra> pedidoDeCompra) {
         this.pedidoDeCompra = pedidoDeCompra;
     }
 
