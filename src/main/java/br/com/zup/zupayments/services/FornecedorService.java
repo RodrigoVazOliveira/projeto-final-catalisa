@@ -1,7 +1,8 @@
-package br.com.zup.zupayments.service;
+package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.models.Fornecedor;
-import br.com.zup.zupayments.repository.FornecedorRepository;
+import br.com.zup.zupayments.repositories.FornecedorRepository;
+import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class FornecedorService {
         return fornecedorRepository.save(fornecedor);
     }
 
-    public Fornecedor pesquisarFornecedor (Integer id){
+    public Fornecedor pesquisarFornecedor (String id){
         Optional<Fornecedor> optionalFornecedor = fornecedorRepository.findById(id);
 
         if (optionalFornecedor.isPresent()){
@@ -26,7 +27,7 @@ public class FornecedorService {
         throw new RuntimeException("Fornecedor não foi encontrado");
     }
 
-    public Fornecedor atualizarCadastroFornecedor (Integer id, Fornecedor fornecedor){
+    public Fornecedor atualizarCadastroFornecedor (String id, Fornecedor fornecedor){
 
         Optional<Fornecedor> fornecedorOptional = fornecedorRepository.findById(id);
 
@@ -38,7 +39,7 @@ public class FornecedorService {
         return fornecedor;
     }
 
-    public void deletarFornecedor(Integer id){
+    public void deletarFornecedor(String id){
          fornecedorRepository.deleteById(id);
     }
 }

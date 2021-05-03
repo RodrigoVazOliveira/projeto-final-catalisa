@@ -1,7 +1,7 @@
-package br.com.zup.zupayments.controller;
+package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.models.Fornecedor;
-import br.com.zup.zupayments.service.FornecedorService;
+import br.com.zup.zupayments.services.FornecedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +21,19 @@ public class FornecedorController {
 
     @GetMapping("{id}/")
     @ResponseStatus(HttpStatus.OK)
-    public Fornecedor pesquisaFornecedor(@PathVariable Integer id){
+    public Fornecedor pesquisaFornecedor(@PathVariable String id){
         return fornecedorService.pesquisarFornecedor(id);
     }
 
     @PutMapping("{id}/")
-    public Fornecedor atualizarFornecedor(@PathVariable Integer id, @RequestBody Fornecedor fornecedor){
+    public Fornecedor atualizarFornecedor(@PathVariable String id, @RequestBody Fornecedor fornecedor){
         Fornecedor objFornecedor = fornecedorService.atualizarCadastroFornecedor(id, fornecedor);
         return objFornecedor;
     }
 
     @DeleteMapping("{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarFornecedor(@PathVariable Integer id){
+    public void deletarFornecedor(@PathVariable String id){
         fornecedorService.deletarFornecedor(id);
     }
 }
