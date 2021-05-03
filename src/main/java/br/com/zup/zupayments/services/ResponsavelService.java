@@ -13,8 +13,8 @@ public class ResponsavelService {
 
     public Responsavel cadastrarResponsavel (Responsavel responsavel){
         try{
-            Responsavel obj = responsavelRepository.save(responsavel);
-            return responsavel;
+            Responsavel objResponsavel = responsavelRepository.save(responsavel);
+            return objResponsavel;
         }catch (Exception error){
             throw new RuntimeException("Responsável já cadastrado");
         }
