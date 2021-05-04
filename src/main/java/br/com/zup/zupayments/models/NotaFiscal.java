@@ -32,16 +32,6 @@ public class NotaFiscal {
     public NotaFiscal() {
     }
 
-    public NotaFiscal(Long id, Long numeroDaNota, Fornecedor fornecedor, Double valorAPagar, LocalDate dataDeEmissao, List<PedidoDeCompra> pedidoDeCompra, LocalDate dataDeEnvio, Responsavel responsavel) {
-        this.id = id;
-        this.numeroDaNota = numeroDaNota;
-        this.fornecedor = fornecedor;
-        this.valorAPagar = valorAPagar;
-        this.dataDeEmissao = dataDeEmissao;
-        this.pedidoDeCompra = pedidoDeCompra;
-        this.dataDeEnvio = dataDeEnvio;
-        this.responsavel = responsavel;
-    }
 
     public Long getId() {
         return id;
