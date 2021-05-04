@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.controllers;
 
+import br.com.zup.zupayments.dtos.fornecedor.entrada.CadastroDeFornecedorDTO;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.services.FornecedorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,10 @@ public class FornecedorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Fornecedor cadastroFornecedor(@RequestBody Fornecedor fornecedor){
-        return fornecedorService.cadastrarFornecedor(fornecedor);
+    public Fornecedor cadastroFornecedor(@RequestBody CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
+        return fornecedorService.cadastrarFornecedor(
+                cadastroDeFornecedorDTO.converterDtoParaModelo()
+        );
     }
 
     @GetMapping("{id}/")
