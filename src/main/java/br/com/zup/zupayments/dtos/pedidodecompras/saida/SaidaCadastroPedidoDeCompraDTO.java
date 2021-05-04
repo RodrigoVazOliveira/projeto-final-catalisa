@@ -6,6 +6,8 @@ import br.com.zup.zupayments.models.Responsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SaidaCadastroPedidoDeCompraDTO {
 
@@ -116,5 +118,16 @@ public class SaidaCadastroPedidoDeCompraDTO {
                 pedidoDeCompra.getFormaDePagamento(),
                 PedidoDeCompraFornecedorDTO.converterModeloParaDto(pedidoDeCompra.getFornecedor())
         );
+    }
+
+    public static Iterable<SaidaCadastroPedidoDeCompraDTO> converterListaDeModeloParaListaDto(
+            Iterable<PedidoDeCompra> pedidoDeCompras) {
+        List<SaidaCadastroPedidoDeCompraDTO> dtos = new ArrayList<>();
+
+        for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
+            dtos.add(converterModeloParaDto(pedidoDeCompra));
+        }
+
+        return dtos;
     }
 }
