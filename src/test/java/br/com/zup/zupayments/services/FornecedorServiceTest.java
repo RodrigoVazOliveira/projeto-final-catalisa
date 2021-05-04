@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Optional;
+
 @SpringBootTest
 public class FornecedorServiceTest {
 
@@ -43,5 +45,13 @@ public class FornecedorServiceTest {
         Mockito.when(fornecedorRepository.save(Mockito.any(Fornecedor.class))).thenReturn(fornecedor);
         Fornecedor testFornecedor = fornecedorService.cadastrarFornecedor(fornecedor);
         Assertions.assertEquals(testFornecedor, fornecedor);
+    }
+
+    @Test
+    public void testarPesquisarFornecedorPorCnpjOuCpfOk() {
+        Optional<Fornecedor> optionalFornecedor = Optional.of(fornecedor);
+        Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
+        Fornecedor test = fornecedorService.pesquisarFornecedorPorCnpjOuCpf("23.524.377/0001-45");
+        Assertions.assertEquals(test, fornecedor);
     }
 }
