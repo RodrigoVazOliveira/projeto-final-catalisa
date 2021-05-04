@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.services;
 
+import br.com.zup.zupayments.enums.CategoriaDeCusto;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.repositories.FornecedorRepository;
 import org.junit.jupiter.api.Assertions;
@@ -25,20 +26,19 @@ public class FornecedorServiceTest {
 
     @BeforeEach
     public void setup() {
-        this.fornecedor = new Fornecedor(
-            "23.524.377/0001-45",
-                "Empresa 1",
-                "Rua Dos bobos",
-                0,
-                "Sem teto",
-                "Sem Fim",
-                "Sem Estado",
-                "2434424232",
-                "(99) 9999-9999",
-                "rsdfasfdsdf@sfsd.com",
-                null,
-                true
-        );
+        this.fornecedor = new Fornecedor();
+        this.fornecedor.setCnpjOuCpf("23.524.377/0001-45");
+        this.fornecedor.setRazaoSocial("Empresa 1");
+        this.fornecedor.setLogradouro("Rua Dos bobos");
+        this.fornecedor.setNumero(0);
+        this.fornecedor.setBairro("Sem teto");
+        this.fornecedor.setCidade("Sem Fim");
+        this.fornecedor.setEstado("Sem Estado");
+        this.fornecedor.setCep("2434424232");
+        this.fornecedor.setTelefone("(99) 9999-9999");
+        this.fornecedor.setEmail("rsdfasfdsdf@sfsd.com");
+        this.fornecedor.setCategoriaDeCusto(CategoriaDeCusto.FACILITIES);
+        this.fornecedor.setAtivo(true);
     }
 
     @Test
