@@ -31,35 +31,32 @@ public class FornecedorControllerTest {
 
     @BeforeEach
     public void setup() {
-        this.fornecedor = new Fornecedor(
-                "23.524.377/0001-45",
-                "Empresa 1",
-                "Rua Dos bobos",
-                0,
-                "Sem teto",
-                "Sem Fim",
-                "Sem Estado",
-                "2434424232",
-                "(99) 9999-9999",
-                "rsdfasfdsdf@sfsd.com",
-                CategoriaDeCusto.BENEFICIOS,
-                true
-        );
+        this.fornecedor = new Fornecedor();
+        this.fornecedor.setCnpjOuCpf("23.524.377/0001-45");
+        this.fornecedor.setRazaoSocial("Empresa 1");
+        this.fornecedor.setLogradouro("Rua Dos bobos");
+        this.fornecedor.setNumero(0);
+        this.fornecedor.setBairro("Sem teto");
+        this.fornecedor.setCidade("Sem Fim");
+        this.fornecedor.setEstado("Sem Estado");
+        this.fornecedor.setCep("2434424232");
+        this.fornecedor.setTelefone("(99) 9999-9999");
+        this.fornecedor.setEmail("rsdfasfdsdf@sfsd.com");
+        this.fornecedor.setCategoriaDeCusto(CategoriaDeCusto.FACILITIES);
+        this.fornecedor.setAtivo(true);
 
-        this.cadastroDeFornecedorDTO = new CadastroDeFornecedorDTO(
-                null,
-                "23.524.377/0001-45",
-                "Empresa 1",
-                "Rua Dos bobos",
-                0,
-                "Sem teto",
-                "Sem Fim",
-                "Sem Estado",
-                "2434424232",
-                "(99) 9999-9999",
-                "rsdfasfdsdf@sfsd.com",
-                CategoriaDeCusto.BENEFICIOS
-        );
+        this.cadastroDeFornecedorDTO = new CadastroDeFornecedorDTO();
+        this.cadastroDeFornecedorDTO.setCnpj("23.524.377/0001-45");
+        this.cadastroDeFornecedorDTO.setRazaoSocial("Empresa 1");
+        this.cadastroDeFornecedorDTO.setLogradouro("Rua Dos bobos");
+        this.cadastroDeFornecedorDTO.setNumero(0);
+        this.cadastroDeFornecedorDTO.setBairro("Sem teto");
+        this.cadastroDeFornecedorDTO.setCidade("Sem Fim");
+        this.cadastroDeFornecedorDTO.setEstado("Sem Estado");
+        this.cadastroDeFornecedorDTO.setCep("2434424232");
+        this.cadastroDeFornecedorDTO.setTelefone("(99) 9999-9999");
+        this.cadastroDeFornecedorDTO.setEmail("rsdfasfdsdf@sfsd.com");
+        this.cadastroDeFornecedorDTO.setCategoriaDeCusto(CategoriaDeCusto.FACILITIES);
     }
 
     @Test
