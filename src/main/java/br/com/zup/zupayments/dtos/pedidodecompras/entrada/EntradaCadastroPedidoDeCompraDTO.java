@@ -90,8 +90,11 @@ public class EntradaCadastroPedidoDeCompraDTO {
     }
 
     public PedidoDeCompra converterDtoParaModelo() {
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setCnpjOuCpf(cnpjOuCpf);
         Responsavel responsavel = new Responsavel();
         responsavel.setEmail(this.emailResponsavel);
+
         return new PedidoDeCompra(
                 null,
                 dataDeVencimento,
@@ -100,8 +103,7 @@ public class EntradaCadastroPedidoDeCompraDTO {
                 responsavel,
                 dataLimiteEnvio,
                 formaDePagamento,
-                new Fornecedor(cnpjOuCpf, null, null, null, null,
-                        null, null, null, null, null, null, null)
+                fornecedor
         );
     }
 }
