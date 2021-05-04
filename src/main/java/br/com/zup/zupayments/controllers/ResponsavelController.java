@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.controllers;
 
+import br.com.zup.zupayments.dtos.responsavel.entrada.CadastrarResponsavelDTO;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.services.ResponsavelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ public class ResponsavelController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Responsavel cadastrarResponsavel(@RequestBody Responsavel responsavel){
-        return responsavelService.cadastrarResponsavel(responsavel);
+    public Responsavel cadastrarResponsavel(@RequestBody CadastrarResponsavelDTO cadastrarResponsavelDTO){
+        return responsavelService.cadastrarResponsavel(
+                cadastrarResponsavelDTO.converterDtoParaModelo()
+        );
     }
 }
