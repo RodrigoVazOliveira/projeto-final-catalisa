@@ -1,5 +1,7 @@
 package br.com.zup.zupayments.dtos.responsavel.entrada;
 
+import br.com.zup.zupayments.models.Responsavel;
+
 public class CadastrarResponsavelDTO {
 
     private String nomeCompleto;
@@ -27,5 +29,14 @@ public class CadastrarResponsavelDTO {
 
     public void setNomeDoProjeto(String nomeDoProjeto) {
         this.nomeDoProjeto = nomeDoProjeto;
+    }
+
+    public Responsavel converterDtoParaModelo() {
+        return new Responsavel(
+                null,
+                this.nomeCompleto,
+                this.nomeDoProjeto,
+                true
+        );
     }
 }
