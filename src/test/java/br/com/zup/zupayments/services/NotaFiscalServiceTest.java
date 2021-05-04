@@ -4,7 +4,10 @@ import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.NotaFiscalRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,10 +29,10 @@ public class NotaFiscalServiceTest {
 
         this.notaFiscalteste = new NotaFiscal();
 
-        Responsavel responsavel = new Responsavel();
-        responsavel.setAtivo(true);
-        responsavel.setEmail("bomdia@zup.com.br");
-        responsavel.setNomeCompleto("bom dia silva");
+        Responsavel notafiscal = new Responsavel();
+        notafiscal.setAtivo(true);
+        notafiscal.setEmail("bomdia@zup.com.br");
+        notafiscal.setNomeCompleto("bom dia silva");
 
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setRazaoSocial("Uma Empresa Ltda");
@@ -50,6 +53,13 @@ public class NotaFiscalServiceTest {
                 this.notaFiscalteste.setDataDeEmissao(LocalDate.now());
                 this.notaFiscalteste.setNumeroDaNota(4L);
                 this.notaFiscalteste.setDataDeEnvio(LocalDate.now());
-                this.notaFiscalteste.setResponsavel(responsavel);
+                this.notaFiscalteste.setResponsavel(notafiscal);
+    }
+
+    @Test
+    public void testarCadastroDeResponsavelOk() {
+        Mockito.when(notaFiscalRepository.save(Mockito.any(NotaFiscal.class))).thenReturn(notaFiscalteste);
+        NotaFiscal testNota = notaFiscalService.cadastrarNotaFiscal(notaFiscalteste);
+        Assertions.assertEquals(testNota, notaFiscalteste);
     }
 }
