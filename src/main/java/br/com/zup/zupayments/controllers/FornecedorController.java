@@ -21,8 +21,8 @@ public class FornecedorController {
 
     @GetMapping("{id}/")
     @ResponseStatus(HttpStatus.OK)
-    public Fornecedor pesquisaFornecedor(@PathVariable String id, @RequestBody Fornecedor fornecedor){
-        return fornecedorService.pesquisarFornecedor(id, fornecedor);
+    public Fornecedor pesquisaFornecedor(@PathVariable String cnpjouCpf){
+        return fornecedorService.pesquisarFornecedorPorCnpjOuCpf(cnpjouCpf);
     }
 
     @PutMapping("{id}/")

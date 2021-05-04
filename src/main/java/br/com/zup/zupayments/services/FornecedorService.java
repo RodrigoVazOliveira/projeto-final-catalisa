@@ -2,7 +2,6 @@ package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.repositories.FornecedorRepository;
-import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,8 @@ public class FornecedorService {
         return fornecedorRepository.save(fornecedor);
     }
 
-    public Fornecedor pesquisarFornecedor (String id, Fornecedor fornecedor){
-        Optional<Fornecedor> optionalFornecedor = fornecedorRepository.findById(id);
+    public Fornecedor pesquisarFornecedorPorCnpjOuCpf(String cnpjOuCpf){
+        Optional<Fornecedor> optionalFornecedor = fornecedorRepository.findById(cnpjOuCpf);
 
         if (optionalFornecedor.isPresent()){
             return optionalFornecedor.get();

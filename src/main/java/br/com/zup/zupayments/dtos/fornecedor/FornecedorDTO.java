@@ -1,6 +1,6 @@
-package br.com.zup.zupayments.dto;
+package br.com.zup.zupayments.dtos.fornecedor;
 
-import br.com.zup.zupayments.models.CategoriaDeCusto;
+import br.com.zup.zupayments.enums.CategoriaDeCusto;
 import br.com.zup.zupayments.models.Fornecedor;
 
 public class FornecedorDTO {

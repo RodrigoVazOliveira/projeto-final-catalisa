@@ -24,7 +24,7 @@ public class PedidoDeCompraService {
     public PedidoDeCompra cadastrarNovoPedidoDeCompra(PedidoDeCompra pedidoDeCompra) {
         pedidoDeCompra.setResponsavel(responsavelService.procurarResponsavelPorEmail(
                 pedidoDeCompra.getResponsavel().getEmail()));
-        pedidoDeCompra.setFornecedor(fornecedorService.procurarFornecedorPorCnpjOuCpf(
+        pedidoDeCompra.setFornecedor(fornecedorService.pesquisarFornecedorPorCnpjOuCpf(
                 pedidoDeCompra.getFornecedor().getCnpjOuCpf()));
         return pedidoDeCompraRespository.save(pedidoDeCompra);
     }
