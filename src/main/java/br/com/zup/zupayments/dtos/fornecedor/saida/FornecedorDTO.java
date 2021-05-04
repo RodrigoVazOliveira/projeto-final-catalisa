@@ -1,4 +1,4 @@
-package br.com.zup.zupayments.dtos.fornecedor;
+package br.com.zup.zupayments.dtos.fornecedor.saida;
 
 import br.com.zup.zupayments.enums.CategoriaDeCusto;
 import br.com.zup.zupayments.models.Fornecedor;
