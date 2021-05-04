@@ -1,13 +1,17 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.models.Responsavel;
+import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.ResponsavelRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@Test
+@SpringBootTest
 public class ResponsavelServiceTest {
 
     @Autowired
@@ -25,5 +29,11 @@ public class ResponsavelServiceTest {
                 "Facilites",
                 true
         );
+    }
+    @Test
+    public void testarCadastroDeResponsavelOk() {
+        Mockito.when(responsavelRepository.save(Mockito.any(Responsavel.class))).thenReturn(responsavel);
+        Responsavel testResponsavel = responsavelService.cadastrarResponsavel(responsavel);
+        Assertions.assertEquals(testResponsavel, responsavel);
     }
 }
