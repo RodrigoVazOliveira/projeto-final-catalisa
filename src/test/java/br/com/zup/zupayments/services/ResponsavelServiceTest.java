@@ -1,7 +1,6 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.models.Responsavel;
-import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.ResponsavelRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +9,8 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.Optional;
 
 @SpringBootTest
 public class ResponsavelServiceTest {
@@ -36,4 +37,13 @@ public class ResponsavelServiceTest {
         Responsavel testResponsavel = responsavelService.cadastrarResponsavel(responsavel);
         Assertions.assertEquals(testResponsavel, responsavel);
     }
-}
+    @Test
+    public void testarPesquisarResponsavelPeloEmailOk(){
+        Optional<Responsavel> optionalResponsavel = Optional.of(responsavel);
+        Mockito.when(responsavelRepository.findById(Mockito.anyString())).thenReturn(optionalResponsavel);
+        Responsavel testBusca = responsavelService.procurarResponsavelPorEmail("bomdia@zup.com");
+        Assertions.assertEquals(testBusca,responsavel);
+
+        }
+    }
+
