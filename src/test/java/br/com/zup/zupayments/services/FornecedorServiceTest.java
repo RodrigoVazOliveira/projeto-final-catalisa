@@ -2,7 +2,10 @@ package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.repositories.FornecedorRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,5 +36,12 @@ public class FornecedorServiceTest {
                 "rsdfasfdsdf@sfsd.com",
                 null
         );
+    }
+
+    @Test
+    public void testarCadastroDeFornecedorOk() {
+        Mockito.when(fornecedorRepository.save(Mockito.any(Fornecedor.class))).thenReturn(fornecedor);
+        Fornecedor testFornecedor = fornecedorService.cadastrarFornecedor(fornecedor);
+        Assertions.assertEquals(testFornecedor, fornecedor);
     }
 }
