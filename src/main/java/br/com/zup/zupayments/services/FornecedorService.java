@@ -13,8 +13,12 @@ public class FornecedorService {
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
-    public Fornecedor cadastrarFornecedor (Fornecedor fornecedor){
-        return fornecedorRepository.save(fornecedor);
+    public Fornecedor cadastrarFornecedor (Fornecedor fornecedor) {
+        try {
+            return fornecedorRepository.save(fornecedor);
+        } catch (Exception error) {
+            throw new RuntimeException("Fornecedor já cadastrado");
+        }
     }
 
     public Fornecedor pesquisarFornecedorPorCnpjOuCpf(String cnpjOuCpf){
@@ -39,7 +43,11 @@ public class FornecedorService {
         return fornecedor;
     }
 
-    public void deletarFornecedor(String id){
-         fornecedorRepository.deleteById(id);
+    public void deletarFornecedor(String id) {
+        try {
+            fornecedorRepository.deleteById(id);
+        } catch (Exception error) {
+            throw new RuntimeException("Fornecedor não encontrado");
+        }
     }
 }
