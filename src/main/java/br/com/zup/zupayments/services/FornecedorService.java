@@ -27,7 +27,8 @@ public class FornecedorService {
         if (optionalFornecedor.isPresent()){
             return optionalFornecedor.get();
         }
-            throw new RuntimeException("Fornecedor não foi encontrado");
+
+        throw new RuntimeException("Fornecedor não foi encontrado");
     }
 
     public Fornecedor atualizarCadastroFornecedor (String id, Fornecedor fornecedor){
