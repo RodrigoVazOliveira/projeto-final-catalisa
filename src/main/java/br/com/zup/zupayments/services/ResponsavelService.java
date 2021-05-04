@@ -5,6 +5,8 @@ import br.com.zup.zupayments.repositories.ResponsavelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ResponsavelService {
 
@@ -18,5 +20,15 @@ public class ResponsavelService {
         }catch (Exception error){
             throw new RuntimeException("Responsável já cadastrado");
         }
+    }
+
+    public Responsavel procurarResponsavelPorEmail(String email) {
+        Optional<Responsavel> optionalResponsavel = responsavelRepository.findById(email);
+
+        if (optionalResponsavel.isEmpty()) {
+            throw new RuntimeException("Não existe responsável com e-mail " + email);
+        }
+
+        return optionalResponsavel.get();
     }
 }

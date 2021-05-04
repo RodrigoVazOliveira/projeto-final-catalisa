@@ -1,4 +1,4 @@
-package br.com.zup.zupayments.models;
+package br.com.zup.zupayments.enums;
 
 public enum FormaDePagamento {
     BOLETO,

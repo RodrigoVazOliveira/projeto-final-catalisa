@@ -28,4 +28,8 @@ public class PedidoDeCompraService {
                 pedidoDeCompra.getFornecedor().getCnpjOuCpf()));
         return pedidoDeCompraRespository.save(pedidoDeCompra);
     }
+
+    public Iterable<PedidoDeCompra> obterTodosOsPedidoDeCompra() {
+        return pedidoDeCompraRespository.findAll();
+    }
 }

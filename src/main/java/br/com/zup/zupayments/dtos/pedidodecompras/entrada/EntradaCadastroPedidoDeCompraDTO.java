@@ -1,6 +1,6 @@
 package br.com.zup.zupayments.dtos.pedidodecompras.entrada;
 
-import br.com.zup.zupayments.models.FormaDePagamento;
+import br.com.zup.zupayments.enums.FormaDePagamento;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;

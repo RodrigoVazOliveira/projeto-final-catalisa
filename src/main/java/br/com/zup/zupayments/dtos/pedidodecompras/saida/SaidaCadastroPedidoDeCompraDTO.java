@@ -1,40 +1,38 @@
-package br.com.zup.zupayments.models;
+package br.com.zup.zupayments.dtos.pedidodecompras.saida;
 
 import br.com.zup.zupayments.enums.FormaDePagamento;
+import br.com.zup.zupayments.models.PedidoDeCompra;
+import br.com.zup.zupayments.models.Responsavel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "pedidos_de_compras")
-public class PedidoDeCompra {
+public class SaidaCadastroPedidoDeCompraDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numeroDePedido;
 
+    @JsonFormat(pattern = "dd/mm/YYYY")
     private LocalDate dataDeVencimento;
-
     private Double valorAproximado;
 
+    @JsonFormat(pattern = "dd/mm/YYYY")
     private LocalDate dataDePagamento;
-
-    @ManyToOne
     private Responsavel responsavel;
 
+    @JsonFormat(pattern = "dd/mm/YYYY")
     private LocalDate dataLimiteEnvio;
-
     private FormaDePagamento formaDePagamento;
 
-    @ManyToOne
-    private Fornecedor fornecedor;
+    private PedidoDeCompraFornecedorDTO fornecedor;
 
-    public PedidoDeCompra() {
+    public SaidaCadastroPedidoDeCompraDTO() {
     }
 
-    public PedidoDeCompra(Long numeroDePedido, LocalDate dataDeVencimento, Double valorAproximado,
-                          LocalDate dataDePagamento, Responsavel responsavel, LocalDate dataLimiteEnvio,
-                          FormaDePagamento formaDePagamento, Fornecedor fornecedor) {
+    public SaidaCadastroPedidoDeCompraDTO(Long numeroDePedido, LocalDate dataDeVencimento, Double valorAproximado,
+                                          LocalDate dataDePagamento, Responsavel responsavel, LocalDate dataLimiteEnvio,
+                                          FormaDePagamento formaDePagamento, PedidoDeCompraFornecedorDTO fornecedor) {
         this.numeroDePedido = numeroDePedido;
         this.dataDeVencimento = dataDeVencimento;
         this.valorAproximado = valorAproximado;
@@ -101,11 +99,35 @@ public class PedidoDeCompra {
         this.formaDePagamento = formaDePagamento;
     }
 
-    public Fornecedor getFornecedor() {
+    public PedidoDeCompraFornecedorDTO getFornecedor() {
         return fornecedor;
     }
 
-    public void setFornecedor(Fornecedor fornecedor) {
+    public void setFornecedor(PedidoDeCompraFornecedorDTO fornecedor) {
         this.fornecedor = fornecedor;
+    }
+
+    public static SaidaCadastroPedidoDeCompraDTO converterModeloParaDto(PedidoDeCompra pedidoDeCompra) {
+        return new SaidaCadastroPedidoDeCompraDTO(
+                pedidoDeCompra.getNumeroDePedido(),
+                pedidoDeCompra.getDataDeVencimento(),
+                pedidoDeCompra.getValorAproximado(),
+                pedidoDeCompra.getDataDePagamento(),
+                pedidoDeCompra.getResponsavel(),
+                pedidoDeCompra.getDataLimiteEnvio(),
+                pedidoDeCompra.getFormaDePagamento(),
+                PedidoDeCompraFornecedorDTO.converterModeloParaDto(pedidoDeCompra.getFornecedor())
+        );
+    }
+
+    public static Iterable<SaidaCadastroPedidoDeCompraDTO> converterListaDeModeloParaListaDto(
+            Iterable<PedidoDeCompra> pedidoDeCompras) {
+        List<SaidaCadastroPedidoDeCompraDTO> dtos = new ArrayList<>();
+
+        for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
+            dtos.add(converterModeloParaDto(pedidoDeCompra));
+        }
+
+        return dtos;
     }
 }

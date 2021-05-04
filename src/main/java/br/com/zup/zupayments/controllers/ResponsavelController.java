@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("responsaveis/")
-
 public class ResponsavelController {
 
     @Autowired
