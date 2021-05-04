@@ -32,7 +32,6 @@ public class NotaFiscal {
     public NotaFiscal() {
     }
 
-
     public Long getId() {
         return id;
     }
