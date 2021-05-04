@@ -63,4 +63,15 @@ public class FornecedorServiceTest {
             fornecedorService.pesquisarFornecedorPorCnpjOuCpf("23.524.377/0001-45");
         });
     }
+
+    @Test
+    public void testarAtualizarCadastroFornecedor() {
+        Optional<Fornecedor> optionalFornecedor = Optional.of(fornecedor);
+        Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
+        Mockito.when(fornecedorRepository.save(Mockito.any(Fornecedor.class))).thenReturn(fornecedor);
+
+        Fornecedor test = fornecedorService.atualizarCadastroFornecedor("23.524.377/0001-45", fornecedor);
+
+        Assertions.assertEquals(test, fornecedor);
+    }
 }
