@@ -20,19 +20,6 @@ public class EntradaCadastroPedidoDeCompraDTO {
     public EntradaCadastroPedidoDeCompraDTO() {
     }
 
-    public EntradaCadastroPedidoDeCompraDTO(LocalDate dataDeVencimento, Double valorAproximado,
-                                            LocalDate dataDePagamento, String emailResponsavel,
-                                            LocalDate dataLimiteEnvio, FormaDePagamento formaDePagamento,
-                                            String cnpjOuCpf) {
-        this.dataDeVencimento = dataDeVencimento;
-        this.valorAproximado = valorAproximado;
-        this.dataDePagamento = dataDePagamento;
-        this.emailResponsavel = emailResponsavel;
-        this.dataLimiteEnvio = dataLimiteEnvio;
-        this.formaDePagamento = formaDePagamento;
-        this.cnpjOuCpf = cnpjOuCpf;
-    }
-
     public LocalDate getDataDeVencimento() {
         return dataDeVencimento;
     }
@@ -90,20 +77,22 @@ public class EntradaCadastroPedidoDeCompraDTO {
     }
 
     public PedidoDeCompra converterDtoParaModelo() {
+        PedidoDeCompra pedidoDeCompra = new PedidoDeCompra();
+
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setCnpjOuCpf(cnpjOuCpf);
+
         Responsavel responsavel = new Responsavel();
         responsavel.setEmail(this.emailResponsavel);
 
-        return new PedidoDeCompra(
-                null,
-                dataDeVencimento,
-                valorAproximado,
-                dataDePagamento,
-                responsavel,
-                dataLimiteEnvio,
-                formaDePagamento,
-                fornecedor
-        );
+        pedidoDeCompra.setDataDeVencimento(this.dataDeVencimento);
+        pedidoDeCompra.setValorAproximado(this.valorAproximado);
+        pedidoDeCompra.setDataDePagamento(this.dataDePagamento);
+        pedidoDeCompra.setResponsavel(responsavel);
+        pedidoDeCompra.setDataLimiteEnvio(this.dataLimiteEnvio);
+        pedidoDeCompra.setFormaDePagamento(this.formaDePagamento);
+        pedidoDeCompra.setFornecedor(fornecedor);
+
+        return pedidoDeCompra;
     }
 }
