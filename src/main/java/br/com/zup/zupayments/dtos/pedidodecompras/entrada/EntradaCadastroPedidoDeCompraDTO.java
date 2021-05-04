@@ -90,12 +90,14 @@ public class EntradaCadastroPedidoDeCompraDTO {
     }
 
     public PedidoDeCompra converterDtoParaModelo() {
+        Responsavel responsavel = new Responsavel();
+        responsavel.setEmail(this.emailResponsavel);
         return new PedidoDeCompra(
                 null,
                 dataDeVencimento,
                 valorAproximado,
                 dataDePagamento,
-                new Responsavel(emailResponsavel, null, null, null),
+                responsavel,
                 dataLimiteEnvio,
                 formaDePagamento,
                 new Fornecedor(cnpjOuCpf, null, null, null, null,

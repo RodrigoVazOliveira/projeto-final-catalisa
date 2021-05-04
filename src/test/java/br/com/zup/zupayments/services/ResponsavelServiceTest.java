@@ -24,12 +24,10 @@ public class ResponsavelServiceTest {
 
     @BeforeEach
     public void setup(){
-        this.responsavel = new Responsavel(
-                "bomdia@zup.com",
-                "Bom dia Silva",
-                "Facilites",
-                true
-        );
+        this.responsavel.setEmail("bomdia@zup.com");
+        this.responsavel.setNomeCompleto("Bom dia Silva");
+        this.responsavel.setNomeCompleto("Facilites");
+        this.responsavel.setAtivo(true);
     }
     @Test
     public void testarCadastroDeResponsavelOk() {
