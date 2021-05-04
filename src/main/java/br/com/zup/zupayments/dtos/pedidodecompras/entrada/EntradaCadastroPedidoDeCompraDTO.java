@@ -95,11 +95,11 @@ public class EntradaCadastroPedidoDeCompraDTO {
                 dataDeVencimento,
                 valorAproximado,
                 dataDePagamento,
-                new Responsavel(emailResponsavel, null, null),
+                new Responsavel(emailResponsavel, null, null, null),
                 dataLimiteEnvio,
                 formaDePagamento,
                 new Fornecedor(cnpjOuCpf, null, null, null, null,
-                        null, null, null, null, null, null)
+                        null, null, null, null, null, null, null)
         );
     }
 }
