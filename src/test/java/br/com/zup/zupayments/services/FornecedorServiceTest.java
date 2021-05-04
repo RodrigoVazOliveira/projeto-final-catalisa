@@ -36,7 +36,8 @@ public class FornecedorServiceTest {
                 "2434424232",
                 "(99) 9999-9999",
                 "rsdfasfdsdf@sfsd.com",
-                null
+                null,
+                true
         );
     }
 

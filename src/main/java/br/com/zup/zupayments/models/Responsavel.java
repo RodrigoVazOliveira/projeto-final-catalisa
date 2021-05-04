@@ -18,13 +18,16 @@ public class Responsavel {
     @Column(length = 70)
     private String nomeDoProjeto;
 
+    private Boolean ativo;
+
     public Responsavel() {
     }
 
-    public Responsavel(String email, String nomeCompleto, String nomeDoProjeto) {
+    public Responsavel(String email, String nomeCompleto, String nomeDoProjeto, Boolean ativo) {
         this.email = email;
         this.nomeCompleto = nomeCompleto;
         this.nomeDoProjeto = nomeDoProjeto;
+        this.ativo = ativo;
     }
 
     public String getEmail() {
@@ -49,5 +52,13 @@ public class Responsavel {
 
     public void setNomeDoProjeto(String nomeDoProjeto) {
         this.nomeDoProjeto = nomeDoProjeto;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 }

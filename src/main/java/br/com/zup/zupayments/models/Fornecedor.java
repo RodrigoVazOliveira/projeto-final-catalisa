@@ -33,12 +33,14 @@ public class Fornecedor {
 
     private CategoriaDeCusto categoriaDeCusto;
 
+    private Boolean ativo;
+
     public Fornecedor() {
     }
 
-    public Fornecedor(String cnpjOuCpf, String razaoSocial, String logradouro, Integer numero,
-                      String bairro, String cidade, String estado, String cep, String telefone,
-                      String email, CategoriaDeCusto categoriaDeCusto) {
+    public Fornecedor(String cnpjOuCpf, String razaoSocial, String logradouro, Integer numero, String bairro,
+                      String cidade, String estado, String cep, String telefone, String email,
+                      CategoriaDeCusto categoriaDeCusto, Boolean ativo) {
         CnpjOuCpf = cnpjOuCpf;
         RazaoSocial = razaoSocial;
         this.logradouro = logradouro;
@@ -50,6 +52,7 @@ public class Fornecedor {
         this.telefone = telefone;
         this.email = email;
         this.categoriaDeCusto = categoriaDeCusto;
+        this.ativo = ativo;
     }
 
     public String getCnpjOuCpf() {
@@ -138,5 +141,13 @@ public class Fornecedor {
 
     public void setCategoriaDeCusto(CategoriaDeCusto categoriaDeCusto) {
         this.categoriaDeCusto = categoriaDeCusto;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 }
