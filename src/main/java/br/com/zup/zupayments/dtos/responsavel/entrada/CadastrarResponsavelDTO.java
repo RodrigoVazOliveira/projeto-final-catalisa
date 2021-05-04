@@ -4,15 +4,25 @@ import br.com.zup.zupayments.models.Responsavel;
 
 public class CadastrarResponsavelDTO {
 
+    private String email;
     private String nomeCompleto;
     private String nomeDoProjeto;
 
     public CadastrarResponsavelDTO() {
     }
 
-    public CadastrarResponsavelDTO(String nomeCompleto, String nomeDoProjeto) {
+    public CadastrarResponsavelDTO(String email, String nomeCompleto, String nomeDoProjeto) {
+        this.email = email;
         this.nomeCompleto = nomeCompleto;
         this.nomeDoProjeto = nomeDoProjeto;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getNomeCompleto() {
@@ -33,7 +43,7 @@ public class CadastrarResponsavelDTO {
 
     public Responsavel converterDtoParaModelo() {
         return new Responsavel(
-                null,
+                this.email,
                 this.nomeCompleto,
                 this.nomeDoProjeto,
                 true
