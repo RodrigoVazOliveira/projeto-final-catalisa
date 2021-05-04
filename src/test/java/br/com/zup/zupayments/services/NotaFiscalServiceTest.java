@@ -57,7 +57,7 @@ public class NotaFiscalServiceTest {
     }
 
     @Test
-    public void testarCadastroDeResponsavelOk() {
+    public void testarCadastroDeNotaFiscalOk() {
         Mockito.when(notaFiscalRepository.save(Mockito.any(NotaFiscal.class))).thenReturn(notaFiscalteste);
         NotaFiscal testNota = notaFiscalService.cadastrarNotaFiscal(notaFiscalteste);
         Assertions.assertEquals(testNota, notaFiscalteste);
