@@ -74,4 +74,11 @@ public class FornecedorServiceTest {
 
         Assertions.assertEquals(test, fornecedor);
     }
+
+    @Test
+    public void TestardeletarFornecedorOk() {
+        Mockito.doNothing().when(fornecedorRepository).deleteById(Mockito.anyString());
+        fornecedorService.deletarFornecedor("234234");
+        Mockito.verify(fornecedorRepository, Mockito.times(1)).deleteById(Mockito.anyString());
+    }
 }
