@@ -47,7 +47,7 @@ public class FornecedorControllerTest {
         );
 
         this.cadastroDeFornecedorDTO = new CadastroDeFornecedorDTO(
-                "423432",
+                null,
                 "23.524.377/0001-45",
                 "Empresa 1",
                 "Rua Dos bobos",
