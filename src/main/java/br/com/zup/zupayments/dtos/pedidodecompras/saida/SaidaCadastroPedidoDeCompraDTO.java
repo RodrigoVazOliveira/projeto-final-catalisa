@@ -30,20 +30,7 @@ public class SaidaCadastroPedidoDeCompraDTO {
     public SaidaCadastroPedidoDeCompraDTO() {
     }
 
-    public SaidaCadastroPedidoDeCompraDTO(Long numeroDePedido, LocalDate dataDeVencimento, Double valorAproximado,
-                                          LocalDate dataDePagamento, Responsavel responsavel, LocalDate dataLimiteEnvio,
-                                          FormaDePagamento formaDePagamento, PedidoDeCompraFornecedorDTO fornecedor) {
-        this.numeroDePedido = numeroDePedido;
-        this.dataDeVencimento = dataDeVencimento;
-        this.valorAproximado = valorAproximado;
-        this.dataDePagamento = dataDePagamento;
-        this.responsavel = responsavel;
-        this.dataLimiteEnvio = dataLimiteEnvio;
-        this.formaDePagamento = formaDePagamento;
-        this.fornecedor = fornecedor;
-    }
-
-    public Long getNumeroDePedido() {
+        public Long getNumeroDePedido() {
         return numeroDePedido;
     }
 
@@ -108,16 +95,16 @@ public class SaidaCadastroPedidoDeCompraDTO {
     }
 
     public static SaidaCadastroPedidoDeCompraDTO converterModeloParaDto(PedidoDeCompra pedidoDeCompra) {
-        return new SaidaCadastroPedidoDeCompraDTO(
-                pedidoDeCompra.getNumeroDePedido(),
-                pedidoDeCompra.getDataDeVencimento(),
-                pedidoDeCompra.getValorAproximado(),
-                pedidoDeCompra.getDataDePagamento(),
-                pedidoDeCompra.getResponsavel(),
-                pedidoDeCompra.getDataLimiteEnvio(),
-                pedidoDeCompra.getFormaDePagamento(),
-                PedidoDeCompraFornecedorDTO.converterModeloParaDto(pedidoDeCompra.getFornecedor())
-        );
+        SaidaCadastroPedidoDeCompraDTO dto = new SaidaCadastroPedidoDeCompraDTO();
+        dto.setNumeroDePedido(pedidoDeCompra.getNumeroDePedido());
+        dto.setDataDeVencimento(pedidoDeCompra.getDataDeVencimento());
+        dto.setValorAproximado(pedidoDeCompra.getValorAproximado());
+        dto.setDataDePagamento(pedidoDeCompra.getDataDePagamento());
+        dto.setResponsavel(pedidoDeCompra.getResponsavel());
+        dto.setDataLimiteEnvio(pedidoDeCompra.getDataLimiteEnvio());
+        dto.setFormaDePagamento(pedidoDeCompra.getFormaDePagamento());
+        dto.setFornecedor(PedidoDeCompraFornecedorDTO.converterModeloParaDto(pedidoDeCompra.getFornecedor()));
+        return dto;
     }
 
     public static Iterable<SaidaCadastroPedidoDeCompraDTO> converterListaDeModeloParaListaDto(
