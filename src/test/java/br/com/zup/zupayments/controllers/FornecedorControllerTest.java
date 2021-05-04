@@ -2,13 +2,19 @@ package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.services.FornecedorService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@WebMvcTest
+@WebMvcTest(FornecedorController.class)
 public class FornecedorControllerTest {
 
     @MockBean
@@ -34,5 +40,21 @@ public class FornecedorControllerTest {
                 "rsdfasfdsdf@sfsd.com",
                 null
         );
+    }
+
+    @Test
+    public void testarCadastroDeFornecedor() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String fornecedorJson = objectMapper.writeValueAsString(fornecedor);
+
+        Mockito.when(fornecedorService.cadastrarFornecedor(Mockito.any())).thenReturn(fornecedor);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/fornecedores/")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(fornecedorJson))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().json(fornecedorJson));
+
     }
 }
