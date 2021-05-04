@@ -152,11 +152,11 @@ public class CadastroDeFornecedorDTO {
     public Fornecedor converterDtoParaModelo() {
         String cnpjOuCpf = null;
 
-        if (cpf != null) {
+        if (this.cpf != null) {
             cnpjOuCpf = cpf;
         }
 
-        if (cnpj != null) {
+        if (this.cnpj != null) {
             cnpjOuCpf = cnpj;
         }
 

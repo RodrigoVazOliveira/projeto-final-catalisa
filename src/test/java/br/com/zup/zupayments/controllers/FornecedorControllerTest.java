@@ -1,5 +1,7 @@
 package br.com.zup.zupayments.controllers;
 
+import br.com.zup.zupayments.dtos.fornecedor.entrada.CadastroDeFornecedorDTO;
+import br.com.zup.zupayments.enums.CategoriaDeCusto;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.services.FornecedorService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +27,8 @@ public class FornecedorControllerTest {
 
     private Fornecedor fornecedor;
 
+    private CadastroDeFornecedorDTO cadastroDeFornecedorDTO;
+
     @BeforeEach
     public void setup() {
         this.fornecedor = new Fornecedor(
@@ -38,15 +42,31 @@ public class FornecedorControllerTest {
                 "2434424232",
                 "(99) 9999-9999",
                 "rsdfasfdsdf@sfsd.com",
-                null,
+                CategoriaDeCusto.BENEFICIOS,
                 true
+        );
+
+        this.cadastroDeFornecedorDTO = new CadastroDeFornecedorDTO(
+                "423432",
+                "23.524.377/0001-45",
+                "Empresa 1",
+                "Rua Dos bobos",
+                0,
+                "Sem teto",
+                "Sem Fim",
+                "Sem Estado",
+                "2434424232",
+                "(99) 9999-9999",
+                "rsdfasfdsdf@sfsd.com",
+                CategoriaDeCusto.BENEFICIOS
         );
     }
 
     @Test
     public void testarCadastroDeFornecedor() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        String fornecedorJson = objectMapper.writeValueAsString(fornecedor);
+        String fornecedorJson = objectMapper.writeValueAsString(cadastroDeFornecedorDTO);
+        String respostaJson   = objectMapper.writeValueAsString(fornecedor);
 
         Mockito.when(fornecedorService.cadastrarFornecedor(Mockito.any())).thenReturn(fornecedor);
 
@@ -55,7 +75,7 @@ public class FornecedorControllerTest {
         .content(fornecedorJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.content().json(fornecedorJson));
+                .andExpect(MockMvcResultMatchers.content().json(respostaJson));
 
     }
 }
