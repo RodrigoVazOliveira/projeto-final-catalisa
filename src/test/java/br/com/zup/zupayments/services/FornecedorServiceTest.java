@@ -54,4 +54,13 @@ public class FornecedorServiceTest {
         Fornecedor test = fornecedorService.pesquisarFornecedorPorCnpjOuCpf("23.524.377/0001-45");
         Assertions.assertEquals(test, fornecedor);
     }
+
+    @Test
+    public void testarPesquisarFornecedorPorCnpjOuCpfError() {
+        Optional<Fornecedor> optionalFornecedor = Optional.empty();
+        Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            fornecedorService.pesquisarFornecedorPorCnpjOuCpf("23.524.377/0001-45");
+        });
+    }
 }
