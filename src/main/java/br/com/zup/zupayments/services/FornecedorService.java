@@ -18,13 +18,13 @@ public class FornecedorService {
         return fornecedorRepository.save(fornecedor);
     }
 
-    public Fornecedor pesquisarFornecedor (String id){
+    public Fornecedor pesquisarFornecedor (String id, Fornecedor fornecedor){
         Optional<Fornecedor> optionalFornecedor = fornecedorRepository.findById(id);
 
         if (optionalFornecedor.isPresent()){
             return optionalFornecedor.get();
         }
-        throw new RuntimeException("Fornecedor não foi encontrado");
+            throw new RuntimeException("Fornecedor não foi encontrado");
     }
 
     public Fornecedor atualizarCadastroFornecedor (String id, Fornecedor fornecedor){
@@ -34,7 +34,8 @@ public class FornecedorService {
         if (!fornecedorOptional.isPresent())
             throw new RuntimeException("Fornecedor não foi encontrado para atualização");
 
-        fornecedor.setCnpjOuCpf(fornecedor.getCnpjOuCpf());
+        fornecedor.setCnpjOuCpf(id);
+        fornecedorRepository.save(fornecedor);
 
         return fornecedor;
     }
