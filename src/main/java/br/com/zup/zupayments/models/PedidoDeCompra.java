@@ -32,19 +32,6 @@ public class PedidoDeCompra {
     public PedidoDeCompra() {
     }
 
-    public PedidoDeCompra(Long numeroDePedido, LocalDate dataDeVencimento, Double valorAproximado,
-                          LocalDate dataDePagamento, Responsavel responsavel, LocalDate dataLimiteEnvio,
-                          FormaDePagamento formaDePagamento, Fornecedor fornecedor) {
-        this.numeroDePedido = numeroDePedido;
-        this.dataDeVencimento = dataDeVencimento;
-        this.valorAproximado = valorAproximado;
-        this.dataDePagamento = dataDePagamento;
-        this.responsavel = responsavel;
-        this.dataLimiteEnvio = dataLimiteEnvio;
-        this.formaDePagamento = formaDePagamento;
-        this.fornecedor = fornecedor;
-    }
-
     public Long getNumeroDePedido() {
         return numeroDePedido;
     }
