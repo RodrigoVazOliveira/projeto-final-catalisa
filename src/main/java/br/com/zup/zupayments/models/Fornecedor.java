@@ -1,5 +1,7 @@
 package br.com.zup.zupayments.models;
 
+import br.com.zup.zupayments.enums.CategoriaDeCusto;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
