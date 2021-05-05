@@ -23,13 +23,6 @@ public class Responsavel {
     public Responsavel() {
     }
 
-    public Responsavel(String email, String nomeCompleto, String nomeDoProjeto, Boolean ativo) {
-        this.email = email;
-        this.nomeCompleto = nomeCompleto;
-        this.nomeDoProjeto = nomeDoProjeto;
-        this.ativo = ativo;
-    }
-
     public String getEmail() {
         return email;
     }

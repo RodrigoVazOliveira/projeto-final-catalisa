@@ -9,11 +9,6 @@ public class PedidoDeCompraFornecedorDTO {
     public PedidoDeCompraFornecedorDTO() {
     }
 
-    public PedidoDeCompraFornecedorDTO(String cnpjOuCpf, String razaoSocial) {
-        this.cnpjOuCpf = cnpjOuCpf;
-        this.razaoSocial = razaoSocial;
-    }
-
     public String getCnpjOuCpf() {
         return cnpjOuCpf;
     }
@@ -31,6 +26,9 @@ public class PedidoDeCompraFornecedorDTO {
     }
 
     public static PedidoDeCompraFornecedorDTO converterModeloParaDto(Fornecedor fornecedor) {
-        return new PedidoDeCompraFornecedorDTO(fornecedor.getCnpjOuCpf(), fornecedor.getRazaoSocial());
+        PedidoDeCompraFornecedorDTO dto = new PedidoDeCompraFornecedorDTO();
+        dto.setCnpjOuCpf(fornecedor.getCnpjOuCpf());
+        dto.setRazaoSocial(fornecedor.getRazaoSocial());
+        return dto;
     }
 }

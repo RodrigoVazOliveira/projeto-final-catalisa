@@ -36,23 +36,6 @@ public class CadastroDeFornecedorDTO {
     public CadastroDeFornecedorDTO() {
     }
 
-    public CadastroDeFornecedorDTO(String cpf, String cnpj, String razaoSocial, String logradouro,
-                                   Integer numero, String bairro, String cidade, String estado,
-                                   String cep, String telefone, String email, CategoriaDeCusto categoriaDeCusto) {
-        this.cpf = cpf;
-        this.cnpj = cnpj;
-        RazaoSocial = razaoSocial;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.cep = cep;
-        this.telefone = telefone;
-        this.email = email;
-        this.categoriaDeCusto = categoriaDeCusto;
-    }
-
     public String getCpf() {
         return cpf;
     }
@@ -160,19 +143,20 @@ public class CadastroDeFornecedorDTO {
             cnpjOuCpf = cnpj;
         }
 
-        return new Fornecedor(
-                cnpjOuCpf,
-                this.RazaoSocial,
-                this.logradouro,
-                this.numero,
-                this.bairro,
-                this.cidade,
-                this.estado,
-                this.cep,
-                this.telefone,
-                this.email,
-                this.categoriaDeCusto,
-                true
-        );
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setCnpjOuCpf(cnpjOuCpf);
+        fornecedor.setRazaoSocial(this.getRazaoSocial());
+        fornecedor.setLogradouro(this.logradouro);
+        fornecedor.setNumero(this.numero);
+        fornecedor.setBairro(this.bairro);
+        fornecedor.setCidade(this.cidade);
+        fornecedor.setEstado(this.estado);
+        fornecedor.setCep(this.cep);
+        fornecedor.setTelefone(this.telefone);
+        fornecedor.setEmail(this.email);
+        fornecedor.setCategoriaDeCusto(this.categoriaDeCusto);
+        fornecedor.setAtivo(true);
+
+        return fornecedor;
     }
 }

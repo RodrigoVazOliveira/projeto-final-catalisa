@@ -10,13 +10,7 @@ public class CadastrarResponsavelDTO {
 
     public CadastrarResponsavelDTO() {
     }
-
-    public CadastrarResponsavelDTO(String email, String nomeCompleto, String nomeDoProjeto) {
-        this.email = email;
-        this.nomeCompleto = nomeCompleto;
-        this.nomeDoProjeto = nomeDoProjeto;
-    }
-
+    
     public String getEmail() {
         return email;
     }
@@ -42,11 +36,10 @@ public class CadastrarResponsavelDTO {
     }
 
     public Responsavel converterDtoParaModelo() {
-        return new Responsavel(
-                this.email,
-                this.nomeCompleto,
-                this.nomeDoProjeto,
-                true
-        );
+        Responsavel responsavel = new Responsavel();
+        responsavel.setNomeCompleto(this.nomeCompleto);
+        responsavel.setEmail(this.email);
+        responsavel.setAtivo(true);
+        return responsavel;
     }
 }

@@ -38,23 +38,6 @@ public class Fornecedor {
     public Fornecedor() {
     }
 
-    public Fornecedor(String cnpjOuCpf, String razaoSocial, String logradouro, Integer numero, String bairro,
-                      String cidade, String estado, String cep, String telefone, String email,
-                      CategoriaDeCusto categoriaDeCusto, Boolean ativo) {
-        CnpjOuCpf = cnpjOuCpf;
-        RazaoSocial = razaoSocial;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.cep = cep;
-        this.telefone = telefone;
-        this.email = email;
-        this.categoriaDeCusto = categoriaDeCusto;
-        this.ativo = ativo;
-    }
-
     public String getCnpjOuCpf() {
         return CnpjOuCpf;
     }
