@@ -32,7 +32,7 @@ public class ResponsavelService {
         return optionalResponsavel.get();
     }
 
-    public void ativarOuDesativarResponasvel(String emailResponsavel) {
+    public void ativarOuDesativarResponsavel(String emailResponsavel) {
         Responsavel responsavelAtual = procurarResponsavelPorEmail(emailResponsavel);
 
         responsavelAtual.setAtivo(!responsavelAtual.getAtivo());

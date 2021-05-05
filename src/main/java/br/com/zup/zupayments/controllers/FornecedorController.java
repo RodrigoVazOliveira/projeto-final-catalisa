@@ -16,7 +16,7 @@ public class FornecedorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Fornecedor cadastroFornecedor(@RequestBody CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
+    public Fornecedor cadastrarFornecedor(@RequestBody CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
         return fornecedorService.cadastrarFornecedor(
                 cadastroDeFornecedorDTO.converterDtoParaModelo()
         );
@@ -24,7 +24,7 @@ public class FornecedorController {
 
     @GetMapping("{id}/")
     @ResponseStatus(HttpStatus.OK)
-    public Fornecedor pesquisaFornecedor(@PathVariable String cnpjouCpf){
+    public Fornecedor pesquisarFornecedor(@PathVariable String cnpjouCpf){
         return fornecedorService.pesquisarFornecedorPorCnpjOuCpf(cnpjouCpf);
     }
 

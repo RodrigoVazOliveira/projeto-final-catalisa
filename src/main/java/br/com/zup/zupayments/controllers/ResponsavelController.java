@@ -25,6 +25,6 @@ public class ResponsavelController {
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void ativarOuDesativarResponsavel(@RequestParam(name = "email") String emailResponsavel) {
-        responsavelService.ativarOuDesativarResponasvel(emailResponsavel);
+        responsavelService.ativarOuDesativarResponsavel(emailResponsavel);
     }
 }
