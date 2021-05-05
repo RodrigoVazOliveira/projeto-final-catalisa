@@ -75,4 +75,13 @@ public class FornecedorServiceTest {
 
         Assertions.assertEquals(test, fornecedor);
     }
+
+    @Test
+    public void testarAtivarOuDesativarFornecedor() {
+        Optional<Fornecedor> optionalFornecedor = Optional.of(fornecedor);
+        Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
+        Mockito.when(fornecedorRepository.save(Mockito.any(Fornecedor.class))).thenReturn(fornecedor);
+        fornecedorService.ativarOuDesativarFornecedor("23.524.377/0001-45");
+        Mockito.verify(fornecedorRepository, Mockito.times(1)).save(Mockito.any(Fornecedor.class));
+    }
 }

@@ -24,24 +24,36 @@ public class ResponsavelServiceTest {
 
     @BeforeEach
     public void setup(){
+        this.responsavel = new Responsavel();
         this.responsavel.setEmail("bomdia@zup.com");
         this.responsavel.setNomeCompleto("Bom dia Silva");
         this.responsavel.setNomeCompleto("Facilites");
         this.responsavel.setAtivo(true);
     }
+
     @Test
     public void testarCadastroDeResponsavelOk() {
         Mockito.when(responsavelRepository.save(Mockito.any(Responsavel.class))).thenReturn(responsavel);
         Responsavel testResponsavel = responsavelService.cadastrarResponsavel(responsavel);
         Assertions.assertEquals(testResponsavel, responsavel);
     }
+
     @Test
     public void testarPesquisarResponsavelPeloEmailOk(){
         Optional<Responsavel> optionalResponsavel = Optional.of(responsavel);
         Mockito.when(responsavelRepository.findById(Mockito.anyString())).thenReturn(optionalResponsavel);
         Responsavel testBusca = responsavelService.procurarResponsavelPorEmail("bomdia@zup.com");
         Assertions.assertEquals(testBusca,responsavel);
-
-        }
     }
+
+    @Test
+    public void testarAtivarEDesativarResponsavelOk() {
+        Optional<Responsavel> optionalResponsavel = Optional.of(responsavel);
+        Mockito.when(responsavelRepository.findById(Mockito.anyString())).thenReturn(optionalResponsavel);
+        Mockito.when(responsavelRepository.save(Mockito.any(Responsavel.class))).thenReturn(responsavel);
+        responsavelService.ativarOuDesativarResponasvel("responsavel@zup.com.br");
+        Mockito.verify(responsavelRepository, Mockito.times(1)).save(Mockito.any(Responsavel.class));
+    }
+}
+
 
