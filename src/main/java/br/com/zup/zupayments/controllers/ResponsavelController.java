@@ -21,4 +21,10 @@ public class ResponsavelController {
                 cadastrarResponsavelDTO.converterDtoParaModelo()
         );
     }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarOuDesativarResponsavel(@RequestParam(name = "email") String emailResponsavel) {
+        responsavelService.ativarOuDesativarResponasvel(emailResponsavel);
+    }
 }
