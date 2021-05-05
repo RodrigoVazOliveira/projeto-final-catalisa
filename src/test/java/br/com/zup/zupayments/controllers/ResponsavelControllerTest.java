@@ -59,4 +59,14 @@ public class ResponsavelControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(saidaJson));
     }
+
+    @Test
+    public void ativarOuDesativarResponsavel() throws Exception {
+        String url = "/responsaveis/?email=rodrigo.vaz@zup.com.br";
+        Mockito.doNothing().when(responsavelService).ativarOuDesativarResponasvel(Mockito.anyString());
+
+        mockMvc.perform(MockMvcRequestBuilders.patch(url))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }
+
