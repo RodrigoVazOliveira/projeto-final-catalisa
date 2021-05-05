@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.controllers;
 
+import br.com.zup.zupayments.dtos.notafiscal.entrada.CadastrarNotaFiscalDTO;
 import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.services.NotaFiscalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class NotaFiscalController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public NotaFiscal cadastroNotaFiscal(@RequestBody NotaFiscal fiscal){
-        return notaFiscalService.cadastrarNotaFiscal(fiscal);
+    public NotaFiscal cadastroNotaFiscal(@RequestBody CadastrarNotaFiscalDTO cadastrarNotaFiscalDTO){
+        return notaFiscalService.cadastrarNotaFiscal(cadastrarNotaFiscalDTO.converterDtoParaModelo());
     }
 }
