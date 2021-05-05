@@ -44,4 +44,17 @@ public class PedidoDeCompraService {
 
         return optionalPedidoDeCompra.get();
     }
+    public PedidoDeCompra cancelarPedidoDeCompra (Long id, PedidoDeCompra pedidoDeCompra){
+        Optional<PedidoDeCompra> pedidoDeCompraOptional = pedidoDeCompraRespository.findById(id);
+
+        if (!pedidoDeCompraOptional.isPresent())
+            throw new RuntimeException("Pedido de Compra não encontrado");
+
+        pedidoDeCompra.setCancelado(true);
+        pedidoDeCompraRespository.save(pedidoDeCompra);
+
+        return pedidoDeCompra;
+
+    }
+
 }

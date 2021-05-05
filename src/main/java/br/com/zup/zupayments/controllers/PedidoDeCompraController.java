@@ -38,4 +38,10 @@ public class PedidoDeCompraController {
         Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraService.obterTodosOsPedidoDeCompra();
         return SaidaCadastroPedidoDeCompraDTO.converterListaDeModeloParaListaDto(pedidoDeCompras);
     }
+    @PutMapping("{id}/")
+    public PedidoDeCompra cancelarPedidoDeCompra(@PathVariable Long id, @RequestBody PedidoDeCompra pedidoDeCompra){
+        PedidoDeCompra pedidoDeCompra1 = pedidoDeCompraService.cancelarPedidoDeCompra(id,pedidoDeCompra);
+        return pedidoDeCompra1;
+    }
+
 }
