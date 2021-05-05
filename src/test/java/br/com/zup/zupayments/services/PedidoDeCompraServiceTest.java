@@ -12,7 +12,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -24,15 +23,16 @@ public class PedidoDeCompraServiceTest {
 
     @MockBean
     private PedidoDeCompraRespository pedidoDeCompraRespository;
+
     @MockBean
     private FornecedorService fornecedorService;
     private Fornecedor fornecedor;
+
     @MockBean
     private ResponsavelService responsavelService;
     private Responsavel responsavel;
 
     private PedidoDeCompra pedidoDeCompra;
-    private FormaDePagamento formaDePagamento;
 
     @BeforeEach
     public void setUp() {
@@ -43,6 +43,7 @@ public class PedidoDeCompraServiceTest {
         this.pedidoDeCompra.setDataDePagamento(LocalDate.now());
         this.pedidoDeCompra.setDataLimiteEnvio(LocalDate.now());
         this.pedidoDeCompra.setFormaDePagamento(FormaDePagamento.BOLETO);
+        this.pedidoDeCompra.setDataDeVencimento(LocalDate.now());
 
         this.responsavel = new Responsavel();
         this.responsavel.setEmail("email@email.com");
@@ -50,7 +51,7 @@ public class PedidoDeCompraServiceTest {
 
         this.fornecedor = new Fornecedor();
         this.fornecedor.setCnpjOuCpf("084.215.150-80");
-        this.pedidoDeCompra.setFornecedor(fornecedor);
+        this.pedidoDeCompra.setFornecedor(this.fornecedor);
     }
 
     @Test

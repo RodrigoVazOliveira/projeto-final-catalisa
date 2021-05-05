@@ -53,8 +53,8 @@ public class ResponsavelControllerTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/responsaveis/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(entradaJson)
-        ).andExpect(MockMvcResultMatchers.status().isCreated())
+                .content(entradaJson))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(saidaJson));
     }
