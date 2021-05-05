@@ -75,4 +75,13 @@ public class FornecedorControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(respostaJson));
 
     }
+
+    @Test
+    public void ativarOuDesativarFornecedor() throws Exception {
+        String url = "/fornecedores/?cnpjoucpf=23.524.377/0001-45";
+        Mockito.doNothing().when(fornecedorService).ativarOuDesativarFornecedor(Mockito.anyString());
+
+        mockMvc.perform(MockMvcRequestBuilders.patch(url))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }

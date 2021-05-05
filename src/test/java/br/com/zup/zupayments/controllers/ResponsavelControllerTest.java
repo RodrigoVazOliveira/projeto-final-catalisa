@@ -30,7 +30,6 @@ public class ResponsavelControllerTest {
 
     @BeforeEach
     public void setup() {
-
         this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO();
         this.cadastrarResponsavelDTO.setEmail("email@email.com");
         this.cadastrarResponsavelDTO.setNomeCompleto("Zup da Silva");
@@ -42,8 +41,6 @@ public class ResponsavelControllerTest {
         this.responsavel.setNomeCompleto("Zup da Silva");
         this.responsavel.setNomeDoProjeto("Zupper");
         this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO();
-
-        this.responsavel = new Responsavel();
     }
 
     @Test
@@ -62,4 +59,14 @@ public class ResponsavelControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(saidaJson));
     }
+
+    @Test
+    public void ativarOuDesativarResponsavel() throws Exception {
+        String url = "/responsaveis/?email=rodrigo.vaz@zup.com.br";
+        Mockito.doNothing().when(responsavelService).ativarOuDesativarResponasvel(Mockito.anyString());
+
+        mockMvc.perform(MockMvcRequestBuilders.patch(url))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
 }
+

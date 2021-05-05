@@ -47,7 +47,7 @@ public class PedidoDeCompraService {
     public PedidoDeCompra cancelarPedidoDeCompra (Long id, PedidoDeCompra pedidoDeCompra){
         Optional<PedidoDeCompra> pedidoDeCompraOptional = pedidoDeCompraRespository.findById(id);
 
-        if (!pedidoDeCompraOptional.isPresent())
+        if (pedidoDeCompraOptional.isEmpty())
             throw new RuntimeException("Pedido de Compra não encontrado");
 
         pedidoDeCompra.setCancelado(true);

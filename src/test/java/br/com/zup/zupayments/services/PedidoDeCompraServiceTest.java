@@ -57,11 +57,12 @@ public class PedidoDeCompraServiceTest {
     @Test
     public void cadastroDePedidoDeCompraTest(){
         Mockito.when(pedidoDeCompraRespository.save(Mockito.any(PedidoDeCompra.class))).thenReturn(pedidoDeCompra);
-        PedidoDeCompra pedidoDeCompraTest = pedidoDeCompraService.cadastrarNovoPedidoDeCompra(pedidoDeCompra);
-        Assertions.assertEquals(pedidoDeCompraTest,pedidoDeCompra);
-
         Mockito.when(responsavelService.procurarResponsavelPorEmail(Mockito.any())).thenReturn(responsavel);
         Mockito.when(fornecedorService.pesquisarFornecedorPorCnpjOuCpf(Mockito.any())).thenReturn(fornecedor);
+
+        PedidoDeCompra pedidoDeCompraTest = pedidoDeCompraService.cadastrarNovoPedidoDeCompra(pedidoDeCompra);
+
+        Assertions.assertEquals(pedidoDeCompraTest,pedidoDeCompra);
     }
 
     @Test
