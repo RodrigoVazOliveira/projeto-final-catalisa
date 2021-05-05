@@ -43,12 +43,4 @@ public class FornecedorService {
 
         return fornecedor;
     }
-
-    public void deletarFornecedor(String id) {
-        try {
-            fornecedorRepository.deleteById(id);
-        } catch (Exception error) {
-            throw new RuntimeException("Fornecedor não encontrado");
-        }
-    }
 }
