@@ -30,7 +30,6 @@ public class ResponsavelControllerTest {
 
     @BeforeEach
     public void setup() {
-
         this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO();
         this.cadastrarResponsavelDTO.setEmail("email@email.com");
         this.cadastrarResponsavelDTO.setNomeCompleto("Zup da Silva");
@@ -42,8 +41,6 @@ public class ResponsavelControllerTest {
         this.responsavel.setNomeCompleto("Zup da Silva");
         this.responsavel.setNomeDoProjeto("Zupper");
         this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO();
-
-        this.responsavel = new Responsavel();
     }
 
     @Test
