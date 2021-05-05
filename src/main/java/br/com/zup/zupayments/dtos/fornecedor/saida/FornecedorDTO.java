@@ -2,8 +2,11 @@ package br.com.zup.zupayments.dtos.fornecedor.saida;
 
 import br.com.zup.zupayments.enums.CategoriaDeCusto;
 import br.com.zup.zupayments.models.Fornecedor;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 public class FornecedorDTO {
+
 
     private String CnpjOuCpf;
 

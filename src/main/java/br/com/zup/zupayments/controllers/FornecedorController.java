@@ -33,10 +33,4 @@ public class FornecedorController {
         Fornecedor objFornecedor = fornecedorService.atualizarCadastroFornecedor(id, fornecedor);
         return objFornecedor;
     }
-
-    @DeleteMapping("{id}/")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarFornecedor(@PathVariable String id){
-        fornecedorService.deletarFornecedor(id);
-    }
 }

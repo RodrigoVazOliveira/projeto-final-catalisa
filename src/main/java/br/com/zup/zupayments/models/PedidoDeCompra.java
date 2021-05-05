@@ -1,7 +1,6 @@
 package br.com.zup.zupayments.models;
 
 import br.com.zup.zupayments.enums.FormaDePagamento;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
