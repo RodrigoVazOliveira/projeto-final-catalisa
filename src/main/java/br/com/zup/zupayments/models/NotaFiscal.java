@@ -29,6 +29,8 @@ public class NotaFiscal {
     @ManyToOne
     private Responsavel responsavel;
 
+    private Boolean cancelar;
+
     public NotaFiscal() {
     }
 
@@ -94,5 +96,13 @@ public class NotaFiscal {
 
     public void setResponsavel(Responsavel responsavel) {
         this.responsavel = responsavel;
+    }
+
+    public Boolean getCancelar() {
+        return cancelar;
+    }
+
+    public void setCancelar(Boolean cancelar) {
+        this.cancelar = cancelar;
     }
 }

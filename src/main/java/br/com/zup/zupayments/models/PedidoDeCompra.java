@@ -28,6 +28,8 @@ public class PedidoDeCompra {
     @ManyToOne
     private Fornecedor fornecedor;
 
+    private Boolean cancelado;
+
     public PedidoDeCompra() {
     }
 
@@ -93,5 +95,13 @@ public class PedidoDeCompra {
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
+    }
+
+    public Boolean getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(Boolean cancelado) {
+        this.cancelado = cancelado;
     }
 }
