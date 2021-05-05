@@ -30,18 +30,16 @@ public class ResponsavelControllerTest {
 
     @BeforeEach
     public void setup() {
-        this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO(
-                "claudio.silva.neto@zup.com.br",
-            "Claúdio da Silva Neto",
-            "FACILITIES"
-        );
+        this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO();
+        this.cadastrarResponsavelDTO.setEmail("email@email.com");
+        this.cadastrarResponsavelDTO.setNomeCompleto("Zup da Silva");
+        this.cadastrarResponsavelDTO.setNomeDoProjeto("Zupper");
 
-        this.responsavel = new Responsavel(
-                "claudio.silva.neto@zup.com.br",
-                "Claúdio da Silva Neto",
-                "FACILITIES",
-                true
-        );
+        this.responsavel = new Responsavel();
+        this.responsavel.setAtivo(true);
+        this.responsavel.setEmail("email@email.com");
+        this.responsavel.setNomeCompleto("Zup da Silva");
+        this.responsavel.setNomeDoProjeto("Zupper");
     }
 
     @Test
