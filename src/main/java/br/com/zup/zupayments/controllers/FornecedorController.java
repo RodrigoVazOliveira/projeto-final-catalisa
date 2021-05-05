@@ -16,7 +16,7 @@ public class FornecedorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Fornecedor cadastroFornecedor(@RequestBody CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
+    public Fornecedor cadastrarFornecedor(@RequestBody CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
         return fornecedorService.cadastrarFornecedor(
                 cadastroDeFornecedorDTO.converterDtoParaModelo()
         );
