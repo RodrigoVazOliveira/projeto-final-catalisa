@@ -42,5 +42,15 @@ public class NotaFiscalService {
         }
     }
 
-    
+    private List<PedidoDeCompra> gerarListaDePedidoDeCompraParaCadastrar(List<PedidoDeCompra> pedidoDeCompras) {
+        List<PedidoDeCompra> listaDePedidoDeCompraParaCadastrar = new ArrayList<>();
+
+        for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
+            listaDePedidoDeCompraParaCadastrar.add(
+                    pedidoDeCompraService.procurarPedidoDeCompraPeloNumeroDePedido(pedidoDeCompra.getNumeroDePedido())
+            );
+        }
+
+        return listaDePedidoDeCompraParaCadastrar;
+    }
 }
