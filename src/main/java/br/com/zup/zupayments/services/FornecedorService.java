@@ -43,4 +43,10 @@ public class FornecedorService {
 
         return fornecedor;
     }
+
+    public void ativarOuDesativarFornecedor(String cnpjOuCpf) {
+        Fornecedor fornecedor = pesquisarFornecedorPorCnpjOuCpf(cnpjOuCpf);
+        fornecedor.setAtivo(!fornecedor.getAtivo());
+        fornecedorRepository.save(fornecedor);
+    }
 }
