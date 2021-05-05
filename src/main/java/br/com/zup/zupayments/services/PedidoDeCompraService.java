@@ -5,6 +5,8 @@ import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PedidoDeCompraService {
 
@@ -31,5 +33,15 @@ public class PedidoDeCompraService {
 
     public Iterable<PedidoDeCompra> obterTodosOsPedidoDeCompra() {
         return pedidoDeCompraRespository.findAll();
+    }
+
+    public PedidoDeCompra procurarPedidoDeCompraPeloNumeroDePedido(Long numeroPedidoDeCompra) {
+        Optional<PedidoDeCompra> optionalPedidoDeCompra = pedidoDeCompraRespository.findById(numeroPedidoDeCompra);
+
+        if (optionalPedidoDeCompra.isEmpty()) {
+            throw new RuntimeException("Não existe pedido de compra com o número " + numeroPedidoDeCompra);
+        }
+
+        return optionalPedidoDeCompra.get();
     }
 }
