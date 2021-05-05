@@ -33,4 +33,10 @@ public class FornecedorController {
         Fornecedor objFornecedor = fornecedorService.atualizarCadastroFornecedor(id, fornecedor);
         return objFornecedor;
     }
+
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ativarOuDesativarFornecedorPeloCnpjOuCpf(@RequestParam(name = "cnpjoucpf") String cnpjOuCpf) {
+        fornecedorService.ativarOuDesativarFornecedor(cnpjOuCpf);
+    }
 }
