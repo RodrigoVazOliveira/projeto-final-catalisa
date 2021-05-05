@@ -30,18 +30,16 @@ public class ResponsavelControllerTest {
 
     @BeforeEach
     public void setup() {
-        this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO(
-                "claudio.silva.neto@zup.com.br",
-            "Claúdio da Silva Neto",
-            "FACILITIES"
-        );
+        this.cadastrarResponsavelDTO = new CadastrarResponsavelDTO();
+        this.cadastrarResponsavelDTO.setEmail("email@email.com");
+        this.cadastrarResponsavelDTO.setNomeCompleto("Zup da Silva");
+        this.cadastrarResponsavelDTO.setNomeDoProjeto("Zupper");
 
-        this.responsavel = new Responsavel(
-                "claudio.silva.neto@zup.com.br",
-                "Claúdio da Silva Neto",
-                "FACILITIES",
-                true
-        );
+        this.responsavel = new Responsavel();
+        this.responsavel.setAtivo(true);
+        this.responsavel.setEmail("email@email.com");
+        this.responsavel.setNomeCompleto("Zup da Silva");
+        this.responsavel.setNomeDoProjeto("Zupper");
     }
 
     @Test
@@ -55,8 +53,8 @@ public class ResponsavelControllerTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/responsaveis/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(entradaJson)
-        ).andExpect(MockMvcResultMatchers.status().isCreated())
+                .content(entradaJson))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(saidaJson));
     }
