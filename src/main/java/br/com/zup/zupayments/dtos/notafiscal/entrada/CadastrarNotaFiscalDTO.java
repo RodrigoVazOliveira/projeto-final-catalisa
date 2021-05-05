@@ -1,8 +1,13 @@
 package br.com.zup.zupayments.dtos.notafiscal.entrada;
 
+import br.com.zup.zupayments.models.Fornecedor;
+import br.com.zup.zupayments.models.NotaFiscal;
+import br.com.zup.zupayments.models.PedidoDeCompra;
+import br.com.zup.zupayments.models.Responsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CadastrarNotaFiscalDTO {
@@ -76,5 +81,38 @@ public class CadastrarNotaFiscalDTO {
 
     public void setEmailDoResponsavel(String emailDoResponsavel) {
         this.emailDoResponsavel = emailDoResponsavel;
+    }
+
+    public NotaFiscal converterDtoParaModelo() {
+        NotaFiscal notaFiscal = new NotaFiscal();
+        notaFiscal.setNumeroDaNota(this.numeroDaNota);
+
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setCnpjOuCpf(this.cnpjOuCpfFornecedor);
+
+        notaFiscal.setFornecedor(fornecedor);
+        notaFiscal.setValorAPagar(this.valorAPagar);
+        notaFiscal.setDataDeEmissao(this.dataDeEmissao);
+        notaFiscal.setPedidoDeCompra(gerarListaDePedidoDeCompraParaModelo());
+        notaFiscal.setDataDeEnvio(this.dataDeEnvio);
+
+        Responsavel responsavel = new Responsavel();
+        responsavel.setEmail(this.emailDoResponsavel);
+        notaFiscal.setResponsavel(responsavel);
+        notaFiscal.setCancelar(false);
+
+        return notaFiscal;
+    }
+
+    private List<PedidoDeCompra> gerarListaDePedidoDeCompraParaModelo() {
+        List<PedidoDeCompra> pedidos = new ArrayList<>();
+
+        for (Long numeroPedido : this.pedidoDeCompra) {
+            PedidoDeCompra pedido = new PedidoDeCompra();
+            pedido.setNumeroDePedido(numeroPedido);
+            pedidos.add(pedido);
+        }
+
+        return pedidos;
     }
 }
