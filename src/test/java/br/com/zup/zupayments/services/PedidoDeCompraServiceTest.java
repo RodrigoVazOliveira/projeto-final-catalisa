@@ -75,4 +75,16 @@ public class PedidoDeCompraServiceTest {
             throw new RuntimeException("");
         });
     }
+    @Test
+    public void testarCancelamentoDePedidoDeCompra() {
+        Optional<PedidoDeCompra> optionalPedidoDeCompra = Optional.of(pedidoDeCompra);
+
+        Mockito.when(pedidoDeCompraRespository.findById(Mockito.anyLong())).thenReturn(optionalPedidoDeCompra);
+        Mockito.when(pedidoDeCompraRespository.save(Mockito.any(PedidoDeCompra.class))).thenReturn(pedidoDeCompra);
+
+        PedidoDeCompra test = pedidoDeCompraService.cancelarPedidoDeCompra(1l, pedidoDeCompra);
+
+        Assertions.assertEquals(test, pedidoDeCompra);
+    }
+
 }
