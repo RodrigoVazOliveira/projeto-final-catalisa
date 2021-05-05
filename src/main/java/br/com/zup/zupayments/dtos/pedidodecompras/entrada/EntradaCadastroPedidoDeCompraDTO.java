@@ -92,7 +92,7 @@ public class EntradaCadastroPedidoDeCompraDTO {
         pedidoDeCompra.setDataLimiteEnvio(this.dataLimiteEnvio);
         pedidoDeCompra.setFormaDePagamento(this.formaDePagamento);
         pedidoDeCompra.setFornecedor(fornecedor);
-
+        pedidoDeCompra.setCancelado(false);
         return pedidoDeCompra;
     }
 }
