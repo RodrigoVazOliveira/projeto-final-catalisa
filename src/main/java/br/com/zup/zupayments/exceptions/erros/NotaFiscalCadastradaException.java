@@ -1,12 +1,12 @@
 package br.com.zup.zupayments.exceptions.erros;
 
-public class NotaFiscalException extends RuntimeException {
+public class NotaFiscalCadastradaException extends RuntimeException {
 
     private Integer status = 400;
-    private String tipoDeErro = "Nota fiscal não cadastrada";
+    private String tipoDeErro = "Nota fiscal já cadastrada";
     private String motivo = "BAD REQUEST";
 
-    public NotaFiscalException(String message) {
+    public NotaFiscalCadastradaException(String message) {
         super(message);
     }
 

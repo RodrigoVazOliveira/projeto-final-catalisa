@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.services;
 
+import br.com.zup.zupayments.exceptions.erros.NotaFiscalCadastradaException;
 import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.repositories.NotaFiscalRepository;
@@ -38,7 +39,7 @@ public class NotaFiscalService {
             NotaFiscal objFiscal = notaFiscalRepository.save(fiscal);
             return objFiscal;
         }catch (Exception error){
-            throw new RuntimeException("Nota fiscal já cadastrada");
+            throw new NotaFiscalCadastradaException("");
         }
     }
 
