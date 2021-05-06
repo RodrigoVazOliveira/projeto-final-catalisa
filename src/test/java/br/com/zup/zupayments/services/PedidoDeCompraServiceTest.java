@@ -83,9 +83,10 @@ public class PedidoDeCompraServiceTest {
         Mockito.when(pedidoDeCompraRespository.findById(Mockito.anyLong())).thenReturn(optionalPedidoDeCompra);
         Mockito.when(pedidoDeCompraRespository.save(Mockito.any(PedidoDeCompra.class))).thenReturn(pedidoDeCompra);
 
-        PedidoDeCompra test = pedidoDeCompraService.cancelarPedidoDeCompra(1l, pedidoDeCompra);
+        pedidoDeCompraService.cancelarPedidoDeCompra(1L);
 
-        Assertions.assertEquals(test, pedidoDeCompra);
+        Mockito.verify(pedidoDeCompraRespository, Mockito.times(1)).save(pedidoDeCompra);
+
     }
 
 }
