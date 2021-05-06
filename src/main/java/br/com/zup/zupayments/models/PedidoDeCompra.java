@@ -12,22 +12,28 @@ public class PedidoDeCompra {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numeroDePedido;
 
+    @Column(nullable = false)
     private LocalDate dataDeVencimento;
 
+    @Column(nullable = false)
     private Double valorAproximado;
 
+    @Column(nullable = false)
     private LocalDate dataDePagamento;
 
     @ManyToOne
     private Responsavel responsavel;
 
+    @Column(nullable = false)
     private LocalDate dataLimiteEnvio;
 
+    @Column(nullable = false)
     private FormaDePagamento formaDePagamento;
 
     @ManyToOne
     private Fornecedor fornecedor;
 
+    @Column(nullable = false)
     private Boolean cancelado;
 
     public PedidoDeCompra() {
