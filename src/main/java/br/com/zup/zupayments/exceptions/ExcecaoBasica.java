@@ -1,11 +1,11 @@
 package br.com.zup.zupayments.exceptions;
 
-public class ExcessaoBasica extends RuntimeException{
+public class ExcecaoBasica extends RuntimeException{
     private int status;
     private String campo;
     private String motivo;
 
-    public ExcessaoBasica(String message, int status, String campo, String motivo) {
+    public ExcecaoBasica(String message, int status, String campo, String motivo) {
         super(message);
         this.status = status;
         this.campo = campo;

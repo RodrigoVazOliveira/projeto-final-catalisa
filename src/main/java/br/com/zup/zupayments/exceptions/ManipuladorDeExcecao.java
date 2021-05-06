@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ManipuladorDeExcessao extends ResponseEntityExceptionHandler {
+public class ManipuladorDeExcecao extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
@@ -40,9 +40,9 @@ public class ManipuladorDeExcessao extends ResponseEntityExceptionHandler {
         return objetosDeErro;
     }
 
-    @ExceptionHandler({ExcessaoBasica.class})
+    @ExceptionHandler({ExcecaoBasica.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public RespostaDeErro manipularRuntimeException(ExcessaoBasica erro){
+    public RespostaDeErro manipularRuntimeException(ExcecaoBasica erro){
         ObjetoDeErro objetoDeErro = new ObjetoDeErro(erro.getMessage(), erro.getCampo());
         RespostaDeErro respostaDeErro = new RespostaDeErro(erro.getMessage(), erro.getStatus(),
                 erro.getMotivo(),   Arrays.asList(objetoDeErro));
