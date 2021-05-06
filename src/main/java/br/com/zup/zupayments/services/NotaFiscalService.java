@@ -5,9 +5,9 @@ import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.repositories.NotaFiscalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotaFiscalService {
@@ -52,5 +52,22 @@ public class NotaFiscalService {
         }
 
         return listaDePedidoDeCompraParaCadastrar;
+    }
+
+    public NotaFiscal pesquisarNF(Long id){
+        Optional<NotaFiscal> optionalNotaFiscal =notaFiscalRepository.findById(id);
+
+        if (optionalNotaFiscal.isEmpty()){
+            throw new RuntimeException("Não existe o id solicitado");
+        }
+        return optionalNotaFiscal.get();
+    }
+
+    public NotaFiscal cancelarNF(Long id){
+        NotaFiscal objNotaFiscal = pesquisarNF(id);
+
+        objNotaFiscal.setCancelar(!objNotaFiscal.getCancelar());
+        notaFiscalRepository.save(objNotaFiscal);
+        return objNotaFiscal;
     }
 }
