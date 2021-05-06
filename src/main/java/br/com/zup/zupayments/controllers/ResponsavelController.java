@@ -32,7 +32,7 @@ public class ResponsavelController {
         responsavelService.ativarOuDesativarResponsavel(emailResponsavel);
     }
 
-    @GetMapping("{email/}")
+    @GetMapping("{email}/")
     public Optional<Responsavel> buscarResponsavelPorEmail (@RequestParam(name = "email") String emailResponsavel){
         Optional<Responsavel> optionalResponsavel = responsavelRepository.findById(emailResponsavel);
         responsavelService.procurarResponsavelPorEmail(emailResponsavel);
