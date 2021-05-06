@@ -14,7 +14,7 @@ public class FornecedorDTO {
 
     private String logradouro;
 
-    private Integer numero;
+    private String numero;
 
     private CategoriaDeCusto categoriaDeCusto;
 
@@ -45,11 +45,11 @@ public class FornecedorDTO {
         this.logradouro = logradouro;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
