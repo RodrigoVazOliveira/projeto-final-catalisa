@@ -6,6 +6,7 @@ import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class CadastrarNotaFiscalDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeEnvio;
+
+    @Email(message = "{validacao.email_invalido}")
     private String emailDoResponsavel;
 
     public CadastrarNotaFiscalDTO() {
