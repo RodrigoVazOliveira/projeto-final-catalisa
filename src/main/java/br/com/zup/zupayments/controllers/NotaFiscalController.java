@@ -20,9 +20,10 @@ public class NotaFiscalController {
         return notaFiscalService.cadastrarNotaFiscal(cadastrarNotaFiscalDTO.converterDtoParaModelo());
     }
 
-    @PutMapping("{id}/")
-    public NotaFiscal cancelamentoDeNotaFiscal(@PathVariable Long id, @RequestBody NotaFiscal notaFiscal){
-        NotaFiscal objNotaFiscal = notaFiscalService.cancelarNF(id, notaFiscal);
+    @PatchMapping("{id}/")
+    @ResponseStatus(HttpStatus.OK)
+    public NotaFiscal cancelamentoDeNotaFiscal(@PathVariable Long id){
+        NotaFiscal objNotaFiscal = notaFiscalService.cancelarNF(id);
         return objNotaFiscal;
     }
 }
