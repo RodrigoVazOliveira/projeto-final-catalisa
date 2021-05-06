@@ -58,4 +58,7 @@ public class PedidoDeCompraService {
 
     }
 
+    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelInativo() {
+        return pedidoDeCompraRespository.findAllByResponsavelAtivo(false);
+    }
 }
