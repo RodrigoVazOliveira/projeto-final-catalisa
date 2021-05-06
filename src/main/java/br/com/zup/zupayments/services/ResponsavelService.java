@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.services;
 
+import br.com.zup.zupayments.exceptions.erros.ResponsavelJaCadastradoException;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.ResponsavelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class ResponsavelService {
             Responsavel objResponsavel = responsavelRepository.save(responsavel);
             return objResponsavel;
         }catch (Exception error){
-            throw new RuntimeException("Responsável já cadastrado");
+            throw new ResponsavelJaCadastradoException();
         }
     }
 
