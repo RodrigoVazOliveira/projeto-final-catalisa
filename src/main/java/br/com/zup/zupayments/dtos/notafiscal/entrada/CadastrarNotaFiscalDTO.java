@@ -16,11 +16,11 @@ public class CadastrarNotaFiscalDTO {
     private String cnpjOuCpfFornecedor;
     private Double valorAPagar;
 
-    @JsonFormat(pattern = "dd/mm/YYYY")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeEmissao;
-    private List<Long> pedidoDeCompra;
+    private List<Long> pedidoDeCompras;
 
-    @JsonFormat(pattern = "dd/mm/YYYY")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeEnvio;
     private String emailDoResponsavel;
 
@@ -59,12 +59,12 @@ public class CadastrarNotaFiscalDTO {
         this.dataDeEmissao = dataDeEmissao;
     }
 
-    public List<Long> getPedidoDeCompra() {
-        return pedidoDeCompra;
+    public List<Long> getPedidoDeCompras() {
+        return pedidoDeCompras;
     }
 
-    public void setPedidoDeCompra(List<Long> pedidoDeCompra) {
-        this.pedidoDeCompra = pedidoDeCompra;
+    public void setPedidoDeCompras(List<Long> pedidoDeCompras) {
+        this.pedidoDeCompras = pedidoDeCompras;
     }
 
     public LocalDate getDataDeEnvio() {
@@ -107,7 +107,7 @@ public class CadastrarNotaFiscalDTO {
     private List<PedidoDeCompra> gerarListaDePedidoDeCompraParaModelo() {
         List<PedidoDeCompra> pedidos = new ArrayList<>();
 
-        for (Long numeroPedido : this.pedidoDeCompra) {
+        for (Long numeroPedido : this.pedidoDeCompras) {
             PedidoDeCompra pedido = new PedidoDeCompra();
             pedido.setNumeroDePedido(numeroPedido);
             pedidos.add(pedido);

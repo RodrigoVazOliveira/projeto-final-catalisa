@@ -37,8 +37,7 @@ public class NotaFiscalService {
             fiscal.setPedidoDeCompra(
                     gerarListaDePedidoDeCompraParaCadastrar(fiscal.getPedidoDeCompra())
             );
-            NotaFiscal objFiscal = notaFiscalRepository.save(fiscal);
-            return objFiscal;
+            return notaFiscalRepository.save(fiscal);
         }catch (Exception error){
             throw new NotaFiscalCadastradaException("Nota fiscal já cadastrada");
         }
