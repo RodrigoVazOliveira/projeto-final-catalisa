@@ -9,7 +9,6 @@ import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.services.FornecedorService;
 import br.com.zup.zupayments.services.PedidoDeCompraService;
 import br.com.zup.zupayments.services.ResponsavelService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -66,7 +66,6 @@ public class PedidoDeCompraControllerTest {
 
     @Test
     public void testarCadastroPedidoDeCompra() throws Exception{
-        ObjectMapper objectMapper = new ObjectMapper();
         String cadastroJson = "{\"dataDeVencimento\":\"01/06/2021\",\"valorAproximado\":2.0,\"dataDePagamento\":\"05/05/2021\",\"emailResponsavel\":\"email@email.com\",\"dataLimiteEnvio\":\"01/06/2021\",\"formaDePagamento\":\"BOLETO\",\"cnpjOuCpf\":\"084.215.150-80\"}";
         String receberJson = "{\"numeroDePedido\":1,\"dataDeVencimento\":\"01/06/2021\",\"valorAproximado\":2.0,\"dataDePagamento\":\"05/05/2021\",\"responsavel\":{\"email\":\"email@email.com\",\"nomeCompleto\":null,\"nomeDoProjeto\":null,\"ativo\":null},\"dataLimiteEnvio\":\"01/06/2021\",\"formaDePagamento\":\"BOLETO\",\"fornecedor\":{\"cnpjOuCpf\":\"084.215.150-80\",\"razaoSocial\":null}}";
         Mockito.when(pedidoDeCompraService.cadastrarNovoPedidoDeCompra(Mockito.any())).thenReturn(pedidoDeCompra);
