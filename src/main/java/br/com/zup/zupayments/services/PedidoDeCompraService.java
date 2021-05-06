@@ -1,6 +1,6 @@
 package br.com.zup.zupayments.services;
 
-import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraNaoCadastradoException;
+import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraNaoExisteException;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class PedidoDeCompraService {
         Optional<PedidoDeCompra> optionalPedidoDeCompra = pedidoDeCompraRespository.findById(numeroPedidoDeCompra);
 
         if (optionalPedidoDeCompra.isEmpty()) {
-            throw new RuntimeException("Não existe pedido de compra com o número " + numeroPedidoDeCompra);
+            throw new PedidoDeCompraNaoExisteException("" + numeroPedidoDeCompra);
         }
 
         return optionalPedidoDeCompra.get();
@@ -49,7 +49,7 @@ public class PedidoDeCompraService {
         Optional<PedidoDeCompra> pedidoDeCompraOptional = pedidoDeCompraRespository.findById(id);
 
         if (pedidoDeCompraOptional.isEmpty())
-            throw new PedidoDeCompraNaoCadastradoException();
+            throw new PedidoDeCompraNaoExisteException();
 
         pedidoDeCompra.setCancelado(true);
         pedidoDeCompraRespository.save(pedidoDeCompra);
