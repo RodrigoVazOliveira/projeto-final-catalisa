@@ -57,7 +57,7 @@ public class NotaFiscalServiceTest {
         fornecedor.setEmail("ceo@umaempresa.com");
         fornecedor.setCnpjOuCpf("12.234.543/8765-56");
         fornecedor.setLogradouro("Rua da empresa");
-        fornecedor.setNumero(272);
+        fornecedor.setNumero("272");
         fornecedor.setCep("12122976");
         fornecedor.setBairro("Bairro da empresa");
         fornecedor.setEstado("Estado da empresa");

@@ -12,6 +12,7 @@ public class NotaFiscal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long numeroDaNota;
 
     @ManyToOne
