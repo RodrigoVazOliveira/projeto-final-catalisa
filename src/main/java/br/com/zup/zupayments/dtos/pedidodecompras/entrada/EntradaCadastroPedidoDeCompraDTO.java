@@ -6,6 +6,7 @@ import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.Email;
 import java.time.LocalDate;
 
 public class EntradaCadastroPedidoDeCompraDTO {
@@ -16,6 +17,8 @@ public class EntradaCadastroPedidoDeCompraDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
+
+    @Email(message = "{validacao.email_invalido}")
     private String emailResponsavel;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

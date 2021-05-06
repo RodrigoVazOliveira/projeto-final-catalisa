@@ -5,6 +5,7 @@ import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class SaidaCadastroPedidoDeCompraDTO {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
+
+    @NotBlank(message = "{validacao.nome_completo}")
     private Responsavel responsavel;
 
     @JsonFormat(pattern = "dd/MM/yyyy")

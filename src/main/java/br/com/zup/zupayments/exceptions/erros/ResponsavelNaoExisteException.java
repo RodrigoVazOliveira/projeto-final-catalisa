@@ -1,6 +1,5 @@
 package br.com.zup.zupayments.exceptions.erros;
 
-<<<<<<< HEAD
 import br.com.zup.zupayments.exceptions.ExcecaoBasica;
 
 public class ResponsavelNaoExisteException extends ExcecaoBasica {

@@ -7,10 +7,10 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public class CadastroDeFornecedorDTO {
 
-    @CPF(message = "O CPF informado é inválido")
+    @CPF(message = "{validacao.cpf_invalido}")
     private String cpf;
 
-    @CNPJ(message = "O CNPJ informado é invalido")
+    @CNPJ(message = "{validacao.cnpj_invalido}")
     private String cnpj;
 
     private String razaoSocial;

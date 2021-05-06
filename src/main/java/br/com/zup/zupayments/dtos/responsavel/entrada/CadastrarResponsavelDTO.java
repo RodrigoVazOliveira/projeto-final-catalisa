@@ -2,9 +2,15 @@ package br.com.zup.zupayments.dtos.responsavel.entrada;
 
 import br.com.zup.zupayments.models.Responsavel;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 public class CadastrarResponsavelDTO {
 
+    @Email(message = "{validacao.email_invalido}")
     private String email;
+
+    @NotBlank(message = "{validacao.nome_completo}")
     private String nomeCompleto;
     private String nomeDoProjeto;
 
