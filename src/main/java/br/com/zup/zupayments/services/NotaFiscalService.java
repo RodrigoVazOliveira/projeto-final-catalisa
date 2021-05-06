@@ -56,8 +56,8 @@ public class NotaFiscalService {
         return listaDePedidoDeCompraParaCadastrar;
     }
 
-    public NotaFiscal pesquisarNF(Long id){
-        Optional<NotaFiscal> optionalNotaFiscal =notaFiscalRepository.findById(id);
+    public NotaFiscal pesquisarNotaFiscalPeloId(Long id){
+        Optional<NotaFiscal> optionalNotaFiscal = notaFiscalRepository.findById(id);
 
         if (optionalNotaFiscal.isEmpty()){
             throw new NotaFiscalNaoCadastradaException("Nota fiscal não esta cadastrada");
@@ -66,10 +66,8 @@ public class NotaFiscalService {
     }
 
     public NotaFiscal cancelarNF(Long id){
-        NotaFiscal objNotaFiscal = pesquisarNF(id);
-
-        objNotaFiscal.setCancelar(!objNotaFiscal.getCancelar());
-        notaFiscalRepository.save(objNotaFiscal);
-        return objNotaFiscal;
+        NotaFiscal notaFiscalAtual = pesquisarNotaFiscalPeloId(id);
+        notaFiscalAtual.setCancelar(!notaFiscalAtual.getCancelar());
+        return notaFiscalRepository.save(notaFiscalAtual);
     }
 }
