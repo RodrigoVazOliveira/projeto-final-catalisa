@@ -15,9 +15,10 @@ public class Responsavel {
     @Column(length = 100, nullable = false)
     private String nomeCompleto;
 
-    @Column(length = 70)
+    @Column(length = 70, nullable = false)
     private String nomeDoProjeto;
 
+    @Column(nullable = false)
     private Boolean ativo;
 
     public Responsavel() {
