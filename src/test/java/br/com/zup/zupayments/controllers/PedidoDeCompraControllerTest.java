@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebMvcTest(PedidoDeCompraController.class)
 public class PedidoDeCompraControllerTest {
@@ -43,6 +45,7 @@ public class PedidoDeCompraControllerTest {
     private PedidoDeCompra pedidoDeCompra;
     private EntradaCadastroPedidoDeCompraDTO entradaCadastroPedidoDeCompraDTO;
     private SaidaCadastroPedidoDeCompraDTO saidaCadastroPedidoDeCompraDTO;
+    private List<PedidoDeCompra> pedidoDeCompras;
 
     @BeforeEach
     public void setUp(){
@@ -62,6 +65,33 @@ public class PedidoDeCompraControllerTest {
         this.pedidoDeCompra.setNumeroDePedido(1L);
 
         this.saidaCadastroPedidoDeCompraDTO = SaidaCadastroPedidoDeCompraDTO.converterModeloParaDto(this.pedidoDeCompra);
+
+        this.pedidoDeCompras = new ArrayList<>();
+
+        for (Long i = 0L; i < 10; i++) {
+            pedidoDeCompras.add(criarNovoPedido(i));
+        }
+    }
+
+    private PedidoDeCompra criarNovoPedido(Long numeroDePedido) {
+        PedidoDeCompra pedido = new PedidoDeCompra();
+        pedido.setNumeroDePedido(31L);
+        pedido.setDataDePagamento(LocalDate.now());
+        pedido.setValorAproximado(2.000);
+        pedido.setDataDePagamento(LocalDate.now());
+        pedido.setDataLimiteEnvio(LocalDate.now());
+        pedido.setFormaDePagamento(FormaDePagamento.BOLETO);
+        pedido.setDataDeVencimento(LocalDate.now());
+
+        Responsavel responsavelTestLista = new Responsavel();
+        responsavelTestLista.setEmail("email@email.com");
+        pedido.setResponsavel(this.responsavel);
+
+        Fornecedor fornecedorTest = new Fornecedor();
+        fornecedorTest.setCnpjOuCpf("084.215.150-80");
+        pedido.setFornecedor(this.fornecedor);
+
+        return pedido;
     }
 
     @Test
@@ -76,4 +106,6 @@ public class PedidoDeCompraControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(receberJson));
     }
+
+    
 }
