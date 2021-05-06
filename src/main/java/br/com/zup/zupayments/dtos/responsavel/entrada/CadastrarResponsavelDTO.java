@@ -38,6 +38,7 @@ public class CadastrarResponsavelDTO {
     public Responsavel converterDtoParaModelo() {
         Responsavel responsavel = new Responsavel();
         responsavel.setNomeCompleto(this.nomeCompleto);
+        responsavel.setNomeDoProjeto(this.nomeDoProjeto);
         responsavel.setEmail(this.email);
         responsavel.setAtivo(true);
         return responsavel;
