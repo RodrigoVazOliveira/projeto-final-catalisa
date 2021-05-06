@@ -18,7 +18,7 @@ public class FornecedorService {
         try {
             return fornecedorRepository.save(fornecedor);
         } catch (Exception error) {
-            throw new FornecedorCadastradoException("");
+            throw new FornecedorCadastradoException("Fornecedor já cadastrado");
         }
     }
 
@@ -29,7 +29,7 @@ public class FornecedorService {
             return optionalFornecedor.get();
         }
 
-        throw new FornecedorNaoCadastrado("");
+        throw new FornecedorNaoCadastrado("Fornecedor não foi cadastrado");
     }
 
     public Fornecedor atualizarCadastroFornecedor (String id, Fornecedor fornecedor){
@@ -37,7 +37,7 @@ public class FornecedorService {
         Optional<Fornecedor> fornecedorOptional = fornecedorRepository.findById(id);
 
         if (!fornecedorOptional.isPresent())
-            throw new FornecedorNaoCadastrado("");
+            throw new FornecedorNaoCadastrado("Fornecedor não foi cadastrado");
 
         fornecedor.setCnpjOuCpf(id);
         fornecedorRepository.save(fornecedor);
