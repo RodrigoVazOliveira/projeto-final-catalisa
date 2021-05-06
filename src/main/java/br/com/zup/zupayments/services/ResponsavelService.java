@@ -20,7 +20,7 @@ public class ResponsavelService {
             Responsavel objResponsavel = responsavelRepository.save(responsavel);
             return objResponsavel;
         }catch (Exception error){
-            throw new ResponsavelJaCadastradoException();
+            throw new ResponsavelJaCadastradoException("Responsável já cadastrado");
         }
     }
 
@@ -28,7 +28,7 @@ public class ResponsavelService {
         Optional<Responsavel> optionalResponsavel = responsavelRepository.findById(email);
 
         if (optionalResponsavel.isEmpty()) {
-            throw new RuntimeException();
+            throw new ResponsavelNaoExisteException("Responsável não cadastrado");
         }
 
         return optionalResponsavel.get();
