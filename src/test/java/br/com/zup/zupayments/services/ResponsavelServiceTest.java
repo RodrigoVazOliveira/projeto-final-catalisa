@@ -51,7 +51,7 @@ public class ResponsavelServiceTest {
         Optional<Responsavel> optionalResponsavel = Optional.of(responsavel);
         Mockito.when(responsavelRepository.findById(Mockito.anyString())).thenReturn(optionalResponsavel);
         Mockito.when(responsavelRepository.save(Mockito.any(Responsavel.class))).thenReturn(responsavel);
-        responsavelService.ativarOuDesativarResponasvel("responsavel@zup.com.br");
+        responsavelService.ativarOuDesativarResponsavel("responsavel@zup.com.br");
         Mockito.verify(responsavelRepository, Mockito.times(1)).save(Mockito.any(Responsavel.class));
     }
 }

@@ -63,7 +63,7 @@ public class ResponsavelControllerTest {
     @Test
     public void ativarOuDesativarResponsavel() throws Exception {
         String url = "/responsaveis/?email=rodrigo.vaz@zup.com.br";
-        Mockito.doNothing().when(responsavelService).ativarOuDesativarResponasvel(Mockito.anyString());
+        Mockito.doNothing().when(responsavelService).ativarOuDesativarResponsavel(Mockito.anyString());
 
         mockMvc.perform(MockMvcRequestBuilders.patch(url))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
