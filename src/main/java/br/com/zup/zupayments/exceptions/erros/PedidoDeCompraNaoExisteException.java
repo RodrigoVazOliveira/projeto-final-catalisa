@@ -1,14 +1,14 @@
 package br.com.zup.zupayments.exceptions.erros;
 
-public class PedidoDeCompraNaoCadastradoException extends RuntimeException{
+public class PedidoDeCompraNaoExisteException extends RuntimeException{
     private Integer status = 400;
     private String tipoDeErro = "Pedido não cadastrado";
     private String motivo = "BAD REQUEST";
 
-    public PedidoDeCompraNaoCadastradoException(){
+    public PedidoDeCompraNaoExisteException(){
     }
 
-    public PedidoDeCompraNaoCadastradoException(String message){super(message);}
+    public PedidoDeCompraNaoExisteException(String message){super(message);}
 
     public Integer getStatus() {
         return status;
