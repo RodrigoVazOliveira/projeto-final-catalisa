@@ -13,7 +13,7 @@ public class Fornecedor {
     @Id
     private String CnpjOuCpf;
 
-    private String RazaoSocial;
+    private String razaoSocial;
 
     private String logradouro;
 
@@ -47,11 +47,11 @@ public class Fornecedor {
     }
 
     public String getRazaoSocial() {
-        return RazaoSocial;
+        return razaoSocial;
     }
 
     public void setRazaoSocial(String razaoSocial) {
-        RazaoSocial = razaoSocial;
+        this.razaoSocial = razaoSocial;
     }
 
     public String getLogradouro() {

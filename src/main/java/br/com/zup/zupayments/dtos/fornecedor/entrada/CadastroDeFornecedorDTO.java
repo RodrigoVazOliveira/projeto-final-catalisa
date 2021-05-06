@@ -145,7 +145,7 @@ public class CadastroDeFornecedorDTO {
 
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setCnpjOuCpf(cnpjOuCpf);
-        fornecedor.setRazaoSocial(this.getRazaoSocial());
+        fornecedor.setRazaoSocial(this.r);
         fornecedor.setLogradouro(this.logradouro);
         fornecedor.setNumero(this.numero);
         fornecedor.setBairro(this.bairro);
