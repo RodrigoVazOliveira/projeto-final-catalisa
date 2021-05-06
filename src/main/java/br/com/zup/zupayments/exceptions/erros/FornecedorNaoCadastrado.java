@@ -1,12 +1,12 @@
 package br.com.zup.zupayments.exceptions.erros;
 
-public class FornecedorException extends RuntimeException{
+public class FornecedorNaoCadastrado extends RuntimeException{
 
     private Integer status = 400;
-    private String tipoDeErro = "Fornecedor não esta cadastrado";
+    private String tipoDeErro = "Fornecedor não foi cadastrado";
     private String motivo = "BAD REQUEST";
 
-    public FornecedorException(String message) {
+    public FornecedorNaoCadastrado(String message) {
         super(message);
     }
 
