@@ -7,17 +7,17 @@ import org.hibernate.validator.constraints.br.CPF;
 
 public class CadastroDeFornecedorDTO {
 
-    @CPF(message = "O CPF informado é inválido")
+    @CPF(message = "{validacao.cpf_invalido}")
     private String cpf;
 
-    @CNPJ(message = "O CNPJ informado é invalido")
+    @CNPJ(message = "{validacao.cnpj_invalido}")
     private String cnpj;
 
     private String razaoSocial;
 
     private String logradouro;
 
-    private Integer numero;
+    private String numero;
 
     private String bairro;
 
@@ -68,11 +68,11 @@ public class CadastroDeFornecedorDTO {
         this.logradouro = logradouro;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 

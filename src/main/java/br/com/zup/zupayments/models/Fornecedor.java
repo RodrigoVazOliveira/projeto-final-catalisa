@@ -2,6 +2,7 @@ package br.com.zup.zupayments.models;
 
 import br.com.zup.zupayments.enums.CategoriaDeCusto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -11,39 +12,51 @@ import javax.persistence.Table;
 public class Fornecedor {
 
     @Id
-    private String CnpjOuCpf;
+    @Column(length = 25, nullable = false)
+    private String cnpjOuCpf;
 
+    @Column(length = 100, nullable = false)
     private String razaoSocial;
 
+    @Column(length = 80, nullable = false)
     private String logradouro;
 
-    private Integer numero;
+    @Column(nullable = false, length = 10)
+    private String numero;
 
+    @Column(length = 60, nullable = false)
     private String bairro;
 
+    @Column(length = 80, nullable = false)
     private String cidade;
 
+    @Column(length = 25, nullable = false)
     private String estado;
 
+    @Column(length = 15, nullable = false)
     private String cep;
 
+    @Column(length = 25, nullable = false)
     private String telefone;
 
+    @Column(length = 80, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private CategoriaDeCusto categoriaDeCusto;
 
+    @Column(nullable = false)
     private Boolean ativo;
 
     public Fornecedor() {
     }
 
     public String getCnpjOuCpf() {
-        return CnpjOuCpf;
+        return cnpjOuCpf;
     }
 
     public void setCnpjOuCpf(String cnpjOuCpf) {
-        CnpjOuCpf = cnpjOuCpf;
+        this.cnpjOuCpf = cnpjOuCpf;
     }
 
     public String getRazaoSocial() {
@@ -62,11 +75,11 @@ public class Fornecedor {
         this.logradouro = logradouro;
     }
 
-    public Integer getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
