@@ -90,4 +90,17 @@ public class NotaFiscalControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().json(jsonSaida));
     }
+
+    @Test
+    public void testarCancelamentoDeNotaFiscal() throws Exception {
+        this.notaFiscalteste.setId(1L);
+        this.notaFiscalteste.setCancelar(false);
+        String jsonSaida   = "{\"id\":1 ,\"numeroDaNota\":4,\"fornecedor\":{\"logradouro\":\"Rua da empresa\",\"numero\":272,\"bairro\":\"Bairro da empresa\",\"cidade\":null,\"estado\":\"Estado da empresa\",\"cep\":\"12122976\",\"telefone\":null,\"email\":\"ceo@umaempresa.com\",\"categoriaDeCusto\":null,\"ativo\":true,\"razaoSocial\":\"Uma Empresa Ltda\",\"cnpjOuCpf\":\"12.234.543/8765-56\"},\"valorAPagar\":300.5,\"dataDeEmissao\":\"2021-05-06\",\"pedidoDeCompra\":[{\"numeroDePedido\":1,\"dataDeVencimento\":null,\"valorAproximado\":null,\"dataDePagamento\":null,\"responsavel\":null,\"dataLimiteEnvio\":null,\"formaDePagamento\":null,\"fornecedor\":null,\"cancelado\":null}],\"dataDeEnvio\":\"2021-05-06\",\"responsavel\":{\"email\":\"bomdia@zup.com.br\",\"nomeCompleto\":\"bom dia silva\",\"nomeDoProjeto\":null,\"ativo\":true},\"cancelar\": false}";
+        Mockito.when(notaFiscalService.cancelarNF(Mockito.anyLong())).thenReturn(this.notaFiscalteste);
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/notas_fiscais/1/"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().json(jsonSaida));
+    }
 }
