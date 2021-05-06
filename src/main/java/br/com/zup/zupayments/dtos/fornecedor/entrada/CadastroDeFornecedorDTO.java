@@ -13,7 +13,7 @@ public class CadastroDeFornecedorDTO {
     @CNPJ(message = "O CNPJ informado é invalido")
     private String cnpj;
 
-    private String RazaoSocial;
+    private String razaoSocial;
 
     private String logradouro;
 
@@ -53,11 +53,11 @@ public class CadastroDeFornecedorDTO {
     }
 
     public String getRazaoSocial() {
-        return RazaoSocial;
+        return razaoSocial;
     }
 
     public void setRazaoSocial(String razaoSocial) {
-        RazaoSocial = razaoSocial;
+        this.razaoSocial = razaoSocial;
     }
 
     public String getLogradouro() {
@@ -145,7 +145,7 @@ public class CadastroDeFornecedorDTO {
 
         Fornecedor fornecedor = new Fornecedor();
         fornecedor.setCnpjOuCpf(cnpjOuCpf);
-        fornecedor.setRazaoSocial(this.r);
+        fornecedor.setRazaoSocial(this.razaoSocial);
         fornecedor.setLogradouro(this.logradouro);
         fornecedor.setNumero(this.numero);
         fornecedor.setBairro(this.bairro);
