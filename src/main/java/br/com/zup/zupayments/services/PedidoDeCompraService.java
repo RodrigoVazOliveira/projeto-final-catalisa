@@ -45,17 +45,13 @@ public class PedidoDeCompraService {
 
         return optionalPedidoDeCompra.get();
     }
-    public PedidoDeCompra cancelarPedidoDeCompra (Long id, PedidoDeCompra pedidoDeCompra){
-        Optional<PedidoDeCompra> pedidoDeCompraOptional = pedidoDeCompraRespository.findById(id);
-
-        if (pedidoDeCompraOptional.isEmpty())
-            throw new PedidoDeCompraNaoExisteException();
-
-        pedidoDeCompra.setCancelado(true);
-        pedidoDeCompraRespository.save(pedidoDeCompra);
-
-        return pedidoDeCompra;
-
+    public void cancelarPedidoDeCompra(Long id){
+        PedidoDeCompra pedidoDeCompraOptional = procurarPedidoDeCompraPeloNumeroDePedido(id);
+        pedidoDeCompraOptional.setCancelado(true);
+        pedidoDeCompraRespository.save(pedidoDeCompraOptional);
     }
 
+    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelAtivo(Boolean ativo) {
+        return pedidoDeCompraRespository.findAllByResponsavelAtivo(ativo);
+    }
 }

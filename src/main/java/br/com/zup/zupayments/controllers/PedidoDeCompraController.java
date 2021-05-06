@@ -36,10 +36,18 @@ public class PedidoDeCompraController {
         Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraService.obterTodosOsPedidoDeCompra();
         return SaidaCadastroPedidoDeCompraDTO.converterListaDeModeloParaListaDto(pedidoDeCompras);
     }
-    @PutMapping("{id}/")
-    public PedidoDeCompra cancelarPedidoDeCompra(@PathVariable Long id, @RequestBody PedidoDeCompra pedidoDeCompra){
-        PedidoDeCompra pedidoDeCompra1 = pedidoDeCompraService.cancelarPedidoDeCompra(id,pedidoDeCompra);
-        return pedidoDeCompra1;
+
+    @PatchMapping("{id}/")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void cancelarPedidoDeCompra(@PathVariable Long id){
+        pedidoDeCompraService.cancelarPedidoDeCompra(id);
     }
 
+    @GetMapping("responsaveis")
+    @ResponseStatus(HttpStatus.OK)
+    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelInativo(
+            @RequestParam(name = "ativo", defaultValue = "false") Boolean ativo
+    ) {
+        return pedidoDeCompraService.obterTodosPedidosDeCompraComResponsavelAtivo(ativo);
+    }
 }
