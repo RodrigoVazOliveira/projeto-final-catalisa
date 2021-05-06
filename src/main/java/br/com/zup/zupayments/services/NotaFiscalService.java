@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.exceptions.erros.NotaFiscalCadastradaException;
+import br.com.zup.zupayments.exceptions.erros.NotaFiscalNaoCadastradaException;
 import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.repositories.NotaFiscalRepository;
@@ -59,7 +60,7 @@ public class NotaFiscalService {
         Optional<NotaFiscal> optionalNotaFiscal =notaFiscalRepository.findById(id);
 
         if (optionalNotaFiscal.isEmpty()){
-            throw new RuntimeException("Não existe o id solicitado");
+            throw new NotaFiscalNaoCadastradaException("");
         }
         return optionalNotaFiscal.get();
     }
