@@ -1,10 +1,11 @@
 package br.com.zup.zupayments.services;
 
+import br.com.zup.zupayments.exceptions.erros.FornecedorCadastradoException;
+import br.com.zup.zupayments.exceptions.erros.FornecedorNaoCadastrado;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.repositories.FornecedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -17,7 +18,7 @@ public class FornecedorService {
         try {
             return fornecedorRepository.save(fornecedor);
         } catch (Exception error) {
-            throw new RuntimeException("Fornecedor já cadastrado");
+            throw new FornecedorCadastradoException("Fornecedor já cadastrado");
         }
     }
 
@@ -28,7 +29,7 @@ public class FornecedorService {
             return optionalFornecedor.get();
         }
 
-        throw new RuntimeException("Fornecedor não foi encontrado");
+        throw new FornecedorNaoCadastrado("Fornecedor não foi cadastrado");
     }
 
     public Fornecedor atualizarCadastroFornecedor (String id, Fornecedor fornecedor){
@@ -36,7 +37,7 @@ public class FornecedorService {
         Optional<Fornecedor> fornecedorOptional = fornecedorRepository.findById(id);
 
         if (!fornecedorOptional.isPresent())
-            throw new RuntimeException("Fornecedor não foi encontrado para atualização");
+            throw new FornecedorNaoCadastrado("Fornecedor não foi cadastrado");
 
         fornecedor.setCnpjOuCpf(id);
         fornecedorRepository.save(fornecedor);
