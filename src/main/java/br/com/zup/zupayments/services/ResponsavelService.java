@@ -28,7 +28,7 @@ public class ResponsavelService {
         Optional<Responsavel> optionalResponsavel = responsavelRepository.findById(email);
 
         if (optionalResponsavel.isEmpty()) {
-            throw new ResponsavelNaoExisteException();
+            throw new RuntimeException();
         }
 
         return optionalResponsavel.get();
