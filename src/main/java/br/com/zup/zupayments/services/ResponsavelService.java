@@ -36,7 +36,6 @@ public class ResponsavelService {
 
     public void ativarOuDesativarResponsavel(String emailResponsavel) {
         Responsavel responsavelAtual = procurarResponsavelPorEmail(emailResponsavel);
-
         responsavelAtual.setAtivo(!responsavelAtual.getAtivo());
         responsavelRepository.save(responsavelAtual);
     }
