@@ -13,15 +13,15 @@ public class SaidaCadastroPedidoDeCompraDTO {
 
     private Long numeroDePedido;
 
-    @JsonFormat(pattern = "dd/mm/YYYY")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDeVencimento;
     private Double valorAproximado;
 
-    @JsonFormat(pattern = "dd/mm/YYYY")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
     private Responsavel responsavel;
 
-    @JsonFormat(pattern = "dd/mm/YYYY")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataLimiteEnvio;
     private FormaDePagamento formaDePagamento;
 
