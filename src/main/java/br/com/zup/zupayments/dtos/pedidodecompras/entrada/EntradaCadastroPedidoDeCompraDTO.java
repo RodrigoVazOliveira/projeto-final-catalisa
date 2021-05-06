@@ -4,15 +4,21 @@ import br.com.zup.zupayments.enums.FormaDePagamento;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDate;
 
 public class EntradaCadastroPedidoDeCompraDTO {
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeVencimento;
     private Double valorAproximado;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
     private String emailResponsavel;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataLimiteEnvio;
     private FormaDePagamento formaDePagamento;
     private String cnpjOuCpf;

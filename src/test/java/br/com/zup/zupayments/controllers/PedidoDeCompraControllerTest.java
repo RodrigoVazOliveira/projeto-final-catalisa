@@ -9,7 +9,6 @@ import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.services.FornecedorService;
 import br.com.zup.zupayments.services.PedidoDeCompraService;
 import br.com.zup.zupayments.services.ResponsavelService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,7 +19,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @WebMvcTest(PedidoDeCompraController.class)
 public class PedidoDeCompraControllerTest {
@@ -45,42 +46,28 @@ public class PedidoDeCompraControllerTest {
 
     @BeforeEach
     public void setUp(){
-        this.pedidoDeCompra = new PedidoDeCompra();
-        this.pedidoDeCompra.setNumeroDePedido(31L);
-        this.pedidoDeCompra.setDataDePagamento(LocalDate.now());
-        this.pedidoDeCompra.setValorAproximado(2.000);
-        this.pedidoDeCompra.setDataDePagamento(LocalDate.now());
-        this.pedidoDeCompra.setDataLimiteEnvio(LocalDate.now());
-        this.pedidoDeCompra.setFormaDePagamento(FormaDePagamento.BOLETO);
-        this.pedidoDeCompra.setDataDeVencimento(LocalDate.now());
-
         this.entradaCadastroPedidoDeCompraDTO = new EntradaCadastroPedidoDeCompraDTO();
         this.entradaCadastroPedidoDeCompraDTO.setCnpjOuCpf("084.215.150-80");
-        this.entradaCadastroPedidoDeCompraDTO.setDataDeVencimento(LocalDate.now());
-        this.entradaCadastroPedidoDeCompraDTO.setDataDePagamento(LocalDate.now());
-        this.entradaCadastroPedidoDeCompraDTO.setDataLimiteEnvio(LocalDate.now());
+
+        DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        this.entradaCadastroPedidoDeCompraDTO.setDataDeVencimento(LocalDate.parse("2021-06-01", dtf));
+        this.entradaCadastroPedidoDeCompraDTO.setDataDePagamento(LocalDate.parse("2021-05-05", dtf));
+        this.entradaCadastroPedidoDeCompraDTO.setDataLimiteEnvio(LocalDate.parse("2021-06-01", dtf));
         this.entradaCadastroPedidoDeCompraDTO.setFormaDePagamento(FormaDePagamento.BOLETO);
         this.entradaCadastroPedidoDeCompraDTO.setEmailResponsavel("email@email.com");
         this.entradaCadastroPedidoDeCompraDTO.setValorAproximado(2.000);
 
-        this.saidaCadastroPedidoDeCompraDTO = new SaidaCadastroPedidoDeCompraDTO();
-        this.saidaCadastroPedidoDeCompraDTO.setNumeroDePedido(31L);
-        this.saidaCadastroPedidoDeCompraDTO.setDataDePagamento(LocalDate.now());
-        this.saidaCadastroPedidoDeCompraDTO.setDataDeVencimento(LocalDate.now());
-        this.saidaCadastroPedidoDeCompraDTO.setDataLimiteEnvio(LocalDate.now());
-        this.saidaCadastroPedidoDeCompraDTO.setValorAproximado(2.000);
+        this.pedidoDeCompra = this.entradaCadastroPedidoDeCompraDTO.converterDtoParaModelo();
+        this.pedidoDeCompra.setNumeroDePedido(1L);
 
-        this.responsavel = new Responsavel();
-        this.responsavel.setEmail("email@email.com");
-        this.saidaCadastroPedidoDeCompraDTO.setResponsavel(this.responsavel);
+        this.saidaCadastroPedidoDeCompraDTO = SaidaCadastroPedidoDeCompraDTO.converterModeloParaDto(this.pedidoDeCompra);
     }
 
     @Test
     public void testarCadastroPedidoDeCompra() throws Exception{
-        ObjectMapper objectMapper = new ObjectMapper();
-        String cadastroJson = objectMapper.writeValueAsString(entradaCadastroPedidoDeCompraDTO);
-        String receberJson = objectMapper.writeValueAsString(saidaCadastroPedidoDeCompraDTO);
-
+        String cadastroJson = "{\"dataDeVencimento\":\"01/06/2021\",\"valorAproximado\":2.0,\"dataDePagamento\":\"05/05/2021\",\"emailResponsavel\":\"email@email.com\",\"dataLimiteEnvio\":\"01/06/2021\",\"formaDePagamento\":\"BOLETO\",\"cnpjOuCpf\":\"084.215.150-80\"}";
+        String receberJson = "{\"numeroDePedido\":1,\"dataDeVencimento\":\"01/06/2021\",\"valorAproximado\":2.0,\"dataDePagamento\":\"05/05/2021\",\"responsavel\":{\"email\":\"email@email.com\",\"nomeCompleto\":null,\"nomeDoProjeto\":null,\"ativo\":null},\"dataLimiteEnvio\":\"01/06/2021\",\"formaDePagamento\":\"BOLETO\",\"fornecedor\":{\"cnpjOuCpf\":\"084.215.150-80\",\"razaoSocial\":null}}";
         Mockito.when(pedidoDeCompraService.cadastrarNovoPedidoDeCompra(Mockito.any())).thenReturn(pedidoDeCompra);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/pedidos/").
