@@ -43,6 +43,10 @@ public class PedidoDeCompraController {
         pedidoDeCompraService.cancelarPedidoDeCompra(id);
     }
 
-
-
+    @GetMapping("responsaveis")
+    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelInativo(
+            @RequestParam(name = "ativo", defaultValue = "false") Boolean ativo
+    ) {
+        return pedidoDeCompraService.obterTodosPedidosDeCompraComResponsavelAtivo(ativo);
+    }
 }
