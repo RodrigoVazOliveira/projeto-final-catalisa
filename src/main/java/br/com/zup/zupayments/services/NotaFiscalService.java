@@ -40,7 +40,7 @@ public class NotaFiscalService {
             NotaFiscal objFiscal = notaFiscalRepository.save(fiscal);
             return objFiscal;
         }catch (Exception error){
-            throw new NotaFiscalCadastradaException("");
+            throw new NotaFiscalCadastradaException("Nota fiscal já cadastrada");
         }
     }
 
@@ -60,7 +60,7 @@ public class NotaFiscalService {
         Optional<NotaFiscal> optionalNotaFiscal =notaFiscalRepository.findById(id);
 
         if (optionalNotaFiscal.isEmpty()){
-            throw new NotaFiscalNaoCadastradaException("");
+            throw new NotaFiscalNaoCadastradaException("Nota fiscal não esta cadastrada");
         }
         return optionalNotaFiscal.get();
     }
