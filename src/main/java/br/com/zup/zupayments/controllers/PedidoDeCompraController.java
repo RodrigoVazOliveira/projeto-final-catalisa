@@ -44,6 +44,7 @@ public class PedidoDeCompraController {
     }
 
     @GetMapping("responsaveis")
+    @ResponseStatus(HttpStatus.OK)
     public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelInativo(
             @RequestParam(name = "ativo", defaultValue = "false") Boolean ativo
     ) {

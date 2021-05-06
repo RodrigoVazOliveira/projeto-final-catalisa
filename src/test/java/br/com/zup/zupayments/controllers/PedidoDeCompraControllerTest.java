@@ -9,6 +9,9 @@ import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.services.FornecedorService;
 import br.com.zup.zupayments.services.PedidoDeCompraService;
 import br.com.zup.zupayments.services.ResponsavelService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -20,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -68,7 +72,7 @@ public class PedidoDeCompraControllerTest {
 
         this.pedidoDeCompras = new ArrayList<>();
 
-        for (Long i = 0L; i < 10; i++) {
+        for (Long i = 0L; i < 2; i++) {
             pedidoDeCompras.add(criarNovoPedido(i));
         }
     }
@@ -76,20 +80,22 @@ public class PedidoDeCompraControllerTest {
     private PedidoDeCompra criarNovoPedido(Long numeroDePedido) {
         PedidoDeCompra pedido = new PedidoDeCompra();
         pedido.setNumeroDePedido(31L);
-        pedido.setDataDePagamento(LocalDate.now());
+        pedido.setDataDePagamento(LocalDate.parse("2021-05-06"));
         pedido.setValorAproximado(2.000);
-        pedido.setDataDePagamento(LocalDate.now());
-        pedido.setDataLimiteEnvio(LocalDate.now());
+        pedido.setDataDePagamento(LocalDate.parse("2021-05-06"));
+        pedido.setDataLimiteEnvio(LocalDate.parse("2021-05-06"));
         pedido.setFormaDePagamento(FormaDePagamento.BOLETO);
-        pedido.setDataDeVencimento(LocalDate.now());
+        pedido.setDataDeVencimento(LocalDate.parse("2021-05-06"));
 
         Responsavel responsavelTestLista = new Responsavel();
         responsavelTestLista.setEmail("email@email.com");
-        pedido.setResponsavel(this.responsavel);
+        responsavelTestLista.setNomeCompleto("Rodrigo Vaz");
+        responsavelTestLista.setNomeDoProjeto("FACILITIES");
+        pedido.setResponsavel(responsavelTestLista);
 
         Fornecedor fornecedorTest = new Fornecedor();
         fornecedorTest.setCnpjOuCpf("084.215.150-80");
-        pedido.setFornecedor(this.fornecedor);
+        pedido.setFornecedor(fornecedorTest);
 
         return pedido;
     }
@@ -107,5 +113,28 @@ public class PedidoDeCompraControllerTest {
                 .andExpect(MockMvcResultMatchers.content().json(receberJson));
     }
 
-    
+    @Test
+    public void testarObterTodosPedidosDeCompraComResponsavelInativo() throws Exception {
+        Mockito.when(
+                    pedidoDeCompraService
+                    .obterTodosPedidosDeCompraComResponsavelAtivo(
+                            Mockito.anyBoolean()
+                    )
+        ).thenReturn(this.pedidoDeCompras);
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
+        objectMapper.setDateFormat(df);
+
+        String jsonResposta = objectMapper.writeValueAsString(this.pedidoDeCompras);
+
+        System.out.println(jsonResposta);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/pedidos/responsaveis?ativo=true"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().json(jsonResposta));
+    }
 }
