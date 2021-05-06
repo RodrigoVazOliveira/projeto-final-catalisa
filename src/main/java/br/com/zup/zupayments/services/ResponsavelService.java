@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.exceptions.erros.ResponsavelJaCadastradoException;
+import br.com.zup.zupayments.exceptions.erros.ResponsavelNaoExisteException;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.ResponsavelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ResponsavelService {
         Optional<Responsavel> optionalResponsavel = responsavelRepository.findById(email);
 
         if (optionalResponsavel.isEmpty()) {
-            throw new RuntimeException("Não existe responsável com e-mail " + email);
+            throw new ResponsavelNaoExisteException();
         }
 
         return optionalResponsavel.get();
