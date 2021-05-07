@@ -1,2 +1,4 @@
-package br.com.zup.zupayments.configuracoes;public class ConfiguracaoDeSeguranca {
+package br.com.zup.zupayments.configuracoes;
+
+public class ConfiguracaoDeSeguranca {
 }
