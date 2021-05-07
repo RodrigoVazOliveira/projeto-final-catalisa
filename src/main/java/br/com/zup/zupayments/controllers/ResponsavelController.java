@@ -15,6 +15,7 @@ public class ResponsavelController {
 
     @Autowired
     private ResponsavelService responsavelService;
+    @Autowired
     private ResponsavelRepository responsavelRepository;
 
     @PostMapping
