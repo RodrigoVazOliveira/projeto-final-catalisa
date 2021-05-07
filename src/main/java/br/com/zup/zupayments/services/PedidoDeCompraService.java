@@ -97,10 +97,9 @@ public class PedidoDeCompraService {
         return pedidoDeCompras;
     }
 
-    public PedidoDeCompra atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido){
+    public void atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido){
         PedidoDeCompra pedidoDeCompra = procurarPedidoDeCompraPeloNumeroDePedido(numeroDoPedido);
         pedidoDeCompra.setResponsavel(pedidoDeCompra.getResponsavel());
         pedidoDeCompraRespository.save(pedidoDeCompra);
-        return pedidoDeCompra;
     }
 }
