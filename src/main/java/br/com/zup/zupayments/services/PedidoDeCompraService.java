@@ -11,17 +11,20 @@ import java.util.Optional;
 @Service
 public class PedidoDeCompraService {
 
-    private PedidoDeCompraRespository pedidoDeCompraRespository;
+    private final PedidoDeCompraRespository pedidoDeCompraRespository;
     private final ResponsavelService responsavelService;
     private final FornecedorService fornecedorService;
+    private final NotaFiscalService notaFiscalService;
 
     @Autowired
     public PedidoDeCompraService(PedidoDeCompraRespository pedidoDeCompraRespository,
                                  ResponsavelService responsavelService,
-                                 FornecedorService fornecedorService) {
+                                 FornecedorService fornecedorService,
+                                 NotaFiscalService notaFiscalService) {
         this.pedidoDeCompraRespository = pedidoDeCompraRespository;
         this.responsavelService = responsavelService;
         this.fornecedorService = fornecedorService;
+        this.notaFiscalService = notaFiscalService;
     }
 
     public PedidoDeCompra cadastrarNovoPedidoDeCompra(PedidoDeCompra pedidoDeCompra) {
@@ -58,6 +61,6 @@ public class PedidoDeCompraService {
     public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(
             Double valorMinimo, Boolean ativo
     ) {
-        return pedidoDeCompraRespository.findAllByValorAproximadoGreaterThanAndResponsavelAtivo(valor, ativo);
+        return pedidoDeCompraRespository.findAllByValorAproximadoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
     }
 }
