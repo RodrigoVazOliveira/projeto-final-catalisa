@@ -36,7 +36,7 @@ public class FornecedorController {
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-        public void ativarOuDesativarFornecedorPeloCnpjOuCpf(@RequestParam(name = "cnpjoucpf") String cnpjOuCpf) {
+    public void ativarOuDesativarFornecedorPeloCnpjOuCpf(@RequestParam(name = "cnpjoucpf") String cnpjOuCpf) {
         fornecedorService.ativarOuDesativarFornecedor(cnpjOuCpf);
     }
 }
