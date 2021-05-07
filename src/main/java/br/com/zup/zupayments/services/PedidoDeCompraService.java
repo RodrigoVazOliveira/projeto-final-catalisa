@@ -103,7 +103,6 @@ public class PedidoDeCompraService {
         return pedidoDeCompras;
     }
 
-
     public void atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido) {
         PedidoDeCompra pedidoDeCompra = procurarPedidoDeCompraPeloNumeroDePedido(numeroDoPedido);
         pedidoDeCompra.setResponsavel(pedidoDeCompra.getResponsavel());

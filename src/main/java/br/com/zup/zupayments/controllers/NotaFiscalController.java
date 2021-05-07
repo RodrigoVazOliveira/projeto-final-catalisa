@@ -1,9 +1,7 @@
 package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.dtos.notafiscal.entrada.CadastrarNotaFiscalDTO;
-import br.com.zup.zupayments.dtos.pedidodecompras.entrada.FiltroPedidoDeCompraComNotaFiscalPendenteDTO;
 import br.com.zup.zupayments.models.NotaFiscal;
-import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.services.NotaFiscalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
