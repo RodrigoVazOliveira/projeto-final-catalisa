@@ -3,12 +3,15 @@ package br.com.zup.zupayments.controllers;
 import br.com.zup.zupayments.dtos.fornecedor.entrada.CadastroDeFornecedorDTO;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.services.FornecedorService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("fornecedores/")
+@Api(value = "API REST de fornecedores")
 public class FornecedorController {
 
     @Autowired
@@ -16,6 +19,7 @@ public class FornecedorController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Cadastrar um novo fornecedor")
     public Fornecedor cadastrarFornecedor(@RequestBody CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
         return fornecedorService.cadastrarFornecedor(
                 cadastroDeFornecedorDTO.converterDtoParaModelo()
@@ -36,6 +40,7 @@ public class FornecedorController {
 
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Desativa um fornecedor pelo CNPJ/CPF")
     public void ativarOuDesativarFornecedorPeloCnpjOuCpf(@RequestParam(name = "cnpjoucpf") String cnpjOuCpf) {
         fornecedorService.ativarOuDesativarFornecedor(cnpjOuCpf);
     }
