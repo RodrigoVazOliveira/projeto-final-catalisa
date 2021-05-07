@@ -3,6 +3,7 @@ package br.com.zup.zupayments.services;
 import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraNaoExisteException;
 import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
+import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -100,6 +101,12 @@ public class PedidoDeCompraService {
         }
 
         return pedidoDeCompras;
+    }
+
+    public void atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido) {
+        PedidoDeCompra pedidoDeCompra = procurarPedidoDeCompraPeloNumeroDePedido(numeroDoPedido);
+        pedidoDeCompra.setResponsavel(pedidoDeCompra.getResponsavel());
+        pedidoDeCompraRespository.save(pedidoDeCompra);
     }
 
     public void enviarEmailParaPedidosDeCompraComNotasPendentes(

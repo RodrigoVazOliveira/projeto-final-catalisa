@@ -5,6 +5,8 @@ import br.com.zup.zupayments.dtos.pedidodecompras.entrada.FiltroPedidoDeCompraCo
 import br.com.zup.zupayments.dtos.pedidodecompras.saida.SaidaCadastroPedidoDeCompraDTO;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.services.PedidoDeCompraService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import javax.mail.MessagingException;
 
 @RestController
 @RequestMapping("pedidos/")
+@Api(value = "API REST Pedidos de compras")
 public class PedidoDeCompraController {
 
     private final PedidoDeCompraService pedidoDeCompraService;
@@ -25,6 +28,7 @@ public class PedidoDeCompraController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Cadastrar um novo pedido de compra")
     public SaidaCadastroPedidoDeCompraDTO cadastrarNovoPedidoDeCompra(
             @RequestBody  EntradaCadastroPedidoDeCompraDTO cadastroPedidoDeCompraDTO) {
 
@@ -36,6 +40,7 @@ public class PedidoDeCompraController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retornar todos os pedidos de compras cadastrados")
     public Iterable<SaidaCadastroPedidoDeCompraDTO> mostrarTodosPedidoDeCompra() {
         Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraService.obterTodosOsPedidoDeCompra();
         return SaidaCadastroPedidoDeCompraDTO.converterListaDeModeloParaListaDto(pedidoDeCompras);
@@ -43,12 +48,14 @@ public class PedidoDeCompraController {
 
     @PatchMapping("{id}/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "cancela um pedido de compra pelo seu número de pedido de compra")
     public void cancelarPedidoDeCompra(@PathVariable Long id){
         pedidoDeCompraService.cancelarPedidoDeCompra(id);
     }
 
     @GetMapping("responsaveis")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retorna todos os pedidos de compra com responsavel inativo")
     public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelInativo(
             @RequestParam(name = "ativo", defaultValue = "false") Boolean ativo
     ) {
@@ -57,6 +64,7 @@ public class PedidoDeCompraController {
 
     @GetMapping("pendentes")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Retornar todos os pedidos de compra com nota fiscal nao enviadas")
     public Iterable<PedidoDeCompra> obterPedidosComNotaFiscaisPendentesDeEnvio(
             @ModelAttribute FiltroPedidoDeCompraComNotaFiscalPendenteDTO filtro
     ) {
@@ -65,17 +73,25 @@ public class PedidoDeCompraController {
         );
     }
 
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ApiOperation(value = "Atualizar o pedido de compra com responsavel inativo")
+    public void alterarResponsavelDoPedido(Long numeroDoPedido) {
+        pedidoDeCompraService.atualizarResponsavelPorPedidoDeCompra(numeroDoPedido);
+    }
+
     @GetMapping("cobrancas")
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Envia e-mail para o responsável do pedido de compra que possuem pendencia de nota fiscal")
     public void enviarEmailDeCobrancas(
-            @ModelAttribute FiltroPedidoDeCompraComNotaFiscalPendenteDTO filtro
-    ) {
+            @ModelAttribute FiltroPedidoDeCompraComNotaFiscalPendenteDTO filtro){
         try {
             pedidoDeCompraService.enviarEmailParaPedidosDeCompraComNotasPendentes(
                     filtro.getValorMinimo(), filtro.getAtivo(), filtro.getDataInicial()
             );
         } catch (MessagingException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+
         }
     }
 }
