@@ -54,4 +54,10 @@ public class PedidoDeCompraService {
     public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelAtivo(Boolean ativo) {
         return pedidoDeCompraRespository.findAllByResponsavelAtivo(ativo);
     }
+
+    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(
+            Double valorMinimo, Boolean ativo
+    ) {
+        return pedidoDeCompraRespository.findAllByValorAproximadoGreaterThanAndResponsavelAtivo(valor, ativo);
+    }
 }
