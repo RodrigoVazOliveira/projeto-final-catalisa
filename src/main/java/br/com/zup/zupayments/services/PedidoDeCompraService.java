@@ -5,6 +5,7 @@ import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class PedidoDeCompraService {
     private final NotaFiscalService notaFiscalService;
 
     @Autowired
+    @Lazy
     public PedidoDeCompraService(PedidoDeCompraRespository pedidoDeCompraRespository,
                                  ResponsavelService responsavelService,
                                  FornecedorService fornecedorService,

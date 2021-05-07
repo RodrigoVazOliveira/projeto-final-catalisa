@@ -5,11 +5,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 
 public class FiltroPedidoDeCompraComNotaFiscalPendenteDTO {
-    private Double valorMinimo;
+    private Double valorMinimo = 0.0;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataInicial;
-    private Boolean ativo;
+    private Boolean ativo = true;
 
     public FiltroPedidoDeCompraComNotaFiscalPendenteDTO() {
     }
