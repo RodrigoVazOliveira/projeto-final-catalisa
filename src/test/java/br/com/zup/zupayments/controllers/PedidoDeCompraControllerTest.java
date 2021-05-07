@@ -16,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebMvcTest(PedidoDeCompraController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class PedidoDeCompraControllerTest {
 
     @MockBean
@@ -145,7 +147,7 @@ public class PedidoDeCompraControllerTest {
                                 (Mockito.anyDouble(), Mockito.anyBoolean(), Mockito.any()))
                 .thenReturn(this.pedidoDeCompras);
 
-        SimpleDateFormat nfPendente = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat nfPendente = new SimpleDateFormat("dd-MM-yyyy");
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
@@ -154,7 +156,7 @@ public class PedidoDeCompraControllerTest {
         String retornoJson = objectMapper.writeValueAsString(this.pedidoDeCompras);
         System.out.println(retornoJson);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pedidos/pendentes?ativo=true&valorMinimo=0&dataInicial=2021/05/07"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pedidos/pendentes?ativo=true&valorMinimo=0&dataInicial=07/05/2021"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(retornoJson));
