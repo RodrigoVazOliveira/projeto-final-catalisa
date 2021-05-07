@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,17 +20,20 @@ public class PedidoDeCompraService {
     private final ResponsavelService responsavelService;
     private final FornecedorService fornecedorService;
     private final NotaFiscalService notaFiscalService;
+    private final EmailService emailService;
 
     @Autowired
     @Lazy
     public PedidoDeCompraService(PedidoDeCompraRespository pedidoDeCompraRespository,
                                  ResponsavelService responsavelService,
                                  FornecedorService fornecedorService,
-                                 NotaFiscalService notaFiscalService) {
+                                 NotaFiscalService notaFiscalService,
+                                 EmailService emailService) {
         this.pedidoDeCompraRespository = pedidoDeCompraRespository;
         this.responsavelService = responsavelService;
         this.fornecedorService = fornecedorService;
         this.notaFiscalService = notaFiscalService;
+        this.emailService = emailService;
     }
 
     public PedidoDeCompra cadastrarNovoPedidoDeCompra(PedidoDeCompra pedidoDeCompra) {
@@ -96,5 +100,16 @@ public class PedidoDeCompraService {
         }
 
         return pedidoDeCompras;
+    }
+
+    public void enviarEmailParaPedidosDeCompraComNotasPendentes(
+            Double valorMinimo, Boolean ativo, LocalDate dataInicial
+    ) throws MessagingException {
+        Iterable<PedidoDeCompra> pedidoDeCompras = obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(
+                valorMinimo, ativo, dataInicial
+        );
+        for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
+            emailService.enviarEmailDePedidoPendenteDeNotaFiscal(pedidoDeCompra);
+        }
     }
 }
