@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.dtos.pedidodecompras.entrada.EntradaCadastroPedidoDeCompraDTO;
+import br.com.zup.zupayments.dtos.pedidodecompras.entrada.FiltroPedidoDeCompraComNotaFiscalPendenteDTO;
 import br.com.zup.zupayments.dtos.pedidodecompras.saida.SaidaCadastroPedidoDeCompraDTO;
 import br.com.zup.zupayments.enums.FormaDePagamento;
 import br.com.zup.zupayments.models.Fornecedor;
@@ -24,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -82,12 +84,12 @@ public class PedidoDeCompraControllerTest {
     private PedidoDeCompra criarNovoPedido(Long numeroDePedido) {
         PedidoDeCompra pedido = new PedidoDeCompra();
         pedido.setNumeroDePedido(31L);
-        pedido.setDataDePagamento(LocalDate.parse("2021-05-06"));
+        pedido.setDataDePagamento(LocalDate.parse("2021-05-01"));
         pedido.setValorAproximado(2.000);
-        pedido.setDataDePagamento(LocalDate.parse("2021-05-06"));
-        pedido.setDataLimiteEnvio(LocalDate.parse("2021-05-06"));
+        pedido.setDataDePagamento(LocalDate.parse("2021-05-01"));
+        pedido.setDataLimiteEnvio(LocalDate.parse("2021-05-01"));
         pedido.setFormaDePagamento(FormaDePagamento.BOLETO);
-        pedido.setDataDeVencimento(LocalDate.parse("2021-05-06"));
+        pedido.setDataDeVencimento(LocalDate.parse("2021-05-01"));
 
         Responsavel responsavelTestLista = new Responsavel();
         responsavelTestLista.setEmail("email@email.com");
@@ -154,12 +156,10 @@ public class PedidoDeCompraControllerTest {
         objectMapper.setDateFormat(nfPendente);
 
         String retornoJson = objectMapper.writeValueAsString(this.pedidoDeCompras);
-        System.out.println(retornoJson);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pedidos/pendentes?ativo=true&valorMinimo=0&dataInicial=07/05/2021"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pedidos/pendentes"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(retornoJson));
-
     }
 }
