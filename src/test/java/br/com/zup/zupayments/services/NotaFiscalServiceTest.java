@@ -41,7 +41,7 @@ public class NotaFiscalServiceTest {
     private PedidoDeCompra pedidoDeCompra;
 
     @BeforeEach
-        public void setup(){
+    public void setup(){
 
         this.notaFiscalteste = new NotaFiscal();
 
@@ -72,6 +72,7 @@ public class NotaFiscalServiceTest {
         this.notaFiscalteste.setDataDeEnvio(LocalDate.now());
         this.notaFiscalteste.setResponsavel(this.responsavel);
         this.notaFiscalteste.setPedidoDeCompra(Arrays.asList(this.pedidoDeCompra));
+        this.notaFiscalteste.setCancelar(false);
     }
 
     @Test
@@ -87,11 +88,11 @@ public class NotaFiscalServiceTest {
 
     @Test
     public void testarAtivarOuDesativarNotaFiscal() {
+        notaFiscalteste.setId(1L);
         Optional<NotaFiscal> optionalNotaFiscal = Optional.of(notaFiscalteste);
         Mockito.when(notaFiscalRepository.findById(Mockito.anyLong())).thenReturn(optionalNotaFiscal);
         Mockito.when(notaFiscalRepository.save(Mockito.any())).thenReturn(notaFiscalteste);
         NotaFiscal teste = notaFiscalService.cancelarNF(1L);
-
         Assertions.assertEquals(teste, notaFiscalteste);
     }
 
