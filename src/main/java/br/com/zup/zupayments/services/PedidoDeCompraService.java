@@ -1,27 +1,33 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraNaoExisteException;
+import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PedidoDeCompraService {
 
-    private PedidoDeCompraRespository pedidoDeCompraRespository;
+    private final PedidoDeCompraRespository pedidoDeCompraRespository;
     private final ResponsavelService responsavelService;
     private final FornecedorService fornecedorService;
+    private final NotaFiscalService notaFiscalService;
 
     @Autowired
     public PedidoDeCompraService(PedidoDeCompraRespository pedidoDeCompraRespository,
                                  ResponsavelService responsavelService,
-                                 FornecedorService fornecedorService) {
+                                 FornecedorService fornecedorService,
+                                 NotaFiscalService notaFiscalService) {
         this.pedidoDeCompraRespository = pedidoDeCompraRespository;
         this.responsavelService = responsavelService;
         this.fornecedorService = fornecedorService;
+        this.notaFiscalService = notaFiscalService;
     }
 
     public PedidoDeCompra cadastrarNovoPedidoDeCompra(PedidoDeCompra pedidoDeCompra) {
@@ -65,5 +71,28 @@ public class PedidoDeCompraService {
 
     public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelAtivo(Boolean ativo) {
         return pedidoDeCompraRespository.findAllByResponsavelAtivo(ativo);
+    }
+
+    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(
+            Double valorMinimo, Boolean ativo, LocalDate dataInicial) {
+        Iterable<NotaFiscal> notasFiscais = notaFiscalService.obterTodasNotaFiscalComIntervaloDeDataDeEmissao(
+                dataInicial, LocalDate.now());
+        Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraRespository
+                .findAllByValorAproximadoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
+        return verificarPendenciasDeNotaFiscal((List<NotaFiscal>) notasFiscais, (List<PedidoDeCompra>) pedidoDeCompras);
+    }
+
+    private Iterable<PedidoDeCompra> verificarPendenciasDeNotaFiscal(List<NotaFiscal> notaFiscals,
+                                                                     List<PedidoDeCompra> pedidoDeCompras) {
+        for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
+            for (NotaFiscal notaFiscal : notaFiscals) {
+                if (notaFiscal.getDataDeEmissao().getMonthValue() == LocalDate.now().getMonthValue()
+                && notaFiscal.getPedidoDeCompra().contains(pedidoDeCompra)) {
+                    pedidoDeCompras.remove(pedidoDeCompra);
+                }
+            }
+        }
+
+        return pedidoDeCompras;
     }
 }

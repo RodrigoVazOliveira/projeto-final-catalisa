@@ -1,7 +1,5 @@
 package br.com.zup.zupayments.exceptions.erros;
 
-import br.com.zup.zupayments.exceptions.ExcecaoBasica;
-
 public class ResponsavelNaoExisteException extends RuntimeException {
     private Integer status = 422;
     private String tipoDeErro = "Responsável não cadastrado";
@@ -33,3 +31,6 @@ public class ResponsavelNaoExisteException extends RuntimeException {
         this.motivo = motivo;
     }
 }
+
+
+

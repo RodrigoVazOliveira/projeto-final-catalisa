@@ -7,6 +7,8 @@ import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.repositories.NotaFiscalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -68,5 +70,10 @@ public class NotaFiscalService {
         NotaFiscal notaFiscalAtual = pesquisarNotaFiscalPeloId(id);
         notaFiscalAtual.setCancelar(!notaFiscalAtual.getCancelar());
         return notaFiscalRepository.save(notaFiscalAtual);
+    }
+
+    public Iterable<NotaFiscal> obterTodasNotaFiscalComIntervaloDeDataDeEmissao(
+            LocalDate dataInicial, LocalDate dataFinal) {
+        return notaFiscalRepository.findAllByDataDeEmissaoBetween(dataInicial, dataFinal);
     }
 }

@@ -28,7 +28,8 @@ public class ResponsavelService {
         Optional<Responsavel> optionalResponsavel = responsavelRepository.findById(email);
 
         if (optionalResponsavel.isEmpty()) {
-            throw new ResponsavelNaoExisteException("Responsável não cadastrado");
+
+            throw new ResponsavelNaoExisteException("Não existe responsável com e-mail" + email);
         }
 
         return optionalResponsavel.get();

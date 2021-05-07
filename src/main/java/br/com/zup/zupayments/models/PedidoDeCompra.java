@@ -3,6 +3,7 @@ package br.com.zup.zupayments.models;
 import br.com.zup.zupayments.enums.FormaDePagamento;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "pedidos_de_compras")
@@ -109,5 +110,18 @@ public class PedidoDeCompra {
 
     public void setCancelado(Boolean cancelado) {
         this.cancelado = cancelado;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PedidoDeCompra that = (PedidoDeCompra) o;
+        return Objects.equals(numeroDePedido, that.numeroDePedido);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numeroDePedido);
     }
 }
