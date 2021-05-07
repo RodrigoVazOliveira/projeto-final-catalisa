@@ -65,17 +65,22 @@ public class PedidoDeCompraController {
         );
     }
 
-    @GetMapping("cobrancas")
-    @ResponseStatus(HttpStatus.OK)
-    public void enviarEmailDeCobrancas(
-            @ModelAttribute FiltroPedidoDeCompraComNotaFiscalPendenteDTO filtro
-    ) {
-        try {
-            pedidoDeCompraService.enviarEmailParaPedidosDeCompraComNotasPendentes(
-                    filtro.getValorMinimo(), filtro.getAtivo(), filtro.getDataInicial()
-            );
-        } catch (MessagingException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void alterarResponsavelDoPedido(Long numeroDoPedido) {
+        pedidoDeCompraService.atualizarResponsavelPorPedidoDeCompra(numeroDoPedido);
+    }
+        @GetMapping("cobrancas")
+        @ResponseStatus(HttpStatus.OK)
+        public void enviarEmailDeCobrancas(
+                @ModelAttribute FiltroPedidoDeCompraComNotaFiscalPendenteDTO filtro){
+            try {
+                pedidoDeCompraService.enviarEmailParaPedidosDeCompraComNotasPendentes(
+                        filtro.getValorMinimo(), filtro.getAtivo(), filtro.getDataInicial()
+                );
+            } catch (MessagingException e) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+
         }
     }
 }

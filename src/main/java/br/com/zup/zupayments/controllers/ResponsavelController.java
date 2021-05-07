@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.dtos.responsavel.entrada.CadastrarResponsavelDTO;
+import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.ResponsavelRepository;
 import br.com.zup.zupayments.services.ResponsavelService;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 @RequestMapping("responsaveis/")
@@ -16,6 +16,7 @@ public class ResponsavelController {
 
     @Autowired
     private ResponsavelService responsavelService;
+    @Autowired
     private ResponsavelRepository responsavelRepository;
 
     @PostMapping
@@ -31,5 +32,4 @@ public class ResponsavelController {
     public void ativarOuDesativarResponsavel(@RequestParam(name = "email") String emailResponsavel) {
         responsavelService.ativarOuDesativarResponsavel(emailResponsavel);
     }
-
 }
