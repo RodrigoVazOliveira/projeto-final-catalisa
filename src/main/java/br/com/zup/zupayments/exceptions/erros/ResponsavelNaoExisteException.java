@@ -1,10 +1,9 @@
 package br.com.zup.zupayments.exceptions.erros;
 
 public class ResponsavelNaoExisteException extends RuntimeException {
-    private Integer status = 400;
+    private Integer status = 422;
     private String tipoDeErro = "Responsável não cadastrado";
-    private String motivo = "BAD REQUEST";
-
+    private String motivo = "Unprocesable Entity";
 
     public ResponsavelNaoExisteException(String message){super(message);}
 

@@ -46,15 +46,27 @@ public class PedidoDeCompraService {
         Optional<PedidoDeCompra> optionalPedidoDeCompra = pedidoDeCompraRespository.findById(numeroPedidoDeCompra);
 
         if (optionalPedidoDeCompra.isEmpty()) {
-            throw new PedidoDeCompraNaoExisteException("" + numeroPedidoDeCompra);
+            throw new PedidoDeCompraNaoExisteException("Não há pedido cadastrado com este número" + numeroPedidoDeCompra);
         }
 
         return optionalPedidoDeCompra.get();
     }
-    public void cancelarPedidoDeCompra(Long id){
+
+    public void cancelarPedidoDeCompra(Long id) {
         PedidoDeCompra pedidoDeCompraOptional = procurarPedidoDeCompraPeloNumeroDePedido(id);
         pedidoDeCompraOptional.setCancelado(true);
         pedidoDeCompraRespository.save(pedidoDeCompraOptional);
+    }
+    public PedidoDeCompra cancelarPedidoDeCompra (Long id, PedidoDeCompra pedidoDeCompra){
+        Optional<PedidoDeCompra> pedidoDeCompraOptional = pedidoDeCompraRespository.findById(id);
+
+        if (pedidoDeCompraOptional.isEmpty())
+            throw new PedidoDeCompraNaoExisteException("Pedido de compra não cadastrado");
+
+        pedidoDeCompra.setCancelado(true);
+        pedidoDeCompraRespository.save(pedidoDeCompra);
+
+        return pedidoDeCompra;
     }
 
     public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComResponsavelAtivo(Boolean ativo) {
