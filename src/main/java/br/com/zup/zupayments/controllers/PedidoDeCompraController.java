@@ -61,4 +61,9 @@ public class PedidoDeCompraController {
                 filtro.getValorMinimo(), filtro.getAtivo(), filtro.getDataInicial()
         );
     }
+    @PatchMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void alterarResponsavelDoPedido(Long numeroDoPedido){
+        pedidoDeCompraService.atualizarResponsavelPorPedidoDeCompra(numeroDoPedido);
+    }
 }
