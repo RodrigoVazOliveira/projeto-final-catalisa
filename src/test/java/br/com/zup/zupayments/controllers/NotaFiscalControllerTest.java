@@ -1,11 +1,14 @@
 package br.com.zup.zupayments.controllers;
 
+import br.com.zup.zupayments.dtos.notafiscal.entrada.CadastrarNotaFiscalDTO;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.services.NotaFiscalService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,10 +20,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.text.SimpleDateFormat;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
 
 @WebMvcTest(NotaFiscalController.class)
 public class NotaFiscalControllerTest {
@@ -32,53 +39,37 @@ public class NotaFiscalControllerTest {
     private NotaFiscalService notaFiscalService;
 
     private NotaFiscal notaFiscalteste;
-    private Responsavel responsavel;
-    private Fornecedor fornecedor;
-    private PedidoDeCompra pedidoDeCompra;
+    private CadastrarNotaFiscalDTO cadastrarNotaFiscalDTO;
 
     @BeforeEach
     public void setup() {
-        this.notaFiscalteste = new NotaFiscal();
+        this.cadastrarNotaFiscalDTO = new CadastrarNotaFiscalDTO();
+        this.cadastrarNotaFiscalDTO.setNumeroDaNota(1L);
+        this.cadastrarNotaFiscalDTO.setCnpjOuCpfFornecedor("05.792.077/0001-65");
+        this.cadastrarNotaFiscalDTO.setValorAPagar(2000.00);
+        this.cadastrarNotaFiscalDTO.setDataDeEmissao(LocalDate.now());
+        this.cadastrarNotaFiscalDTO.setPedidoDeCompras(Arrays.asList(1L, 2L));
+        this.cadastrarNotaFiscalDTO.setDataDeEnvio(LocalDate.now());
+        this.cadastrarNotaFiscalDTO.setEmailDoResponsavel("rodrigo.vaz@zup.com.br");
 
-        DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        this.responsavel  = new Responsavel();
-        this.responsavel.setAtivo(true);
-        this.responsavel.setEmail("bomdia@zup.com.br");
-        this.responsavel.setNomeCompleto("bom dia silva");
-
-        this.fornecedor = new Fornecedor();
-        fornecedor.setRazaoSocial("Uma Empresa Ltda");
-        fornecedor.setAtivo(true);
-        fornecedor.setCategoriaDeCusto(null);
-        fornecedor.setEmail("ceo@umaempresa.com");
-        fornecedor.setCnpjOuCpf("12.234.543/8765-56");
-        fornecedor.setLogradouro("Rua da empresa");
-        fornecedor.setNumero("272");
-        fornecedor.setCep("12122976");
-        fornecedor.setBairro("Bairro da empresa");
-        fornecedor.setEstado("Estado da empresa");
-
-        this.pedidoDeCompra = new PedidoDeCompra();
-        this.pedidoDeCompra.setNumeroDePedido(1L);
-
-        this.notaFiscalteste.setFornecedor(fornecedor);
-        this.notaFiscalteste.setResponsavel(this.responsavel);
-        this.notaFiscalteste.setPedidoDeCompra(Arrays.asList(this.pedidoDeCompra));
-        this.notaFiscalteste.setValorAPagar(300.50);
-        this.notaFiscalteste.setDataDeEmissao(LocalDate.now(Clock.systemUTC()));
-        this.notaFiscalteste.setNumeroDaNota(4L);
-        this.notaFiscalteste.setDataDeEnvio(LocalDate.now());
-
+        this.notaFiscalteste = this.cadastrarNotaFiscalDTO.converterDtoParaModelo();
     }
 
 
     @Test
     public void testarCadastrarNotaFiscal() throws Exception {
         this.notaFiscalteste.setId(1L);
+        SimpleDateFormat dfDto = new SimpleDateFormat("dd/MM/yyyy");
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonEntrada = "{\"numeroDaNota\":12, \"cnpjOuCpfFornecedor\":\"03.497.698/0001-90\",\"valorAPagar\":200.00, \"dataDeEmissao\":\"06/05/2021\",\"pedidoDeCompras\":[1,2, 3],\"dataDeEnvio\":\"06/05/2021\", \"emailDoResponsavel\":\"rodrigo.vaz@zup.com.br\"}";
-        String jsonSaida   = "{\"id\":1 ,\"numeroDaNota\":4,\"fornecedor\":{\"logradouro\":\"Rua da empresa\",\"numero\":272,\"bairro\":\"Bairro da empresa\",\"cidade\":null,\"estado\":\"Estado da empresa\",\"cep\":\"12122976\",\"telefone\":null,\"email\":\"ceo@umaempresa.com\",\"categoriaDeCusto\":null,\"ativo\":true,\"razaoSocial\":\"Uma Empresa Ltda\",\"cnpjOuCpf\":\"12.234.543/8765-56\"},\"valorAPagar\":300.5,\"dataDeEmissao\":\"2021-05-06\",\"pedidoDeCompra\":[{\"numeroDePedido\":1,\"dataDeVencimento\":null,\"valorAproximado\":null,\"dataDePagamento\":null,\"responsavel\":null,\"dataLimiteEnvio\":null,\"formaDePagamento\":null,\"fornecedor\":null,\"cancelado\":null}],\"dataDeEnvio\":\"2021-05-06\",\"responsavel\":{\"email\":\"bomdia@zup.com.br\",\"nomeCompleto\":\"bom dia silva\",\"nomeDoProjeto\":null,\"ativo\":true},\"cancelar\":null}";
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
+        objectMapper.setDateFormat(dfDto);
+
+        notaFiscalteste.setId(1L);
+        String jsonEntrada = objectMapper.writeValueAsString(this.cadastrarNotaFiscalDTO);
+        SimpleDateFormat df = new SimpleDateFormat("yyyyy-MM-dd");
+        objectMapper.setDateFormat(df);
+        String jsonSaida   = objectMapper.writeValueAsString(this.notaFiscalteste);
 
         Mockito.when(notaFiscalService.cadastrarNotaFiscal(Mockito.any())).thenReturn(notaFiscalteste);
 
@@ -94,8 +85,14 @@ public class NotaFiscalControllerTest {
     @Test
     public void testarCancelamentoDeNotaFiscal() throws Exception {
         this.notaFiscalteste.setId(1L);
-        this.notaFiscalteste.setCancelar(false);
-        String jsonSaida   = "{\"id\":1 ,\"numeroDaNota\":4,\"fornecedor\":{\"logradouro\":\"Rua da empresa\",\"numero\":272,\"bairro\":\"Bairro da empresa\",\"cidade\":null,\"estado\":\"Estado da empresa\",\"cep\":\"12122976\",\"telefone\":null,\"email\":\"ceo@umaempresa.com\",\"categoriaDeCusto\":null,\"ativo\":true,\"razaoSocial\":\"Uma Empresa Ltda\",\"cnpjOuCpf\":\"12.234.543/8765-56\"},\"valorAPagar\":300.5,\"dataDeEmissao\":\"2021-05-06\",\"pedidoDeCompra\":[{\"numeroDePedido\":1,\"dataDeVencimento\":null,\"valorAproximado\":null,\"dataDePagamento\":null,\"responsavel\":null,\"dataLimiteEnvio\":null,\"formaDePagamento\":null,\"fornecedor\":null,\"cancelado\":null}],\"dataDeEnvio\":\"2021-05-06\",\"responsavel\":{\"email\":\"bomdia@zup.com.br\",\"nomeCompleto\":\"bom dia silva\",\"nomeDoProjeto\":null,\"ativo\":true},\"cancelar\": false}";
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
+        objectMapper.setDateFormat(df);
+
+        String jsonSaida = objectMapper.writeValueAsString(this.notaFiscalteste);
+
         Mockito.when(notaFiscalService.cancelarNF(Mockito.anyLong())).thenReturn(this.notaFiscalteste);
         mockMvc.perform(
                 MockMvcRequestBuilders.patch("/notas_fiscais/1/"))
