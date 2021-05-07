@@ -137,4 +137,27 @@ public class PedidoDeCompraControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.content().json(jsonResposta));
     }
+
+    @Test
+    public void testarObterPedidosComNotaFiscaisPendentesDeEnvio() throws Exception{
+        Mockito.when(
+                pedidoDeCompraService.obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo
+                                (Mockito.anyDouble(), Mockito.anyBoolean(), Mockito.any()))
+                .thenReturn(this.pedidoDeCompras);
+
+        SimpleDateFormat nfPendente = new SimpleDateFormat("yyyy-MM-dd");
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
+        objectMapper.setDateFormat(nfPendente);
+
+        String retornoJson = objectMapper.writeValueAsString(this.pedidoDeCompras);
+        System.out.println(retornoJson);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/pedidos/pendentes?ativo=true&valorMinimo=0&dataInicial=2021/05/07"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.content().json(retornoJson));
+
+    }
 }

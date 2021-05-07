@@ -127,4 +127,13 @@ public class PedidoDeCompraServiceTest {
         Iterable<PedidoDeCompra> testes = pedidoDeCompraService.obterTodosPedidosDeCompraComResponsavelAtivo(false);
         Assertions.assertEquals(testes, this.pedidoDeCompras);
     }
+
+    @Test
+    public void testarObterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(){
+        Mockito.when(pedidoDeCompraRespository.findAllByValorAproximadoGreaterThanAndResponsavelAtivo
+                (Mockito.anyDouble(), Mockito.anyBoolean())).thenReturn(this.pedidoDeCompras);
+        Iterable<PedidoDeCompra> test = pedidoDeCompraService.obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(456.7,false, LocalDate.now());
+        Assertions.assertEquals(test, this.pedidoDeCompras);
+
+    }
 }
