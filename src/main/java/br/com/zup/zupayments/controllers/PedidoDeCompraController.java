@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.dtos.pedidodecompras.entrada.EntradaCadastroPedidoDeCompraDTO;
+import br.com.zup.zupayments.dtos.pedidodecompras.entrada.FiltroPedidoDeCompraComNotaFiscalPendenteDTO;
 import br.com.zup.zupayments.dtos.pedidodecompras.saida.SaidaCadastroPedidoDeCompraDTO;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.services.PedidoDeCompraService;
@@ -49,5 +50,15 @@ public class PedidoDeCompraController {
             @RequestParam(name = "ativo", defaultValue = "false") Boolean ativo
     ) {
         return pedidoDeCompraService.obterTodosPedidosDeCompraComResponsavelAtivo(ativo);
+    }
+
+    @GetMapping("pendentes")
+    @ResponseStatus(HttpStatus.OK)
+    public Iterable<PedidoDeCompra> obterPedidosComNotaFiscaisPendentesDeEnvio(
+            @ModelAttribute FiltroPedidoDeCompraComNotaFiscalPendenteDTO filtro
+    ) {
+        return pedidoDeCompraService.obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(
+                filtro.getValorMinimo(), filtro.getAtivo(), filtro.getDataInicial()
+        );
     }
 }
