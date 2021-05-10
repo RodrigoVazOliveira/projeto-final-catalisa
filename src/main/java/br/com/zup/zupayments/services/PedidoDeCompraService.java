@@ -105,7 +105,7 @@ public class PedidoDeCompraService {
 
     public void atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido,Responsavel responsavel) {
         PedidoDeCompra pedidoDeCompra = procurarPedidoDeCompraPeloNumeroDePedido(numeroDoPedido);
-        pedidoDeCompra.setResponsavel(pedidoDeCompra.getResponsavel());
+        pedidoDeCompra.setResponsavel(responsavel);
         pedidoDeCompraRespository.save(pedidoDeCompra);
     }
 
