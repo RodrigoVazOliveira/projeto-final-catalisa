@@ -16,7 +16,7 @@ public class SaidaCadastroPedidoDeCompraDTO {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDeVencimento;
-    private Double valorAproximado;
+    private Double saldo;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
@@ -49,12 +49,12 @@ public class SaidaCadastroPedidoDeCompraDTO {
         this.dataDeVencimento = dataDeVencimento;
     }
 
-    public Double getValorAproximado() {
-        return valorAproximado;
+    public Double getSaldo() {
+        return saldo;
     }
 
-    public void setValorAproximado(Double valorAproximado) {
-        this.valorAproximado = valorAproximado;
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
     }
 
     public LocalDate getDataDePagamento() {
@@ -101,7 +101,7 @@ public class SaidaCadastroPedidoDeCompraDTO {
         SaidaCadastroPedidoDeCompraDTO dto = new SaidaCadastroPedidoDeCompraDTO();
         dto.setNumeroDePedido(pedidoDeCompra.getNumeroDePedido());
         dto.setDataDeVencimento(pedidoDeCompra.getDataDeVencimento());
-        dto.setValorAproximado(pedidoDeCompra.getValorAproximado());
+        dto.setSaldo(pedidoDeCompra.getSaldo());
         dto.setDataDePagamento(pedidoDeCompra.getDataDePagamento());
         dto.setResponsavel(pedidoDeCompra.getResponsavel());
         dto.setDataLimiteEnvio(pedidoDeCompra.getDataLimiteEnvio());

@@ -85,7 +85,7 @@ public class PedidoDeCompraService {
         Iterable<NotaFiscal> notasFiscais = notaFiscalService.obterTodasNotaFiscalComIntervaloDeDataDeEmissao(
                 dataInicial, LocalDate.now());
         Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraRespository
-                .findAllByValorAproximadoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
+                .findAllBySaldoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
         return verificarPendenciasDeNotaFiscal((List<NotaFiscal>) notasFiscais, (List<PedidoDeCompra>) pedidoDeCompras);
     }
 
@@ -138,7 +138,7 @@ public class PedidoDeCompraService {
         Double soma = 0.0;
 
         for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
-            soma += pedidoDeCompra.getValorAproximado();
+            soma += pedidoDeCompra.getSaldo();
         }
 
         return soma;
@@ -146,15 +146,15 @@ public class PedidoDeCompraService {
 
     private Double atualizarPedido(PedidoDeCompra pedidoDeCompra, Double valor) {
         PedidoDeCompra pedidoBancoDeDados = procurarPedidoDeCompraPeloNumeroDePedido(pedidoDeCompra.getNumeroDePedido());
-        Double auxiliar = pedidoBancoDeDados.getValorAproximado();
+        Double auxiliar = pedidoBancoDeDados.getSaldo();
 
         if (auxiliar >= valor) {
-            pedidoBancoDeDados.setValorAproximado(auxiliar - valor);
+            pedidoBancoDeDados.setSaldo(auxiliar - valor);
             pedidoDeCompraRespository.save(pedidoBancoDeDados);
             return 0.0;
         } else {
             Double valorNota = valor - auxiliar;
-            pedidoBancoDeDados.setValorAproximado(valor - auxiliar);
+            pedidoBancoDeDados.setSaldo(valor - auxiliar);
             pedidoDeCompraRespository.save(pedidoBancoDeDados);
             return valorNota;
         }

@@ -13,7 +13,7 @@ public class EntradaCadastroPedidoDeCompraDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeVencimento;
-    private Double valorAproximado;
+    private Double saldo;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
@@ -37,12 +37,12 @@ public class EntradaCadastroPedidoDeCompraDTO {
         this.dataDeVencimento = dataDeVencimento;
     }
 
-    public Double getValorAproximado() {
-        return valorAproximado;
+    public Double getSaldo() {
+        return saldo;
     }
 
-    public void setValorAproximado(Double valorAproximado) {
-        this.valorAproximado = valorAproximado;
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
     }
 
     public LocalDate getDataDePagamento() {
@@ -95,7 +95,7 @@ public class EntradaCadastroPedidoDeCompraDTO {
         responsavel.setEmail(this.emailResponsavel);
 
         pedidoDeCompra.setDataDeVencimento(this.dataDeVencimento);
-        pedidoDeCompra.setValorAproximado(this.valorAproximado);
+        pedidoDeCompra.setSaldo(this.saldo);
         pedidoDeCompra.setDataDePagamento(this.dataDePagamento);
         pedidoDeCompra.setResponsavel(responsavel);
         pedidoDeCompra.setDataLimiteEnvio(this.dataLimiteEnvio);
