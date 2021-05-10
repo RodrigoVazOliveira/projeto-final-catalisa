@@ -24,6 +24,8 @@ public class Usuario {
 
     private RolesEnum nivelDeAcesso;
 
+    private Boolean ativo;
+
     public Usuario() {
     }
 
@@ -65,6 +67,14 @@ public class Usuario {
 
     public void setNomeCompleto(String nomeCompleto) {
         this.nomeCompleto = nomeCompleto;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Override
