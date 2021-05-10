@@ -4,6 +4,7 @@ import br.com.zup.zupayments.dtos.pedidodecompras.entrada.EntradaCadastroPedidoD
 import br.com.zup.zupayments.dtos.pedidodecompras.entrada.FiltroPedidoDeCompraComNotaFiscalPendenteDTO;
 import br.com.zup.zupayments.dtos.pedidodecompras.saida.SaidaCadastroPedidoDeCompraDTO;
 import br.com.zup.zupayments.models.PedidoDeCompra;
+import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.services.PedidoDeCompraService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -76,8 +77,8 @@ public class PedidoDeCompraController {
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Atualizar o pedido de compra com responsavel inativo")
-    public void alterarResponsavelDoPedido(Long numeroDoPedido) {
-        pedidoDeCompraService.atualizarResponsavelPorPedidoDeCompra(numeroDoPedido);
+    public void alterarResponsavelDoPedido(Long numeroDoPedido, Responsavel responsavel) {
+        pedidoDeCompraService.atualizarResponsavelPorPedidoDeCompra(numeroDoPedido,responsavel);
     }
 
     @GetMapping("cobrancas")

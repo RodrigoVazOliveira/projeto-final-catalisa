@@ -103,9 +103,9 @@ public class PedidoDeCompraService {
         return pedidoDeCompras;
     }
 
-    public void atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido) {
+    public void atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido,Responsavel responsavel) {
         PedidoDeCompra pedidoDeCompra = procurarPedidoDeCompraPeloNumeroDePedido(numeroDoPedido);
-        pedidoDeCompra.setResponsavel(pedidoDeCompra.getResponsavel());
+        pedidoDeCompra.setResponsavel(responsavel);
         pedidoDeCompraRespository.save(pedidoDeCompra);
     }
 
@@ -121,10 +121,13 @@ public class PedidoDeCompraService {
     }
 
     public void debitarValorDaNotaFiscalNoPedido(NotaFiscal nf,PedidoDeCompra pedidoDeCompra){
+        PedidoDeCompra pedidoDeCompra1 = new PedidoDeCompra();
+        NotaFiscal notaFiscal = new NotaFiscal();
         if (pedidoDeCompra.getValorAproximado() < nf.getValorAPagar()){
             throw new RuntimeException("Pedido não possui saldo sufuciente");
         }
-        pedidoDeCompraRespository.save(pedidoDeCompra);
-
+        pedidoDeCompraRespository.findById(pedidoDeCompra1.getNumeroDePedido());
+        pedidoDeCompra1.setValorAproximado(pedidoDeCompra1.getValorAproximado()- notaFiscal.getValorAPagar());
+        pedidoDeCompraRespository.save(pedidoDeCompra1);
     }
 }
