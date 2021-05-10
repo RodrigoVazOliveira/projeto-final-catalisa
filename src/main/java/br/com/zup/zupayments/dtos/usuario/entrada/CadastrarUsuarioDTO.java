@@ -69,6 +69,7 @@ public class CadastrarUsuarioDTO {
         usuario.setEmail(this.email);
         usuario.setSenha(this.senha);
         usuario.setNivelDeAcesso(this.nivelDeAcesso);
+        usuario.setAtivo(true);
 
         return usuario;
     }
