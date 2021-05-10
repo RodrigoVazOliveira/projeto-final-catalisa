@@ -32,7 +32,7 @@ public class UsuarioService {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(id);
 
         if (optionalUsuario.isEmpty()) {
-            throw new UsuarioNaoExisteException("O usuário com id " + id + " não existe!")
+            throw new UsuarioNaoExisteException("O usuário com id " + id + " não existe!");
         }
 
         return optionalUsuario.get();
