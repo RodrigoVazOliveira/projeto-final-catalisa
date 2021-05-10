@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.services;
 
+import br.com.zup.zupayments.enums.RolesEnum;
 import br.com.zup.zupayments.exceptions.erros.UsuarioNaoExisteException;
 import br.com.zup.zupayments.models.Usuario;
 import br.com.zup.zupayments.repositories.UsuarioRepository;
@@ -41,5 +42,11 @@ public class UsuarioService {
         Usuario usuarioAtual = procurarUsuarioPeloId(id);
         usuarioAtual.setAtivo(!usuarioAtual.getAtivo());
         usuarioRepository.save(usuarioAtual);
+    }
+
+    public Usuario atualizarNivelDeAcesso(Long id, RolesEnum nivelDeAcesso) {
+        Usuario usuario = procurarUsuarioPeloId(id);
+        usuario.setNivelDeAcesso(nivelDeAcesso);
+        return usuarioRepository.save(usuario);
     }
 }
