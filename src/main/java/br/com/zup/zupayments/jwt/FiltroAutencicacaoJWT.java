@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.jwt;
 
+import br.com.zup.zupayments.dtos.login.LoginDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
