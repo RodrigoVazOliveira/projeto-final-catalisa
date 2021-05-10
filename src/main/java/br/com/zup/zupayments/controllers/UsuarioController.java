@@ -20,4 +20,8 @@ public class UsuarioController {
     public void cadastrarNovoUsuario(@RequestBody @Valid CadastrarUsuarioDTO usuario) {
         usuarioService.cadastrarNovoUsuario(usuario.converterDtoParaModelo());
     }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Iterable<U>
 }
