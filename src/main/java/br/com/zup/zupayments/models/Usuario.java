@@ -1,0 +1,71 @@
+package br.com.zup.zupayments.models;
+
+import br.com.zup.zupayments.enums.RolesEnum;
+
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
+@Table(name = "usuarios")
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 150, nullable = false, unique = true)
+    private String email;
+
+    @Column(length = 30, nullable = false)
+    private String senha;
+
+    private RolesEnum nivelDeAcesso;
+
+    public Usuario() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public RolesEnum getNivelDeAcesso() {
+        return nivelDeAcesso;
+    }
+
+    public void setNivelDeAcesso(RolesEnum nivelDeAcesso) {
+        this.nivelDeAcesso = nivelDeAcesso;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+}
