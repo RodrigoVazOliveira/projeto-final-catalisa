@@ -19,7 +19,7 @@ public class Usuario {
     @Column(length = 150, nullable = false, unique = true)
     private String email;
 
-    @Column(length = 30, nullable = false)
+    @Column(nullable = false)
     private String senha;
 
     private RolesEnum nivelDeAcesso;
