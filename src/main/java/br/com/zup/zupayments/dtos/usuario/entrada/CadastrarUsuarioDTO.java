@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.dtos.usuario.entrada;
 
 import br.com.zup.zupayments.enums.RolesEnum;
+import br.com.zup.zupayments.models.Usuario;
 
 import javax.validation.constraints.*;
 
@@ -60,5 +61,15 @@ public class CadastrarUsuarioDTO {
 
     public void setNivelDeAcesso(RolesEnum nivelDeAcesso) {
         this.nivelDeAcesso = nivelDeAcesso;
+    }
+
+    public Usuario converterDtoParaModelo() {
+        Usuario usuario = new Usuario();
+        usuario.setNomeCompleto(this.nomeCompleto);
+        usuario.setEmail(this.email);
+        usuario.setSenha(this.senha);
+        usuario.setNivelDeAcesso(this.nivelDeAcesso);
+
+        return usuario;
     }
 }
