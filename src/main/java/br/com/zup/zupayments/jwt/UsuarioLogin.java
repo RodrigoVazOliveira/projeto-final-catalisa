@@ -1,31 +1,26 @@
 package br.com.zup.zupayments.jwt;
 
+import br.com.zup.zupayments.enums.RolesEnum;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class UsuarioLogin implements UserDetails {
 
-    private String cpf;
     private String email;
     private String senha;
+    private String nomeCompleto;
+    private RolesEnum rolesEnum;
 
-    public UsuarioLogin(String cpf, String email, String senha) {
-        this.cpf = cpf;
+    public UsuarioLogin(String email, String senha, String nomeCompleto, RolesEnum rolesEnum) {
         this.email = email;
         this.senha = senha;
-    }
-
-    public UsuarioLogin() {
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+        this.nomeCompleto = nomeCompleto;
+        this.rolesEnum = rolesEnum;
     }
 
     public String getEmail() {
@@ -44,9 +39,31 @@ public class UsuarioLogin implements UserDetails {
         this.senha = senha;
     }
 
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
+    }
+
+    public RolesEnum getRolesEnum() {
+        return rolesEnum;
+    }
+
+    public void setRolesEnum(RolesEnum rolesEnum) {
+        this.rolesEnum = rolesEnum;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (RolesEnum role : RolesEnum.values()) {
+            grantedAuthorities.add(
+                    new SimpleGrantedAuthority(rolesEnum.getRole())
+            );
+        }
+        return grantedAuthorities;
     }
 
     @Override

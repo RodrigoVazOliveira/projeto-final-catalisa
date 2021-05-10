@@ -4,14 +4,17 @@ import br.com.zup.zupayments.exceptions.TokenNotValidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
 public class ComponenteJWT {
 
+    @Value("{jwt.secret}")
     private String segredo;
 
+    @Value("${jwt.timeout}")
     private Long milisegundos;
 
     public String gerarToken(String username) {

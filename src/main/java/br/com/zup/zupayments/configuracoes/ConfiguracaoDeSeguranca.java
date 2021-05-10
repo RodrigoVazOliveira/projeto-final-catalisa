@@ -1,9 +1,15 @@
 package br.com.zup.zupayments.configuracoes;
 
 import br.com.zup.zupayments.enums.RolesEnum;
+import br.com.zup.zupayments.jwt.ComponenteJWT;
+import br.com.zup.zupayments.jwt.FiltroAutencicacaoJWT;
+import br.com.zup.zupayments.jwt.FiltroDeAutorizacao;
+import br.com.zup.zupayments.jwt.UsuarioLoginService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,6 +44,12 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
     };
 
 
+    @Autowired
+    private ComponenteJWT componenteJWT;
+
+    @Autowired
+    private UsuarioLoginService usuarioLoginService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable();
@@ -65,6 +77,9 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.POST, "/usuarios/").permitAll()
                     .anyRequest().authenticated();
 
+        http.addFilter(new FiltroAutencicacaoJWT(componenteJWT, authenticationManager()));
+        http.addFilter(new FiltroDeAutorizacao(authenticationManager(), componenteJWT, usuarioLoginService));
+
     }
 
     @Override
@@ -82,5 +97,10 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
     @Bean
     protected BCryptPasswordEncoder critografarSenha() {
        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(usuarioLoginService).passwordEncoder(critografarSenha());
     }
 }

@@ -21,6 +21,7 @@ public class UsuarioLoginService implements org.springframework.security.core.us
 
         usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Email não cadastrado"));
         Usuario usuario = usuarioOptional.get();
-        return new UsuarioLogin(usuario.getEmail(), usuario.getSenha(), usuario.getNomeCompleto());
+        return new UsuarioLogin(usuario.getEmail(), usuario.getSenha(),
+                usuario.getNomeCompleto(), usuario.getNivelDeAcesso());
     }
 }
