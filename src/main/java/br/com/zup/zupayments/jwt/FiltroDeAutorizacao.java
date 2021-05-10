@@ -16,13 +16,13 @@ import java.io.IOException;
 public class FiltroDeAutorizacao extends BasicAuthenticationFilter {
 
     private ComponenteJWT componenteJWT;
-    private UserDetailsService userDetailsService;
+    private UsuarioLoginService userDetailsService;
 
     public FiltroDeAutorizacao(AuthenticationManager authenticationManager, ComponenteJWT componenteJWT,
-                               UserDetailsService userDetailsService) {
+                               UsuarioLoginService usuarioLoginService) {
         super(authenticationManager);
         this.componenteJWT = componenteJWT;
-        this.userDetailsService = userDetailsService;
+        this.userDetailsService = usuarioLoginService;
     }
 
     private UsernamePasswordAuthenticationToken pegarAutenticacao(HttpServletRequest request, String token){
