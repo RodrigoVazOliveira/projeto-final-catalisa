@@ -119,4 +119,12 @@ public class PedidoDeCompraService {
             emailService.enviarEmailDePedidoPendenteDeNotaFiscal(pedidoDeCompra);
         }
     }
+
+    public void debitarValorDaNotaFiscalNoPedido(NotaFiscal nf,PedidoDeCompra pedidoDeCompra){
+        if (pedidoDeCompra.getValorAproximado() < nf.getValorAPagar()){
+            throw new RuntimeException("Pedido não possui saldo sufuciente");
+        }
+        pedidoDeCompraRespository.save(pedidoDeCompra);
+
+    }
 }
