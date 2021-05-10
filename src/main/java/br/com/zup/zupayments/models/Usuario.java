@@ -13,6 +13,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 50, nullable = false)
+    private String nomeCompleto;
+
     @Column(length = 150, nullable = false, unique = true)
     private String email;
 
@@ -54,6 +57,14 @@ public class Usuario {
 
     public void setNivelDeAcesso(RolesEnum nivelDeAcesso) {
         this.nivelDeAcesso = nivelDeAcesso;
+    }
+
+    public String getNomeCompleto() {
+        return nomeCompleto;
+    }
+
+    public void setNomeCompleto(String nomeCompleto) {
+        this.nomeCompleto = nomeCompleto;
     }
 
     @Override
