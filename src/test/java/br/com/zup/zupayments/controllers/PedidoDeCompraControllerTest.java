@@ -1,7 +1,6 @@
 package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.dtos.pedidodecompras.entrada.EntradaCadastroPedidoDeCompraDTO;
-import br.com.zup.zupayments.dtos.pedidodecompras.entrada.FiltroPedidoDeCompraComNotaFiscalPendenteDTO;
 import br.com.zup.zupayments.dtos.pedidodecompras.saida.SaidaCadastroPedidoDeCompraDTO;
 import br.com.zup.zupayments.enums.FormaDePagamento;
 import br.com.zup.zupayments.models.Fornecedor;
@@ -25,7 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -67,7 +65,7 @@ public class PedidoDeCompraControllerTest {
         this.entradaCadastroPedidoDeCompraDTO.setDataLimiteEnvio(LocalDate.parse("2021-06-01", dtf));
         this.entradaCadastroPedidoDeCompraDTO.setFormaDePagamento(FormaDePagamento.BOLETO);
         this.entradaCadastroPedidoDeCompraDTO.setEmailResponsavel("email@email.com");
-        this.entradaCadastroPedidoDeCompraDTO.setValorAproximado(2.000);
+        this.entradaCadastroPedidoDeCompraDTO.setSaldo(2.000);
 
         this.pedidoDeCompra = this.entradaCadastroPedidoDeCompraDTO.converterDtoParaModelo();
         this.pedidoDeCompra.setNumeroDePedido(1L);
@@ -85,7 +83,7 @@ public class PedidoDeCompraControllerTest {
         PedidoDeCompra pedido = new PedidoDeCompra();
         pedido.setNumeroDePedido(31L);
         pedido.setDataDePagamento(LocalDate.parse("2021-05-01"));
-        pedido.setValorAproximado(2.000);
+        pedido.setSaldo(2.000);
         pedido.setDataDePagamento(LocalDate.parse("2021-05-01"));
         pedido.setDataLimiteEnvio(LocalDate.parse("2021-05-01"));
         pedido.setFormaDePagamento(FormaDePagamento.BOLETO);

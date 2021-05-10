@@ -43,7 +43,7 @@ public class PedidoDeCompraServiceTest {
         this.pedidoDeCompra = new PedidoDeCompra();
         this.pedidoDeCompra.setNumeroDePedido(31L);
         this.pedidoDeCompra.setDataDePagamento(LocalDate.now());
-        this.pedidoDeCompra.setValorAproximado(2.000);
+        this.pedidoDeCompra.setSaldo(2.000);
         this.pedidoDeCompra.setDataDePagamento(LocalDate.now());
         this.pedidoDeCompra.setDataLimiteEnvio(LocalDate.now());
         this.pedidoDeCompra.setFormaDePagamento(FormaDePagamento.BOLETO);
@@ -68,7 +68,7 @@ public class PedidoDeCompraServiceTest {
         PedidoDeCompra pedido = new PedidoDeCompra();
         pedido.setNumeroDePedido(31L);
         pedido.setDataDePagamento(LocalDate.now());
-        pedido.setValorAproximado(2.000);
+        pedido.setSaldo(2.000);
         pedido.setDataDePagamento(LocalDate.now());
         pedido.setDataLimiteEnvio(LocalDate.now());
         pedido.setFormaDePagamento(FormaDePagamento.BOLETO);
@@ -130,7 +130,7 @@ public class PedidoDeCompraServiceTest {
 
     @Test
     public void testarObterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(){
-        Mockito.when(pedidoDeCompraRespository.findAllByValorAproximadoGreaterThanAndResponsavelAtivo
+        Mockito.when(pedidoDeCompraRespository.findAllBySaldoGreaterThanAndResponsavelAtivo
                 (Mockito.anyDouble(), Mockito.anyBoolean())).thenReturn(this.pedidoDeCompras);
         Iterable<PedidoDeCompra> test = pedidoDeCompraService.obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(456.7,false, LocalDate.now());
         Assertions.assertEquals(test, this.pedidoDeCompras);

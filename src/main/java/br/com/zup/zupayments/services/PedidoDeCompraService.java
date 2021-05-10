@@ -85,7 +85,7 @@ public class PedidoDeCompraService {
         Iterable<NotaFiscal> notasFiscais = notaFiscalService.obterTodasNotaFiscalComIntervaloDeDataDeEmissao(
                 dataInicial, LocalDate.now());
         Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraRespository
-                .findAllByValorAproximadoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
+                .findAllBySaldoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
         return verificarPendenciasDeNotaFiscal((List<NotaFiscal>) notasFiscais, (List<PedidoDeCompra>) pedidoDeCompras);
     }
 
@@ -120,14 +120,43 @@ public class PedidoDeCompraService {
         }
     }
 
-    public void debitarValorDaNotaFiscalNoPedido(NotaFiscal nf,PedidoDeCompra pedidoDeCompra){
-        PedidoDeCompra pedidoDeCompra1 = new PedidoDeCompra();
-        NotaFiscal notaFiscal = new NotaFiscal();
-        if (pedidoDeCompra.getValorAproximado() < nf.getValorAPagar()){
+    public void debitarValorDaNotaFiscalNoPedido(NotaFiscal nf){
+        Double saldoTotal = somarValoresDosPedidos(nf.getPedidoDeCompra());
+
+        if (saldoTotal < nf.getValorAPagar()){
             throw new RuntimeException("Pedido não possui saldo sufuciente");
         }
-        pedidoDeCompraRespository.findById(pedidoDeCompra1.getNumeroDePedido());
-        pedidoDeCompra1.setValorAproximado(pedidoDeCompra1.getValorAproximado()- notaFiscal.getValorAPagar());
-        pedidoDeCompraRespository.save(pedidoDeCompra1);
+
+        Double valorNota = nf.getValorAPagar();
+        for (PedidoDeCompra pedidoDeCompra : nf.getPedidoDeCompra()) {
+            valorNota = atualizarPedido(pedidoDeCompra, valorNota);
+        }
+
+    }
+
+    private Double somarValoresDosPedidos(List<PedidoDeCompra> pedidoDeCompras) {
+        Double soma = 0.0;
+
+        for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
+            soma += pedidoDeCompra.getSaldo();
+        }
+
+        return soma;
+    }
+
+    private Double atualizarPedido(PedidoDeCompra pedidoDeCompra, Double valor) {
+        PedidoDeCompra pedidoBancoDeDados = procurarPedidoDeCompraPeloNumeroDePedido(pedidoDeCompra.getNumeroDePedido());
+        Double auxiliar = pedidoBancoDeDados.getSaldo();
+
+        if (auxiliar >= valor) {
+            pedidoBancoDeDados.setSaldo(auxiliar - valor);
+            pedidoDeCompraRespository.save(pedidoBancoDeDados);
+            return 0.0;
+        } else {
+            Double valorNota = valor - auxiliar;
+            pedidoBancoDeDados.setSaldo(valor - auxiliar);
+            pedidoDeCompraRespository.save(pedidoBancoDeDados);
+            return valorNota;
+        }
     }
 }

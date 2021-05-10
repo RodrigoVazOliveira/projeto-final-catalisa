@@ -17,7 +17,7 @@ public class PedidoDeCompra {
     private LocalDate dataDeVencimento;
 
     @Column(nullable = false)
-    private Double valorAproximado;
+    private Double saldo;
 
     @Column(nullable = false)
     private LocalDate dataDePagamento;
@@ -56,12 +56,12 @@ public class PedidoDeCompra {
         this.dataDeVencimento = dataDeVencimento;
     }
 
-    public Double getValorAproximado() {
-        return valorAproximado;
+    public Double getSaldo() {
+        return saldo;
     }
 
-    public void setValorAproximado(Double valorAproximado) {
-        this.valorAproximado = valorAproximado;
+    public void setSaldo(Double saldo) {
+        this.saldo = saldo;
     }
 
     public LocalDate getDataDePagamento() {
