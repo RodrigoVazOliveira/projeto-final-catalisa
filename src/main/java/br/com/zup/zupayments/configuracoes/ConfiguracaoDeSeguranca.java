@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -63,6 +64,12 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/pedidos/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
 
                 .anyRequest().authenticated();
+
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/usuarios/")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
     }
 
     @Override
@@ -75,5 +82,10 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
+    }
+
+    @Bean
+    protected BCryptPasswordEncoder critografarSenha() {
+       return new BCryptPasswordEncoder();
     }
 }
