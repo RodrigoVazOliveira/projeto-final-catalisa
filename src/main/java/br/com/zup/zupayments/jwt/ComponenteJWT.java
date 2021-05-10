@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.jwt;
 
+import br.com.zup.zupayments.exceptions.TokenNotValidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,7 +29,7 @@ public class ComponenteJWT {
             Claims claims = Jwts.parser().setSigningKey(segredo.getBytes()).parseClaimsJws(token).getBody();
             return claims;
         }catch (Exception error) {
-            throw new TokenNotValidExcecption(error.getMessage());
+            throw new TokenNotValidException(error.getMessage());
         }
     }
 
@@ -43,7 +44,7 @@ public class ComponenteJWT {
                 return true;
             }
             return false;
-        }catch (TokenNotValidExcecption error){
+        }catch (TokenNotValidException error){
             return false;
         }
     }
