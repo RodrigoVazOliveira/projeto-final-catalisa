@@ -60,16 +60,11 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PATCH,"/notas_ficais/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.GET,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.POST,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.PATCH,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.GET,"/pedidos/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                    .antMatchers(HttpMethod.PATCH,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                    .antMatchers(HttpMethod.GET,"/pedidos/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                    .antMatchers(HttpMethod.POST, "/usuarios/").permitAll()
+                    .anyRequest().authenticated();
 
-                .anyRequest().authenticated();
-
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/usuarios/")
-                .permitAll()
-                .anyRequest()
-                .authenticated();
     }
 
     @Override
