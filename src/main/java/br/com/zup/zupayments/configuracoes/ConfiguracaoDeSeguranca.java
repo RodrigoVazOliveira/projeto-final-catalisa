@@ -64,6 +64,12 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/pedidos/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
 
                 .anyRequest().authenticated();
+        
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/usuarios/")
+                .permitAll()
+                .anyRequest()
+                .authenticated();
     }
 
     @Override
