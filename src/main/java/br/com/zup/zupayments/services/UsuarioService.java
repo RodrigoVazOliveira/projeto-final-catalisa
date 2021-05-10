@@ -36,4 +36,10 @@ public class UsuarioService {
 
         return optionalUsuario.get();
     }
+
+    public void ativarOuDesativarUsuario(Long id) {
+        Usuario usuarioAtual = procurarUsuarioPeloId(id);
+        usuarioAtual.setAtivo(!usuarioAtual.getAtivo());
+        usuarioRepository.save(usuarioAtual);
+    }
 }
