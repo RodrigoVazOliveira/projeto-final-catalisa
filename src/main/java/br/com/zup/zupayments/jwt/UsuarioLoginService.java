@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 import java.util.Optional;
 
 public class UsuarioLoginService implements UserDetailsService {
@@ -17,7 +16,10 @@ public class UsuarioLoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email)
-;        return new ;
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+
+        usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Email não cadastrado"));
+        Usuario usuario = usuarioOptional.get();
+        return new UsuarioLogin(usuario.getEmail(), usuario.getSenha(), usuario.getNomeCompleto());
     }
 }
