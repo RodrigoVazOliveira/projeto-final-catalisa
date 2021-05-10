@@ -51,7 +51,7 @@ public class UsuarioDTO {
     public static UsuarioDTO converterModeloParaDTO(Usuario usuario) {
         UsuarioDTO dto = new UsuarioDTO();
         dto.setNomeCompleto(usuario.getNomeCompleto());
-        dto.setEmail(dto.getEmail());
+        dto.setEmail(usuario.getEmail());
         dto.setNivelDeAcesso(usuario.getNivelDeAcesso());
         dto.setAtivo(usuario.getAtivo());
 
