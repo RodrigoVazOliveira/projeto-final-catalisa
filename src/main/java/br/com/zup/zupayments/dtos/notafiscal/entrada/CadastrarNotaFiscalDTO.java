@@ -13,6 +13,7 @@ import java.util.List;
 
 public class CadastrarNotaFiscalDTO {
 
+
     private Long numeroDaNota;
     private String cnpjOuCpfFornecedor;
     private Double valorAPagar;

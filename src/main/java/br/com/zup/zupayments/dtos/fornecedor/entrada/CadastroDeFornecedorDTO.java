@@ -5,6 +5,8 @@ import br.com.zup.zupayments.models.Fornecedor;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.xml.bind.ValidationException;
+
 public class CadastroDeFornecedorDTO {
 
     @CPF(message = "{validacao.cpf_invalido}")
