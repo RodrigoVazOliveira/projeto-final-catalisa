@@ -46,7 +46,6 @@ public class FiltroDeAutorizacao extends BasicAuthenticationFilter {
             try {
                 UsernamePasswordAuthenticationToken auth = pegarAutenticacao(request, autorizacao.substring(6));
                 SecurityContextHolder.getContext().setAuthentication(auth);
-                System.out.println(auth.toString());
             }catch (TokenNotValidException error){
                 error.getStackTrace();
             }
