@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("fornecedores/")
 @Api(value = "API REST de fornecedores")
@@ -20,7 +22,7 @@ public class FornecedorController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Cadastrar um novo fornecedor")
-    public Fornecedor cadastrarFornecedor(@RequestBody CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
+    public Fornecedor cadastrarFornecedor(@RequestBody @Valid CadastroDeFornecedorDTO cadastroDeFornecedorDTO){
         return fornecedorService.cadastrarFornecedor(
                 cadastroDeFornecedorDTO.converterDtoParaModelo()
         );

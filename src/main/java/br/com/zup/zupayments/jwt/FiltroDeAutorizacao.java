@@ -7,6 +7,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +34,7 @@ public class FiltroDeAutorizacao extends BasicAuthenticationFilter {
         Claims claims = componenteJWT.getClaims(token);
         UserDetails usuario = userDetailsService.loadUserByUsername(claims.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(usuario,null, usuario.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword(), usuario.getAuthorities());
     }
 
     @Override
@@ -44,7 +46,9 @@ public class FiltroDeAutorizacao extends BasicAuthenticationFilter {
             try {
                 UsernamePasswordAuthenticationToken auth = pegarAutenticacao(request, autorizacao.substring(6));
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            }catch (TokenNotValidException error){}
+            }catch (TokenNotValidException error){
+                error.getStackTrace();
+            }
         }
         chain.doFilter(request, response);
     }

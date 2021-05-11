@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("pedidos/")
@@ -31,7 +32,7 @@ public class PedidoDeCompraController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Cadastrar um novo pedido de compra")
     public SaidaCadastroPedidoDeCompraDTO cadastrarNovoPedidoDeCompra(
-            @RequestBody  EntradaCadastroPedidoDeCompraDTO cadastroPedidoDeCompraDTO) {
+            @RequestBody @Valid EntradaCadastroPedidoDeCompraDTO cadastroPedidoDeCompraDTO) {
 
         PedidoDeCompra pedidoDeCompra = pedidoDeCompraService.cadastrarNovoPedidoDeCompra(
                 cadastroPedidoDeCompraDTO.converterDtoParaModelo()
