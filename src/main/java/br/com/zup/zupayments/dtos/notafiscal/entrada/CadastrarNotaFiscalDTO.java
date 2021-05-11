@@ -28,8 +28,6 @@ public class CadastrarNotaFiscalDTO {
     private Double valorAPagar;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
-    @NotBlank(message = "{validacao.campo_em_branco}")
-    @NotEmpty(message = "{validacao.campo_vazio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeEmissao;
 
@@ -37,8 +35,6 @@ public class CadastrarNotaFiscalDTO {
     private List<Long> pedidoDeCompras;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
-    @NotBlank(message = "{validacao.campo_em_branco}")
-    @NotEmpty(message = "{validacao.campo_vazio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeEnvio;
 

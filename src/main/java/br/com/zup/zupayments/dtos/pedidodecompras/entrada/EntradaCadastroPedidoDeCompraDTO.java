@@ -15,8 +15,6 @@ import java.time.LocalDate;
 public class EntradaCadastroPedidoDeCompraDTO {
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
-    @NotBlank(message = "{validacao.campo_em_branco}")
-    @NotEmpty(message = "{validacao.campo_vazio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeVencimento;
 
@@ -24,8 +22,6 @@ public class EntradaCadastroPedidoDeCompraDTO {
     private Double saldo;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
-    @NotBlank(message = "{validacao.campo_em_branco}")
-    @NotEmpty(message = "{validacao.campo_vazio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
 
@@ -36,8 +32,6 @@ public class EntradaCadastroPedidoDeCompraDTO {
     private String emailResponsavel;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
-    @NotBlank(message = "{validacao.campo_em_branco}")
-    @NotEmpty(message = "{validacao.campo_vazio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataLimiteEnvio;
 
