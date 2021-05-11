@@ -21,6 +21,9 @@ public class UsuarioService {
 
     public Usuario cadastrarNovoUsuario(Usuario usuario) {
         usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
+
+
+
         return usuarioRepository.save(usuario);
     }
 
