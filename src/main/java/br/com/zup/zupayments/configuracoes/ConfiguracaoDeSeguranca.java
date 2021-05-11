@@ -47,7 +47,7 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER),String.valueOf(RolesEnum.PERFIL_COMPRAS),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.PATCH, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
                 .antMatchers(HttpMethod.POST, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.GET, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER),String.valueOf(RolesEnum.PERFIL_COMPRAS),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                .antMatchers(HttpMethod.GET, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.PATCH, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.POST, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.GET, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
