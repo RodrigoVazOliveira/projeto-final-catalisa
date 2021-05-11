@@ -41,6 +41,10 @@ Cada fornecedor é de responsabilidade de uma área, com isso teremos também um
 /notas-fiscais/1/ | PATCH | NO CONTENT | cancelar uma nota fiscal
 /pedidos/responsaveis?ativo=false | GET | NO CONTENT | gerar relatório de pedidos com responsáveis inativos
 /pedidos/pendentes?valorMinimo=111&dataInicial=01/05/2021&ativo=true | GET | NO CONTENT | Emitir um relatório do responsável que não enviou a nota fiscal;
+/usuarios/ | POST | JSON | Cadastrar novo usuário
+/usuarios/ | GET | NO CONTENT | mostrar todos usuários
+/usuarios/nivel?idUsuario={id} | PATCH | JSON | alterar o nível de acesso do usuário
+/usuarios/ativo?idUsuario={id} | PATCH | NO CONTENT | Ativar ou desativar usuário
 
 #### Forma de envio de JSON de cadastros:
 
@@ -101,7 +105,22 @@ Cada fornecedor é de responsabilidade de uma área, com isso teremos também um
         "cnpjOuCpf":"38.551.219/0001-51"
     }
     ~~~
+5. cadastrar usuários:
+   ~~~json
+   {
+       "email":"rodrigo.oliveiraa@zup.com.br",
+       "nomeCompleto":"Rodrigo Oliveira",
+       "senha": "12345678",
+       "nivelDeAcesso": "PERFIL_MASTER"
+   }
+   ~~~
 
+6. Modificar nível de acesso do usuário:
+   ~~~json
+   {
+       "nivelDeAcesso": "PERFIL_FINANCEIRO"
+   }
+   ~~~
 ### DOCUMENTAÇÃO:
 
 Swagger UI: http://localhost:8080/swagger-ui.html
