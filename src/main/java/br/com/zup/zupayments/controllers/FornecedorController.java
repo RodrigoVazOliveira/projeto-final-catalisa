@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.controllers;
 
+import br.com.zup.zupayments.dtos.fornecedor.entrada.AtualizarFornecedorDTO;
 import br.com.zup.zupayments.dtos.fornecedor.entrada.CadastroDeFornecedorDTO;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.services.FornecedorService;
@@ -34,10 +35,10 @@ public class FornecedorController {
         return fornecedorService.pesquisarFornecedorPorCnpjOuCpf(cnpjouCpf);
     }
 
-    @PutMapping("{id}/")
-    public Fornecedor atualizarFornecedor(@PathVariable String id, @RequestBody Fornecedor fornecedor){
-        Fornecedor objFornecedor = fornecedorService.atualizarCadastroFornecedor(id, fornecedor);
-        return objFornecedor;
+    @PutMapping("{cnpjoucpf}/")
+    public Fornecedor atualizarFornecedor(@PathVariable String cnpjoucpf,
+                                          @RequestBody AtualizarFornecedorDTO atualizarFornecedorDTO){
+        return  fornecedorService.atualizarCadastroFornecedor(cnpjoucpf,atualizarFornecedorDTO.converterDtoParaModelo());
     }
 
     @PatchMapping

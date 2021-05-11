@@ -31,17 +31,21 @@ public class FornecedorService {
         throw new FornecedorNaoCadastrado("Fornecedor não foi cadastrado");
     }
 
-    public Fornecedor atualizarCadastroFornecedor (String id, Fornecedor fornecedor){
+    public Fornecedor atualizarCadastroFornecedor (String cnpjOuCpf, Fornecedor fornecedor){
+        Fornecedor fornecedorBD = pesquisarFornecedorPorCnpjOuCpf(cnpjOuCpf);
 
-        Optional<Fornecedor> fornecedorOptional = fornecedorRepository.findById(id);
+        fornecedorBD.setRazaoSocial(fornecedor.getRazaoSocial());
+        fornecedorBD.setBairro(fornecedor.getBairro());
+        fornecedorBD.setCep(fornecedor.getCep());
+        fornecedorBD.setCategoriaDeCusto(fornecedor.getCategoriaDeCusto());
+        fornecedorBD.setCidade(fornecedor.getCidade());
+        fornecedorBD.setEmail(fornecedor.getEmail());
+        fornecedorBD.setEstado(fornecedor.getEstado());
+        fornecedorBD.setLogradouro(fornecedor.getLogradouro());
+        fornecedorBD.setNumero(fornecedor.getNumero());
+        fornecedorBD.setTelefone(fornecedor.getTelefone());
 
-        if (!fornecedorOptional.isPresent())
-            throw new FornecedorNaoCadastrado("Fornecedor não foi cadastrado");
-
-        fornecedor.setCnpjOuCpf(id);
-        fornecedorRepository.save(fornecedor);
-
-        return fornecedor;
+        return fornecedorRepository.save(fornecedorBD);
     }
 
     public void ativarOuDesativarFornecedor(String cnpjOuCpf) {
