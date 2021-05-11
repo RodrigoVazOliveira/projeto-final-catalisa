@@ -18,9 +18,7 @@ public class FornecedorService {
         if (fornecedorRepository.existsByCnpjOuCpf(fornecedor.getCnpjOuCpf())) {
             throw new FornecedorCadastradoException("Fornecedor com CNPJ/CPF " + fornecedor.getCnpjOuCpf() + " já cadastrado");
         }
-        String cpnjOuCpf = fornecedor.getCnpjOuCpf().replace(".", "")
-                .replace("-", "");
-        fornecedor.setCnpjOuCpf(cpnjOuCpf);
+
         return fornecedorRepository.save(fornecedor);
     }
 
@@ -34,8 +32,8 @@ public class FornecedorService {
         throw new FornecedorNaoCadastrado("Fornecedor não foi cadastrado");
     }
 
-    public Fornecedor atualizarCadastroFornecedor (String cnpjOuCpf, Fornecedor fornecedor){
-        Fornecedor fornecedorBD = pesquisarFornecedorPorCnpjOuCpf(cnpjOuCpf);
+    public Fornecedor atualizarCadastroFornecedor ( Fornecedor fornecedor){
+        Fornecedor fornecedorBD = pesquisarFornecedorPorCnpjOuCpf(fornecedor.getCnpjOuCpf());
 
         fornecedorBD.setRazaoSocial(fornecedor.getRazaoSocial());
         fornecedorBD.setBairro(fornecedor.getBairro());

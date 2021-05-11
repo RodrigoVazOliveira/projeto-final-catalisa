@@ -35,10 +35,11 @@ public class FornecedorController {
         return fornecedorService.pesquisarFornecedorPorCnpjOuCpf(cnpjouCpf);
     }
 
-    @PutMapping("{cnpjoucpf}/")
-    public Fornecedor atualizarFornecedor(@PathVariable("cnpjoucpf") String cnpjoucpf,
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Fornecedor atualizarFornecedor(
                                           @RequestBody AtualizarFornecedorDTO atualizarFornecedorDTO){
-        return  fornecedorService.atualizarCadastroFornecedor(cnpjoucpf,atualizarFornecedorDTO.converterDtoParaModelo());
+        return  fornecedorService.atualizarCadastroFornecedor(atualizarFornecedorDTO.converterDtoParaModelo());
     }
 
     @PatchMapping
