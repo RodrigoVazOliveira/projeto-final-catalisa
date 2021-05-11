@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.exceptions;
 
+import br.com.zup.zupayments.exceptions.erros.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,4 +53,48 @@ public class ManipuladorDeExcecao extends ResponseEntityExceptionHandler {
         return respostaDeErro;
     }
 
+    @ExceptionHandler({UsuarioJaExisteComEmailException.class})
+    public RespostaDeErroSemCampo usuarioJaExisteComEmailException(UsuarioJaExisteComEmailException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({UsuarioNaoExisteException.class})
+    public RespostaDeErroSemCampo usuarioNaoExisteException(UsuarioNaoExisteException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({ResponsavelNaoExisteException.class})
+    public RespostaDeErroSemCampo responsavelNaoExisteException(ResponsavelNaoExisteException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({ResponsavelJaCadastradoException.class})
+    public RespostaDeErroSemCampo responsavelJaCadastradoException(ResponsavelJaCadastradoException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({PedidoDeCompraNaoExisteException.class})
+    public RespostaDeErroSemCampo pedidoDeCompraNaoExisteException(PedidoDeCompraNaoExisteException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({NotaFiscalNaoCadastradaException.class})
+    public RespostaDeErroSemCampo notaFiscalNaoCadastradaException(NotaFiscalNaoCadastradaException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({NotaFiscalCadastradaException.class})
+    public RespostaDeErroSemCampo notaFiscalCadastradaException(NotaFiscalCadastradaException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({FornecedorNaoCadastrado.class})
+    public RespostaDeErroSemCampo fornecedorNaoCadastrado(FornecedorNaoCadastrado ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
+
+    @ExceptionHandler({FornecedorCadastradoException.class})
+    public RespostaDeErroSemCampo fornecedorCadastradoException(FornecedorCadastradoException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
 }

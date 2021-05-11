@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.enums.RolesEnum;
+import br.com.zup.zupayments.exceptions.erros.UsuarioJaExisteComEmailException;
 import br.com.zup.zupayments.exceptions.erros.UsuarioNaoExisteException;
 import br.com.zup.zupayments.models.Usuario;
 import br.com.zup.zupayments.repositories.UsuarioRepository;
@@ -20,10 +21,11 @@ public class UsuarioService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Usuario cadastrarNovoUsuario(Usuario usuario) {
+        if (usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new UsuarioJaExisteComEmailException("Usuário com e-mail " + usuario.getEmail() + " já cadastrado!");
+        }
+
         usuario.setSenha(bCryptPasswordEncoder.encode(usuario.getSenha()));
-
-
-
         return usuarioRepository.save(usuario);
     }
 
