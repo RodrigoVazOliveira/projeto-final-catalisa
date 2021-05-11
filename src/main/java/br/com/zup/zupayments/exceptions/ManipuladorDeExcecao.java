@@ -54,46 +54,55 @@ public class ManipuladorDeExcecao extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({UsuarioJaExisteComEmailException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo usuarioJaExisteComEmailException(UsuarioJaExisteComEmailException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({UsuarioNaoExisteException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo usuarioNaoExisteException(UsuarioNaoExisteException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({ResponsavelNaoExisteException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo responsavelNaoExisteException(ResponsavelNaoExisteException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({ResponsavelJaCadastradoException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo responsavelJaCadastradoException(ResponsavelJaCadastradoException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({PedidoDeCompraNaoExisteException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo pedidoDeCompraNaoExisteException(PedidoDeCompraNaoExisteException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({NotaFiscalNaoCadastradaException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo notaFiscalNaoCadastradaException(NotaFiscalNaoCadastradaException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({NotaFiscalCadastradaException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo notaFiscalCadastradaException(NotaFiscalCadastradaException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({FornecedorNaoCadastrado.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo fornecedorNaoCadastrado(FornecedorNaoCadastrado ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
 
     @ExceptionHandler({FornecedorCadastradoException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public RespostaDeErroSemCampo fornecedorCadastradoException(FornecedorCadastradoException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }

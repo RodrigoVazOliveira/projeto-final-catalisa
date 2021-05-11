@@ -16,12 +16,11 @@ public class ResponsavelService {
     private ResponsavelRepository responsavelRepository;
 
     public Responsavel cadastrarResponsavel (Responsavel responsavel){
-        try{
-            Responsavel objResponsavel = responsavelRepository.save(responsavel);
-            return objResponsavel;
-        }catch (Exception error){
-            throw new ResponsavelJaCadastradoException("Responsável já cadastrado");
+        if (responsavelRepository.existsByEmail(responsavel.getEmail())) {
+            throw new ResponsavelJaCadastradoException("Um responsável com e-mail " + responsavel.getEmail() + " já foi cadastrado!");
         }
+
+        return responsavelRepository.save(responsavel);
     }
 
     public Responsavel procurarResponsavelPorEmail(String email) {

@@ -31,20 +31,16 @@ public class NotaFiscalService {
     }
 
     public NotaFiscal cadastrarNotaFiscal(NotaFiscal fiscal){
-        try{
-            fiscal.setResponsavel(responsavelService.procurarResponsavelPorEmail(fiscal.getResponsavel().getEmail()));
-            fiscal.setFornecedor(
-                    fornecedorService.pesquisarFornecedorPorCnpjOuCpf(fiscal.getFornecedor().getCnpjOuCpf())
-            );
-            fiscal.setPedidoDeCompra(
-                    gerarListaDePedidoDeCompraParaCadastrar(fiscal.getPedidoDeCompra())
-            );
-            NotaFiscal novaNotaFiscal = notaFiscalRepository.save(fiscal);
-            pedidoDeCompraService.debitarValorDaNotaFiscalNoPedido(novaNotaFiscal);
-            return novaNotaFiscal;
-        }catch (Exception error){
-            throw new NotaFiscalCadastradaException("Nota fiscal já cadastrada");
-        }
+        fiscal.setResponsavel(responsavelService.procurarResponsavelPorEmail(fiscal.getResponsavel().getEmail()));
+        fiscal.setFornecedor(
+                fornecedorService.pesquisarFornecedorPorCnpjOuCpf(fiscal.getFornecedor().getCnpjOuCpf())
+        );
+        fiscal.setPedidoDeCompra(
+                gerarListaDePedidoDeCompraParaCadastrar(fiscal.getPedidoDeCompra())
+        );
+        NotaFiscal novaNotaFiscal = notaFiscalRepository.save(fiscal);
+        pedidoDeCompraService.debitarValorDaNotaFiscalNoPedido(novaNotaFiscal);
+        return novaNotaFiscal;
     }
 
     private List<PedidoDeCompra> gerarListaDePedidoDeCompraParaCadastrar(List<PedidoDeCompra> pedidoDeCompras) {

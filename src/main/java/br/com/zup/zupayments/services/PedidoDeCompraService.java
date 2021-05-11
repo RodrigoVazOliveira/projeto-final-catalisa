@@ -86,6 +86,7 @@ public class PedidoDeCompraService {
                 dataInicial, LocalDate.now());
         Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraRespository
                 .findAllBySaldoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
+
         return verificarPendenciasDeNotaFiscal((List<NotaFiscal>) notasFiscais, (List<PedidoDeCompra>) pedidoDeCompras);
     }
 
