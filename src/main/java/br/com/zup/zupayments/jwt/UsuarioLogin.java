@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class UsuarioLogin implements UserDetails {
+public class    giUsuarioLogin implements UserDetails {
 
     private String email;
     private String senha;
