@@ -2,7 +2,6 @@ package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.dtos.responsavel.entrada.CadastrarResponsavelDTO;
 import br.com.zup.zupayments.models.Responsavel;
-import br.com.zup.zupayments.repositories.ResponsavelRepository;
 import br.com.zup.zupayments.services.ResponsavelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
