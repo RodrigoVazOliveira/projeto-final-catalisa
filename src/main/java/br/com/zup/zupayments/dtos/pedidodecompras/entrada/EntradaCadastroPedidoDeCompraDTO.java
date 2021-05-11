@@ -42,8 +42,6 @@ public class EntradaCadastroPedidoDeCompraDTO {
     private LocalDate dataLimiteEnvio;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
-    @NotBlank(message = "{validacao.campo_em_branco}")
-    @NotEmpty(message = "{validacao.campo_vazio}")
     private FormaDePagamento formaDePagamento;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
