@@ -1,6 +1,7 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraNaoExisteException;
+import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraSemSaldoException;
 import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
@@ -125,7 +126,7 @@ public class PedidoDeCompraService {
         Double saldoTotal = somarValoresDosPedidos(nf.getPedidoDeCompra());
 
         if (saldoTotal < nf.getValorAPagar()){
-            throw new RuntimeException("Pedido não possui saldo sufuciente");
+            throw new PedidoDeCompraSemSaldoException("Pedido não possui saldo sufuciente");
         }
 
         Double valorNota = nf.getValorAPagar();

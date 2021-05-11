@@ -106,4 +106,10 @@ public class ManipuladorDeExcecao extends ResponseEntityExceptionHandler {
     public RespostaDeErroSemCampo fornecedorCadastradoException(FornecedorCadastradoException ex) {
         return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
     }
+
+    @ExceptionHandler({PedidoDeCompraSemSaldoException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public RespostaDeErroSemCampo pedidoDeCompraSemSaldoException(PedidoDeCompraSemSaldoException ex) {
+        return new RespostaDeErroSemCampo(ex.getTipoDeErro(), ex.getStatus(), ex.getMotivo(), ex.getMessage());
+    }
 }
