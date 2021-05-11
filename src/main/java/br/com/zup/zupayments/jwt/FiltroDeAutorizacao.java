@@ -32,7 +32,7 @@ public class FiltroDeAutorizacao extends BasicAuthenticationFilter {
         Claims claims = componenteJWT.getClaims(token);
         UserDetails usuario = userDetailsService.loadUserByUsername(claims.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(usuario,null, usuario.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword(), usuario.getAuthorities());
     }
 
     @Override
@@ -44,7 +44,9 @@ public class FiltroDeAutorizacao extends BasicAuthenticationFilter {
             try {
                 UsernamePasswordAuthenticationToken auth = pegarAutenticacao(request, autorizacao.substring(6));
                 SecurityContextHolder.getContext().setAuthentication(auth);
-            }catch (TokenNotValidException error){}
+            }catch (TokenNotValidException error){
+                error.getStackTrace();
+            }
         }
         chain.doFilter(request, response);
     }

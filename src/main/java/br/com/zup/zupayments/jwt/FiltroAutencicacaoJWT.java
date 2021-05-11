@@ -30,12 +30,12 @@ public class FiltroAutencicacaoJWT extends UsernamePasswordAuthenticationFilter 
 
         try {
             LoginDTO login = objectMapper.readValue(request.getInputStream(), LoginDTO.class);
+            UsuarioLogin usuarioLogin=
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken
                     (login.getEmail(), login.getSenha(), new ArrayList<>());
 
 
             Authentication auth = authenticationManager.authenticate(authToken);
-
             return auth;
 
         } catch (IOException error) {

@@ -49,4 +49,14 @@ public class UsuarioService {
         usuario.setNivelDeAcesso(nivelDeAcesso);
         return usuarioRepository.save(usuario);
     }
+
+    public Usuario procurarUsuarioPeloEmail(String email) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findByEmail(email);
+
+        if (optionalUsuario.isEmpty()) {
+            throw new RuntimeException("Usuário com email " + email + " não localizado!");
+        }
+
+        return optionalUsuario.get();
+    }
 }
