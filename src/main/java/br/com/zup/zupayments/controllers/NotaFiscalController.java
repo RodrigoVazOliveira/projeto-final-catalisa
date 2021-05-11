@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("notas_fiscais/")
 @Api(value = "API REST de Notas fiscais")
@@ -20,7 +22,7 @@ public class NotaFiscalController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Cadastrar uma nova nota fiscal")
-    public NotaFiscal cadastroNotaFiscal(@RequestBody CadastrarNotaFiscalDTO cadastrarNotaFiscalDTO){
+    public NotaFiscal cadastroNotaFiscal(@RequestBody @Valid CadastrarNotaFiscalDTO cadastrarNotaFiscalDTO){
         return notaFiscalService.cadastrarNotaFiscal(cadastrarNotaFiscalDTO.converterDtoParaModelo());
     }
 

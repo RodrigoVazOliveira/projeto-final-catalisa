@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("responsaveis/")
@@ -18,13 +20,11 @@ public class ResponsavelController {
 
     @Autowired
     private ResponsavelService responsavelService;
-    @Autowired
-    private ResponsavelRepository responsavelRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "cadastrar um novo responsavel")
-    public Responsavel cadastrarResponsavel(@RequestBody CadastrarResponsavelDTO cadastrarResponsavelDTO){
+    public Responsavel cadastrarResponsavel(@RequestBody @Valid CadastrarResponsavelDTO cadastrarResponsavelDTO){
         return responsavelService.cadastrarResponsavel(
                 cadastrarResponsavelDTO.converterDtoParaModelo()
         );
