@@ -5,6 +5,7 @@ import br.com.zup.zupayments.jwt.ComponenteJWT;
 import br.com.zup.zupayments.jwt.FiltroAutencicacaoJWT;
 import br.com.zup.zupayments.jwt.FiltroDeAutorizacao;
 import br.com.zup.zupayments.jwt.UsuarioLoginService;
+import br.com.zup.zupayments.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -50,11 +52,14 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
     @Autowired
     private UsuarioLoginService usuarioLoginService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable();
         http.cors();
-
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.PATCH,PUBLIC_MATCHES_PATCH).hasRole(String.valueOf(RolesEnum.PERFIL_MASTER))
@@ -72,12 +77,14 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PATCH,"/notas_ficais/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.GET,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.POST,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                    .antMatchers(HttpMethod.PATCH,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                    .antMatchers(HttpMethod.GET,"/pedidos/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                    .antMatchers(HttpMethod.POST, "/usuarios/").permitAll()
-                    .anyRequest().authenticated();
+                .antMatchers(HttpMethod.PATCH,"/responsaveis/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                .antMatchers(HttpMethod.GET,"/pedidos/").hasRole(String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                .antMatchers(HttpMethod.POST, "/usuarios/").permitAll()
+                .anyRequest().authenticated();
 
-        http.addFilter(new FiltroAutencicacaoJWT(componenteJWT, authenticationManager()));
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilter(new FiltroAutencicacaoJWT(componenteJWT, authenticationManager(), usuarioService));
         http.addFilter(new FiltroDeAutorizacao(authenticationManager(), componenteJWT, usuarioLoginService));
 
     }

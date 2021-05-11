@@ -16,20 +16,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FiltroAutencicacaoJWT extends UsernamePasswordAuthenticationFilter {
 
     private ComponenteJWT componenteJWT;
     private AuthenticationManager authenticationManager;
-
-    @Autowired
     private UsuarioService usuarioService;
 
-    public FiltroAutencicacaoJWT(ComponenteJWT componenteJWT, AuthenticationManager authenticationManager) {
+    public FiltroAutencicacaoJWT(ComponenteJWT componenteJWT, AuthenticationManager authenticationManager, UsuarioService usuarioService) {
         this.componenteJWT = componenteJWT;
         this.authenticationManager = authenticationManager;
+        this.usuarioService = usuarioService;
     }
 
     @Override

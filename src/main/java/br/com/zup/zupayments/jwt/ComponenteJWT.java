@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.jwt;
 
+import br.com.zup.zupayments.enums.RolesEnum;
 import br.com.zup.zupayments.exceptions.TokenNotValidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,8 +21,9 @@ public class ComponenteJWT {
     public String gerarToken(String username) {
         Date vencimento = new Date(System.currentTimeMillis()+ milisegundos);
 
-        String token = Jwts.builder().setSubject(username).
-                setExpiration(vencimento).signWith(SignatureAlgorithm.HS512,segredo.
+        String token = Jwts.builder()
+                .setSubject(username)
+                .setExpiration(vencimento).signWith(SignatureAlgorithm.HS512,segredo.
                 getBytes()).compact();
 
         return token;

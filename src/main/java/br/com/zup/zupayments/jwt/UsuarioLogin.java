@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class    giUsuarioLogin implements UserDetails {
+public class UsuarioLogin implements UserDetails {
 
     private String email;
     private String senha;
@@ -59,7 +59,7 @@ public class    giUsuarioLogin implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(
-                new SimpleGrantedAuthority(String.valueOf(this.rolesEnum))
+                new SimpleGrantedAuthority(String.valueOf(rolesEnum))
         );
         return grantedAuthorities;
     }
@@ -93,4 +93,6 @@ public class    giUsuarioLogin implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
