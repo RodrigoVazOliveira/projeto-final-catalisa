@@ -7,23 +7,40 @@ import br.com.zup.zupayments.models.Responsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class EntradaCadastroPedidoDeCompraDTO {
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDeVencimento;
+
+    @NotNull(message = "{validacao.campo_obrigatorio}")
     private Double saldo;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataDePagamento;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
     @Email(message = "{validacao.email_invalido}")
     private String emailResponsavel;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate dataLimiteEnvio;
+
+    @NotNull(message = "{validacao.campo_obrigatorio}")
     private FormaDePagamento formaDePagamento;
+
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
     private String cnpjOuCpf;
 
     public EntradaCadastroPedidoDeCompraDTO() {

@@ -2,16 +2,27 @@ package br.com.zup.zupayments.dtos.responsavel.entrada;
 
 import br.com.zup.zupayments.models.Responsavel;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 
 public class CadastrarResponsavelDTO {
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 255, message = "{validacao.tamanho_campo}")
     @Email(message = "{validacao.email_invalido}")
     private String email;
 
-    @NotBlank(message = "{validacao.nome_completo}")
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 100, message = "{validacao.tamanho_campo}")
     private String nomeCompleto;
+
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 70, message = "{validacao.tamanho_campo}")
     private String nomeDoProjeto;
 
     public CadastrarResponsavelDTO() {

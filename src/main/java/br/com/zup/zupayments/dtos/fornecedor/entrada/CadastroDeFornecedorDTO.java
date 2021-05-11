@@ -5,6 +5,12 @@ import br.com.zup.zupayments.models.Fornecedor;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.ValidationException;
+
 public class CadastroDeFornecedorDTO {
 
     @CPF(message = "{validacao.cpf_invalido}")
@@ -13,24 +19,61 @@ public class CadastroDeFornecedorDTO {
     @CNPJ(message = "{validacao.cnpj_invalido}")
     private String cnpj;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 100, message = "{validacao.tamanho_campo}")
     private String razaoSocial;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 80, message = "{validacao.tamanho_campo}")
     private String logradouro;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 10, message = "{validacao.tamanho_campo}")
     private String numero;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 60, message = "{validacao.tamanho_campo}")
     private String bairro;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 80, message = "{validacao.tamanho_campo}")
     private String cidade;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 25, message = "{validacao.tamanho_campo}")
     private String estado;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 15, message = "{validacao.tamanho_campo}")
     private String cep;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 25, message = "{validacao.tamanho_campo}")
     private String telefone;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
+    @NotBlank(message = "{validacao.campo_em_branco}")
+    @NotEmpty(message = "{validacao.campo_vazio}")
+    @Size(max = 80, message = "{validacao.tamanho_campo}")
     private String email;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
     private CategoriaDeCusto categoriaDeCusto;
 
     public CadastroDeFornecedorDTO() {
