@@ -21,8 +21,6 @@ public class EntradaCadastroPedidoDeCompraDTO {
     private LocalDate dataDeVencimento;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
-    @NotBlank(message = "{validacao.campo_em_branco}")
-    @NotEmpty(message = "{validacao.campo_vazio}")
     private Double saldo;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
