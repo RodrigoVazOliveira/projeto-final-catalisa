@@ -78,7 +78,7 @@ public class PedidoDeCompraController {
     @PatchMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Atualizar o pedido de compra com responsavel inativo")
-    public void alterarResponsavelDoPedido(Long numeroDoPedido, Responsavel responsavel) {
+    public void alterarResponsavelDoPedido(@PathVariable Long numeroDoPedido, @RequestBody Responsavel responsavel) {
         pedidoDeCompraService.atualizarResponsavelPorPedidoDeCompra(numeroDoPedido,responsavel);
     }
 
