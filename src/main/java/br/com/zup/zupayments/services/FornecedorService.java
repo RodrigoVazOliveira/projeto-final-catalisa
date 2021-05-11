@@ -18,6 +18,9 @@ public class FornecedorService {
         if (fornecedorRepository.existsByCnpjOuCpf(fornecedor.getCnpjOuCpf())) {
             throw new FornecedorCadastradoException("Fornecedor com CNPJ/CPF " + fornecedor.getCnpjOuCpf() + " já cadastrado");
         }
+        String cpnjOuCpf = fornecedor.getCnpjOuCpf().replace(".", "")
+                .replace("-", "");
+        fornecedor.setCnpjOuCpf(cpnjOuCpf);
         return fornecedorRepository.save(fornecedor);
     }
 

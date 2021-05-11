@@ -36,7 +36,7 @@ public class FornecedorController {
     }
 
     @PutMapping("{cnpjoucpf}/")
-    public Fornecedor atualizarFornecedor(@PathVariable String cnpjoucpf,
+    public Fornecedor atualizarFornecedor(@PathVariable("cnpjoucpf") String cnpjoucpf,
                                           @RequestBody AtualizarFornecedorDTO atualizarFornecedorDTO){
         return  fornecedorService.atualizarCadastroFornecedor(cnpjoucpf,atualizarFornecedorDTO.converterDtoParaModelo());
     }
