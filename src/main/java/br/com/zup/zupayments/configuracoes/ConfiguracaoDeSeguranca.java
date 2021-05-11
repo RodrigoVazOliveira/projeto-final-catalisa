@@ -53,6 +53,8 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.PATCH, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
                 .antMatchers(HttpMethod.POST, "/usuarios/").permitAll()
+                .antMatchers(HttpMethod.GET, "/usuarios/").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/usuarios/**").permitAll()
                 .anyRequest().authenticated();
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
