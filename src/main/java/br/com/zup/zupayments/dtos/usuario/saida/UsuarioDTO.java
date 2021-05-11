@@ -8,6 +8,7 @@ import java.util.List;
 
 public class UsuarioDTO {
 
+    private Long id;
     private String email;
     private String nomeCompleto;
     private RolesEnum nivelDeAcesso;
@@ -48,8 +49,17 @@ public class UsuarioDTO {
         this.ativo = ativo;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public static UsuarioDTO converterModeloParaDTO(Usuario usuario) {
         UsuarioDTO dto = new UsuarioDTO();
+        dto.setId(usuario.getId());
         dto.setNomeCompleto(usuario.getNomeCompleto());
         dto.setEmail(usuario.getEmail());
         dto.setNivelDeAcesso(usuario.getNivelDeAcesso());
