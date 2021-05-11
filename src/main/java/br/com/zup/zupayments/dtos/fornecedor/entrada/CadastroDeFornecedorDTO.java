@@ -5,10 +5,7 @@ import br.com.zup.zupayments.models.Fornecedor;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import javax.xml.bind.ValidationException;
 
 public class CadastroDeFornecedorDTO {
@@ -71,6 +68,7 @@ public class CadastroDeFornecedorDTO {
     @NotBlank(message = "{validacao.campo_em_branco}")
     @NotEmpty(message = "{validacao.campo_vazio}")
     @Size(max = 80, message = "{validacao.tamanho_campo}")
+    @Email(message = "{validacao.email_invalido}")
     private String email;
 
     @NotNull(message = "{validacao.campo_obrigatorio}")
