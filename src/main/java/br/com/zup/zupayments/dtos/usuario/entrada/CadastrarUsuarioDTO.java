@@ -26,6 +26,7 @@ public class CadastrarUsuarioDTO {
     @Size(min = 6, max = 16, message = "{validacao.tamanho_campo}")
     private String senha;
 
+    @NotNull(message = "{validacao.campo_obrigatorio}")
     private RolesEnum nivelDeAcesso;
 
     public CadastrarUsuarioDTO() {
