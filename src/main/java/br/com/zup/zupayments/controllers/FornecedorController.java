@@ -29,9 +29,9 @@ public class FornecedorController {
         );
     }
 
-    @GetMapping("{id}/")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Fornecedor pesquisarFornecedor(@PathVariable String cnpjouCpf){
+    public Fornecedor pesquisarFornecedor(@RequestParam(value = "cnpjOuCpf") String cnpjouCpf){
         return fornecedorService.pesquisarFornecedorPorCnpjOuCpf(cnpjouCpf);
     }
 
