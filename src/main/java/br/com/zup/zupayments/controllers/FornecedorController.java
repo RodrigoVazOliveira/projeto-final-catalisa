@@ -29,16 +29,17 @@ public class FornecedorController {
         );
     }
 
-    @GetMapping("{id}/")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Fornecedor pesquisarFornecedor(@PathVariable String cnpjouCpf){
+    public Fornecedor pesquisarFornecedor(@RequestParam(value = "cnpjOuCpf") String cnpjouCpf){
         return fornecedorService.pesquisarFornecedorPorCnpjOuCpf(cnpjouCpf);
     }
 
-    @PutMapping("{cnpjoucpf}/")
-    public Fornecedor atualizarFornecedor(@PathVariable String cnpjoucpf,
+    @PutMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Fornecedor atualizarFornecedor(
                                           @RequestBody AtualizarFornecedorDTO atualizarFornecedorDTO){
-        return  fornecedorService.atualizarCadastroFornecedor(cnpjoucpf,atualizarFornecedorDTO.converterDtoParaModelo());
+        return  fornecedorService.atualizarCadastroFornecedor(atualizarFornecedorDTO.converterDtoParaModelo());
     }
 
     @PatchMapping

@@ -1,5 +1,6 @@
 package br.com.zup.zupayments.services;
 
+import br.com.zup.zupayments.dtos.pedidodecompras.entrada.AtualizarResponsavelDoPedidoDeCompraDTO;
 import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraNaoExisteException;
 import br.com.zup.zupayments.exceptions.erros.PedidoDeCompraSemSaldoException;
 import br.com.zup.zupayments.models.NotaFiscal;
@@ -105,8 +106,9 @@ public class PedidoDeCompraService {
         return pedidoDeCompras;
     }
 
-    public void atualizarResponsavelPorPedidoDeCompra(Long numeroDoPedido,Responsavel responsavel) {
-        PedidoDeCompra pedidoDeCompra = procurarPedidoDeCompraPeloNumeroDePedido(numeroDoPedido);
+    public void atualizarResponsavelPorPedidoDeCompra(AtualizarResponsavelDoPedidoDeCompraDTO dados) {
+        PedidoDeCompra pedidoDeCompra = procurarPedidoDeCompraPeloNumeroDePedido(dados.getNumeroPedidoDeCompra());
+        Responsavel responsavel = responsavelService.procurarResponsavelPorEmail(dados.getEmailResponsavel());
         pedidoDeCompra.setResponsavel(responsavel);
         pedidoDeCompraRespository.save(pedidoDeCompra);
     }

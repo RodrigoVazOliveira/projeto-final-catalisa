@@ -9,6 +9,12 @@ import javax.validation.constraints.*;
 
 public class AtualizarFornecedorDTO {
 
+    @CPF(message = "{validacao.cpf_invalido}")
+    private String cpf;
+
+    @CNPJ(message = "{validacao.cnpj_invalido}")
+    private String cnpj;
+
     @NotNull(message = "{validacao.campo_obrigatorio}")
     @NotBlank(message = "{validacao.campo_em_branco}")
     @NotEmpty(message = "{validacao.campo_vazio}")
@@ -150,9 +156,36 @@ public class AtualizarFornecedorDTO {
         this.categoriaDeCusto = categoriaDeCusto;
     }
 
-    public Fornecedor converterDtoParaModelo() {
-        Fornecedor fornecedor = new Fornecedor();
+    public String getCpf() {
+        return cpf;
+    }
 
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public Fornecedor converterDtoParaModelo() {
+        String cnpjOuCpf = null;
+
+        if (this.cpf != null) {
+            cnpjOuCpf = cpf;
+        }
+
+        if (this.cnpj != null) {
+            cnpjOuCpf = cnpj;
+        }
+
+
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedor.setCnpjOuCpf(cnpjOuCpf);
         fornecedor.setRazaoSocial(this.razaoSocial);
         fornecedor.setLogradouro(this.logradouro);
         fornecedor.setNumero(this.numero);
