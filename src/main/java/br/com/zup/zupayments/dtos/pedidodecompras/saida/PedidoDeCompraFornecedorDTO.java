@@ -2,22 +2,22 @@ package br.com.zup.zupayments.dtos.pedidodecompras.saida;
 
 import br.com.zup.zupayments.models.Fornecedor;
 
-public class PedidoDeCompraFornecedorDTO {
-    private String cnpjOuCpf;
-    private String razaoSocial;
+    public class PedidoDeCompraFornecedorDTO {
+        private String cnpjOuCpf;
+        private String razaoSocial;
 
-    public PedidoDeCompraFornecedorDTO() {
-    }
+        public PedidoDeCompraFornecedorDTO() {
+        }
 
-    public String getCnpjOuCpf() {
-        return cnpjOuCpf;
-    }
+        public String getCnpjOuCpf() {
+            return cnpjOuCpf;
+        }
 
-    public void setCnpjOuCpf(String cnpjOuCpf) {
-        this.cnpjOuCpf = cnpjOuCpf;
-    }
+        public void setCnpjOuCpf(String cnpjOuCpf) {
+            this.cnpjOuCpf = cnpjOuCpf;
+        }
 
-    public String getRazaoSocial() {
+        public String getRazaoSocial() {
         return razaoSocial;
     }
 
