@@ -37,7 +37,7 @@ public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable();
-        http.cors();
+        http.cors().configurationSource(configuracaoDeCors());
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
