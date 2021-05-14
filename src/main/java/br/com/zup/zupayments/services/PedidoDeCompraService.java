@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,18 +90,25 @@ public class PedidoDeCompraService {
         Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraRespository
                 .findAllBySaldoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
 
+
         return verificarPendenciasDeNotaFiscal((List<NotaFiscal>) notasFiscais, (List<PedidoDeCompra>) pedidoDeCompras);
     }
 
     private Iterable<PedidoDeCompra> verificarPendenciasDeNotaFiscal(List<NotaFiscal> notaFiscals,
                                                                      List<PedidoDeCompra> pedidoDeCompras) {
+        List<PedidoDeCompra> removeListaDePedidos = new ArrayList<>();
+
         for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
             for (NotaFiscal notaFiscal : notaFiscals) {
                 if (notaFiscal.getDataDeEmissao().getMonthValue() == LocalDate.now().getMonthValue()
-                && notaFiscal.getPedidoDeCompra().contains(pedidoDeCompra)) {
-                    pedidoDeCompras.remove(pedidoDeCompra);
+                        && notaFiscal.getPedidoDeCompra().contains(pedidoDeCompra)) {
+                    removeListaDePedidos.add(pedidoDeCompra);
                 }
             }
+        }
+
+        for (PedidoDeCompra remove : removeListaDePedidos) {
+            pedidoDeCompras.remove(remove);
         }
 
         return pedidoDeCompras;
