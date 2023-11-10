@@ -4,15 +4,18 @@ import br.com.zup.zupayments.exceptions.erros.FornecedorCadastradoException;
 import br.com.zup.zupayments.exceptions.erros.FornecedorNaoCadastrado;
 import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.repositories.FornecedorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
 public class FornecedorService {
 
-    @Autowired
-    private FornecedorRepository fornecedorRepository;
+    private final FornecedorRepository fornecedorRepository;
+
+    public FornecedorService(FornecedorRepository fornecedorRepository) {
+        this.fornecedorRepository = fornecedorRepository;
+    }
 
     public Fornecedor cadastrarFornecedor (Fornecedor fornecedor) {
         if (fornecedorRepository.existsByCnpjOuCpf(fornecedor.getCnpjOuCpf())) {

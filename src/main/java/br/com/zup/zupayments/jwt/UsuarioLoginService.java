@@ -2,17 +2,20 @@ package br.com.zup.zupayments.jwt;
 
 import br.com.zup.zupayments.models.Usuario;
 import br.com.zup.zupayments.repositories.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
-public class UsuarioLoginService implements org.springframework.security.core.userdetails.UserDetailsService {
+public class UsuarioLoginService implements UserDetailsService {
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    public UsuarioLoginService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -20,7 +23,6 @@ public class UsuarioLoginService implements org.springframework.security.core.us
         usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Email não cadastrado"));
         Usuario usuario = usuarioOptional.get();
 
-        return new UsuarioLogin(usuario.getEmail(), usuario.getSenha(),
-                usuario.getNomeCompleto(), usuario.getNivelDeAcesso());
+        return new UsuarioLogin(usuario.getEmail(), usuario.getSenha(), usuario.getNomeCompleto(), usuario.getNivelDeAcesso());
     }
 }

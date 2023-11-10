@@ -58,9 +58,7 @@ public class UsuarioLogin implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(
-                new SimpleGrantedAuthority(String.valueOf(rolesEnum))
-        );
+        grantedAuthorities.add(new SimpleGrantedAuthority(String.valueOf(rolesEnum)));
         return grantedAuthorities;
     }
 

@@ -2,8 +2,7 @@ package br.com.zup.zupayments.dtos.usuario.entrada;
 
 import br.com.zup.zupayments.enums.RolesEnum;
 import br.com.zup.zupayments.models.Usuario;
-
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 public class CadastrarUsuarioDTO {
 

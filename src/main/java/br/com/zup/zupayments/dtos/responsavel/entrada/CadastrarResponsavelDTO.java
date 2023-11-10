@@ -1,8 +1,7 @@
 package br.com.zup.zupayments.dtos.responsavel.entrada;
 
 import br.com.zup.zupayments.models.Responsavel;
-
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 public class CadastrarResponsavelDTO {
 

@@ -7,11 +7,11 @@ import br.com.zup.zupayments.models.NotaFiscal;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.PedidoDeCompraRespository;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,7 @@ public class PedidoDeCompraService {
 
     @Autowired
     @Lazy
-    public PedidoDeCompraService(PedidoDeCompraRespository pedidoDeCompraRespository,
-                                 ResponsavelService responsavelService,
-                                 FornecedorService fornecedorService,
-                                 NotaFiscalService notaFiscalService,
-                                 EmailService emailService) {
+    public PedidoDeCompraService(PedidoDeCompraRespository pedidoDeCompraRespository, ResponsavelService responsavelService, FornecedorService fornecedorService, NotaFiscalService notaFiscalService, EmailService emailService) {
         this.pedidoDeCompraRespository = pedidoDeCompraRespository;
         this.responsavelService = responsavelService;
         this.fornecedorService = fornecedorService;
@@ -41,10 +37,8 @@ public class PedidoDeCompraService {
     }
 
     public PedidoDeCompra cadastrarNovoPedidoDeCompra(PedidoDeCompra pedidoDeCompra) {
-        pedidoDeCompra.setResponsavel(responsavelService.procurarResponsavelPorEmail(
-                pedidoDeCompra.getResponsavel().getEmail()));
-        pedidoDeCompra.setFornecedor(fornecedorService.pesquisarFornecedorPorCnpjOuCpf(
-                pedidoDeCompra.getFornecedor().getCnpjOuCpf()));
+        pedidoDeCompra.setResponsavel(responsavelService.procurarResponsavelPorEmail(pedidoDeCompra.getResponsavel().getEmail()));
+        pedidoDeCompra.setFornecedor(fornecedorService.pesquisarFornecedorPorCnpjOuCpf(pedidoDeCompra.getFornecedor().getCnpjOuCpf()));
         return pedidoDeCompraRespository.save(pedidoDeCompra);
     }
 
@@ -67,7 +61,8 @@ public class PedidoDeCompraService {
         pedidoDeCompraOptional.setCancelado(true);
         pedidoDeCompraRespository.save(pedidoDeCompraOptional);
     }
-    public PedidoDeCompra cancelarPedidoDeCompra (Long id, PedidoDeCompra pedidoDeCompra){
+
+    public PedidoDeCompra cancelarPedidoDeCompra(Long id, PedidoDeCompra pedidoDeCompra) {
         Optional<PedidoDeCompra> pedidoDeCompraOptional = pedidoDeCompraRespository.findById(id);
 
         if (pedidoDeCompraOptional.isEmpty())
@@ -83,25 +78,20 @@ public class PedidoDeCompraService {
         return pedidoDeCompraRespository.findAllByResponsavelAtivo(ativo);
     }
 
-    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(
-            Double valorMinimo, Boolean ativo, LocalDate dataInicial) {
-        Iterable<NotaFiscal> notasFiscais = notaFiscalService.obterTodasNotaFiscalComIntervaloDeDataDeEmissao(
-                dataInicial, LocalDate.now());
-        Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraRespository
-                .findAllBySaldoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
+    public Iterable<PedidoDeCompra> obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(Double valorMinimo, Boolean ativo, LocalDate dataInicial) {
+        Iterable<NotaFiscal> notasFiscais = notaFiscalService.obterTodasNotaFiscalComIntervaloDeDataDeEmissao(dataInicial, LocalDate.now());
+        Iterable<PedidoDeCompra> pedidoDeCompras = pedidoDeCompraRespository.findAllBySaldoGreaterThanAndResponsavelAtivo(valorMinimo, ativo);
 
 
         return verificarPendenciasDeNotaFiscal((List<NotaFiscal>) notasFiscais, (List<PedidoDeCompra>) pedidoDeCompras);
     }
 
-    private Iterable<PedidoDeCompra> verificarPendenciasDeNotaFiscal(List<NotaFiscal> notaFiscals,
-                                                                     List<PedidoDeCompra> pedidoDeCompras) {
+    private Iterable<PedidoDeCompra> verificarPendenciasDeNotaFiscal(List<NotaFiscal> notaFiscals, List<PedidoDeCompra> pedidoDeCompras) {
         List<PedidoDeCompra> removeListaDePedidos = new ArrayList<>();
 
         for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
             for (NotaFiscal notaFiscal : notaFiscals) {
-                if (notaFiscal.getDataDeEmissao().getMonthValue() == LocalDate.now().getMonthValue()
-                        && notaFiscal.getPedidoDeCompra().contains(pedidoDeCompra)) {
+                if (notaFiscal.getDataDeEmissao().getMonthValue() == LocalDate.now().getMonthValue() && notaFiscal.getPedidoDeCompra().contains(pedidoDeCompra)) {
                     removeListaDePedidos.add(pedidoDeCompra);
                 }
             }
@@ -121,21 +111,17 @@ public class PedidoDeCompraService {
         pedidoDeCompraRespository.save(pedidoDeCompra);
     }
 
-    public void enviarEmailParaPedidosDeCompraComNotasPendentes(
-            Double valorMinimo, Boolean ativo, LocalDate dataInicial
-    ) throws MessagingException {
-        Iterable<PedidoDeCompra> pedidoDeCompras = obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(
-                valorMinimo, ativo, dataInicial
-        );
+    public void enviarEmailParaPedidosDeCompraComNotasPendentes(Double valorMinimo, Boolean ativo, LocalDate dataInicial) throws MessagingException {
+        Iterable<PedidoDeCompra> pedidoDeCompras = obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(valorMinimo, ativo, dataInicial);
         for (PedidoDeCompra pedidoDeCompra : pedidoDeCompras) {
             emailService.enviarEmailDePedidoPendenteDeNotaFiscal(pedidoDeCompra);
         }
     }
 
-    public void debitarValorDaNotaFiscalNoPedido(NotaFiscal nf){
+    public void debitarValorDaNotaFiscalNoPedido(NotaFiscal nf) {
         Double saldoTotal = somarValoresDosPedidos(nf.getPedidoDeCompra());
 
-        if (saldoTotal < nf.getValorAPagar()){
+        if (saldoTotal < nf.getValorAPagar()) {
             throw new PedidoDeCompraSemSaldoException("Pedido não possui saldo sufuciente");
         }
 

@@ -1,8 +1,8 @@
 package br.com.zup.zupayments.models;
 
 import br.com.zup.zupayments.enums.RolesEnum;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
