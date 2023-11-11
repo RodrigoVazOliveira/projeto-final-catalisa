@@ -1,25 +1,26 @@
 package br.com.zup.zupayments.services;
 
 import br.com.zup.zupayments.models.PedidoDeCompra;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 
 @Service
 public class EmailService {
 
-    @Autowired
-    private SpringTemplateEngine springTemplateEngine;
+    private final SpringTemplateEngine springTemplateEngine;
+    private final JavaMailSender javaMailSender;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    public EmailService(SpringTemplateEngine springTemplateEngine, JavaMailSender javaMailSender) {
+        this.springTemplateEngine = springTemplateEngine;
+        this.javaMailSender = javaMailSender;
+    }
 
     public void enviarEmailDePedidoPendenteDeNotaFiscal(PedidoDeCompra pedidoDeCompra) throws MessagingException {
         MimeMessage mensagem = javaMailSender.createMimeMessage();

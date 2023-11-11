@@ -4,7 +4,6 @@ import br.com.zup.zupayments.exceptions.erros.ResponsavelJaCadastradoException;
 import br.com.zup.zupayments.exceptions.erros.ResponsavelNaoExisteException;
 import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.repositories.ResponsavelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,10 +11,13 @@ import java.util.Optional;
 @Service
 public class ResponsavelService {
 
-    @Autowired
-    private ResponsavelRepository responsavelRepository;
+    private final ResponsavelRepository responsavelRepository;
 
-    public Responsavel cadastrarResponsavel (Responsavel responsavel){
+    public ResponsavelService(ResponsavelRepository responsavelRepository) {
+        this.responsavelRepository = responsavelRepository;
+    }
+
+    public Responsavel cadastrarResponsavel(Responsavel responsavel) {
         if (responsavelRepository.existsByEmail(responsavel.getEmail())) {
             throw new ResponsavelJaCadastradoException("Um responsável com e-mail " + responsavel.getEmail() + " já foi cadastrado!");
         }

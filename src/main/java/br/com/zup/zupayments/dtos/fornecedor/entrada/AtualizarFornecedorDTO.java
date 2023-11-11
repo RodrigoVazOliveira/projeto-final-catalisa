@@ -2,10 +2,10 @@ package br.com.zup.zupayments.dtos.fornecedor.entrada;
 
 import br.com.zup.zupayments.enums.CategoriaDeCusto;
 import br.com.zup.zupayments.models.Fornecedor;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.validation.constraints.*;
 
 public class AtualizarFornecedorDTO {
 

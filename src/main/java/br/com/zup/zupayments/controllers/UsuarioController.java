@@ -3,51 +3,52 @@ package br.com.zup.zupayments.controllers;
 import br.com.zup.zupayments.dtos.usuario.entrada.CadastrarUsuarioDTO;
 import br.com.zup.zupayments.dtos.usuario.entrada.NivelDeAcessoUsuarioDTO;
 import br.com.zup.zupayments.dtos.usuario.saida.UsuarioDTO;
+import br.com.zup.zupayments.models.Usuario;
 import br.com.zup.zupayments.services.UsuarioService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("usuarios/")
-@Api(value = "API REST de usuários")
+@Tag(name = "API REST de usuários")
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Cadastrar um novo usuário")
-    public void cadastrarNovoUsuario(@RequestBody @Valid CadastrarUsuarioDTO usuario) {
+    @Operation(summary = "Cadastrar um novo usuário")
+    void cadastrarNovoUsuario(@RequestBody @Valid CadastrarUsuarioDTO usuario) {
         usuarioService.cadastrarNovoUsuario(usuario.converterDtoParaModelo());
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Mostrar todos os usuários")
-    public Iterable<UsuarioDTO> mostarTodosUsuarios() {
+    @Operation(summary = "Mostrar todos os usuários")
+    Iterable<UsuarioDTO> mostarTodosUsuarios() {
         return UsuarioDTO.converterListaDeModeloParaListaDto(usuarioService.obterTodosUsuarios());
     }
 
     @PatchMapping("ativo")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiOperation(value = "Ativar ou desativar um usuário pelo id")
-    public void ativarOuDesativarUsuario(@RequestParam(name = "idUsuario") Long id) {
+    @Operation(summary = "Ativar ou desativar um usuário pelo id")
+    void ativarOuDesativarUsuario(@RequestParam(name = "idUsuario") Long id) {
         usuarioService.ativarOuDesativarUsuario(id);
     }
 
     @PatchMapping("nivel")
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "Alterar o nível de acesso do usuário")
-    public UsuarioDTO atualizarNivelDeAcesso(@RequestParam(name = "idUsuario") Long id,
-                                             @RequestBody NivelDeAcessoUsuarioDTO nivelDeAcessoUsuarioDTO) {
-        return UsuarioDTO.converterModeloParaDTO(
-                usuarioService.atualizarNivelDeAcesso(id, nivelDeAcessoUsuarioDTO.getNivelDeAcesso())
-        );
+    @Operation(summary = "Alterar o nível de acesso do usuário")
+    UsuarioDTO atualizarNivelDeAcesso(@RequestParam(name = "idUsuario") Long id, @RequestBody NivelDeAcessoUsuarioDTO nivelDeAcessoUsuarioDTO) {
+        Usuario usuario = usuarioService.atualizarNivelDeAcesso(id, nivelDeAcessoUsuarioDTO.getNivelDeAcesso());
+
+        return UsuarioDTO.converterModeloParaDTO(usuario);
     }
 }

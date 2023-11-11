@@ -5,86 +5,84 @@ import br.com.zup.zupayments.jwt.ComponenteJWT;
 import br.com.zup.zupayments.jwt.FiltroAutencicacaoJWT;
 import br.com.zup.zupayments.jwt.FiltroDeAutorizacao;
 import br.com.zup.zupayments.jwt.UsuarioLoginService;
+import br.com.zup.zupayments.repositories.UsuarioRepository;
 import br.com.zup.zupayments.services.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class ConfiguracaoDeSeguranca extends WebSecurityConfigurerAdapter {
+public class ConfiguracaoDeSeguranca {
 
-    @Autowired
-    private ComponenteJWT componenteJWT;
+    private final ComponenteJWT componenteJWT;
+    private final UsuarioLoginService usuarioLoginService;
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private UsuarioLoginService usuarioLoginService;
-
-    @Autowired
-    private UsuarioService usuarioService;
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable();
-        http.cors().configurationSource(configuracaoDeCors());
-
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
-                .antMatchers(HttpMethod.GET, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
-                .antMatchers(HttpMethod.PATCH, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
-                .antMatchers(HttpMethod.PUT, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
-                .antMatchers(HttpMethod.GET, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
-                .antMatchers(HttpMethod.POST, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
-                .antMatchers(HttpMethod.GET, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER),String.valueOf(RolesEnum.PERFIL_COMPRAS),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.PATCH, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
-                .antMatchers(HttpMethod.POST, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.GET, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.PATCH, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.POST, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.GET, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER),String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.PATCH, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
-                .antMatchers(HttpMethod.POST, "/usuarios/").permitAll()
-                .antMatchers(HttpMethod.GET, "/usuarios/").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/usuarios/**").permitAll()
-                .anyRequest().authenticated();
-
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilter(new FiltroAutencicacaoJWT(componenteJWT, authenticationManager(), usuarioService));
-        http.addFilter(new FiltroDeAutorizacao(authenticationManager(), componenteJWT, usuarioLoginService));
-
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+    public ConfiguracaoDeSeguranca(ComponenteJWT componenteJWT, UsuarioLoginService usuarioLoginService, UsuarioRepository usuarioRepository) {
+        this.componenteJWT = componenteJWT;
+        this.usuarioLoginService = usuarioLoginService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Bean
-    CorsConfigurationSource configuracaoDeCors(){
+    public SecurityFilterChain getSecurityFilterChain(HttpSecurity http) throws Exception {
+        final AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(usuarioLoginService).passwordEncoder(critografarSenha());
+        final AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+
+        http.csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(configuracaoDeCors()))
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
+                        .requestMatchers(HttpMethod.POST, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
+                        .requestMatchers(HttpMethod.GET, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
+                        .requestMatchers(HttpMethod.PATCH, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
+                        .requestMatchers(HttpMethod.PUT, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
+                        .requestMatchers(HttpMethod.GET, "/fornecedores/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
+                        .requestMatchers(HttpMethod.POST, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
+                        .requestMatchers(HttpMethod.GET, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                        .requestMatchers(HttpMethod.PATCH, "/pedidos/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS))
+                        .requestMatchers(HttpMethod.POST, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                        .requestMatchers(HttpMethod.GET, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_COMPRAS), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                        .requestMatchers(HttpMethod.PATCH, "/notas_ficais/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                        .requestMatchers(HttpMethod.POST, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                        .requestMatchers(HttpMethod.GET, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                        .requestMatchers(HttpMethod.PATCH, "/responsaveis/**").hasAnyAuthority(String.valueOf(RolesEnum.PERFIL_MASTER), String.valueOf(RolesEnum.PERFIL_FINANCEIRO))
+                        .requestMatchers(HttpMethod.POST, "/usuarios/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/").permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/usuarios/**").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger-ui/**").permitAll()
+                        .anyRequest().authenticated())
+                .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationManager(authenticationManager)
+                .addFilterBefore(new FiltroAutencicacaoJWT(componenteJWT, authenticationManager, new UsuarioService(usuarioRepository, critografarSenha())), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new FiltroDeAutorizacao(authenticationManager, componenteJWT, usuarioLoginService), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+    @Bean
+    CorsConfigurationSource configuracaoDeCors() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+
         return source;
     }
 
     @Bean
-    protected BCryptPasswordEncoder critografarSenha() {
-       return new BCryptPasswordEncoder();
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(usuarioLoginService).passwordEncoder(critografarSenha());
+    BCryptPasswordEncoder critografarSenha() {
+        return new BCryptPasswordEncoder();
     }
 }

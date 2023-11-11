@@ -3,6 +3,7 @@ package br.com.zup.zupayments.exceptions;
 import br.com.zup.zupayments.exceptions.erros.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,14 +19,12 @@ import java.util.List;
 
 @RestControllerAdvice
 public class ManipuladorDeExcecao extends ResponseEntityExceptionHandler {
+
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers,
-                                                                  HttpStatus status,
-                                                                  WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         List<ObjetoDeErro> objetosDeErro = criarObjetoDeErro(ex);
         RespostaDeErro respostaDeErro = new RespostaDeErro("Validação", status.value(),
-                status.getReasonPhrase(), objetosDeErro);
+                status.toString(), objetosDeErro);
 
         return ResponseEntity.status(status).body(respostaDeErro);
     }
@@ -45,10 +44,10 @@ public class ManipuladorDeExcecao extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ExcecaoBasica.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public RespostaDeErro manipularRuntimeException(ExcecaoBasica erro){
+    public RespostaDeErro manipularRuntimeException(ExcecaoBasica erro) {
         ObjetoDeErro objetoDeErro = new ObjetoDeErro(erro.getMessage(), erro.getCampo());
         RespostaDeErro respostaDeErro = new RespostaDeErro(erro.getMessage(), erro.getStatus(),
-                erro.getMotivo(),   Arrays.asList(objetoDeErro));
+                erro.getMotivo(), Arrays.asList(objetoDeErro));
 
         return respostaDeErro;
     }
