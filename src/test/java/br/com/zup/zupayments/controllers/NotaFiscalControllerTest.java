@@ -1,14 +1,9 @@
 package br.com.zup.zupayments.controllers;
 
 import br.com.zup.zupayments.dtos.notafiscal.entrada.CadastrarNotaFiscalDTO;
-import br.com.zup.zupayments.models.Fornecedor;
 import br.com.zup.zupayments.models.NotaFiscal;
-import br.com.zup.zupayments.models.PedidoDeCompra;
-import br.com.zup.zupayments.models.Responsavel;
 import br.com.zup.zupayments.services.NotaFiscalService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,21 +16,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.text.SimpleDateFormat;
-import java.time.Clock;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
 
 @WebMvcTest(NotaFiscalController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class NotaFiscalControllerTest {
+class NotaFiscalControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private NotaFiscalService notaFiscalService;
@@ -59,18 +51,10 @@ public class NotaFiscalControllerTest {
 
 
     @Test
-    public void testarCadastrarNotaFiscal() throws Exception {
+    void testarCadastrarNotaFiscal() throws Exception {
         this.notaFiscalteste.setId(1L);
-        SimpleDateFormat dfDto = new SimpleDateFormat("dd/MM/yyyy");
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
-        objectMapper.setDateFormat(dfDto);
-
         notaFiscalteste.setId(1L);
         String jsonEntrada = objectMapper.writeValueAsString(this.cadastrarNotaFiscalDTO);
-        SimpleDateFormat df = new SimpleDateFormat("yyyyy-MM-dd");
-        objectMapper.setDateFormat(df);
         String jsonSaida   = objectMapper.writeValueAsString(this.notaFiscalteste);
 
         Mockito.when(notaFiscalService.cadastrarNotaFiscal(Mockito.any())).thenReturn(notaFiscalteste);
@@ -85,14 +69,8 @@ public class NotaFiscalControllerTest {
     }
 
     @Test
-    public void testarCancelamentoDeNotaFiscal() throws Exception {
+    void testarCancelamentoDeNotaFiscal() throws Exception {
         this.notaFiscalteste.setId(1L);
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        objectMapper.disable(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS);
-        objectMapper.setDateFormat(df);
-
         String jsonSaida = objectMapper.writeValueAsString(this.notaFiscalteste);
 
         Mockito.when(notaFiscalService.cancelarNF(Mockito.anyLong())).thenReturn(this.notaFiscalteste);

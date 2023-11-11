@@ -4,6 +4,10 @@ import br.com.zup.zupayments.enums.FormaDePagamento;
 import br.com.zup.zupayments.models.PedidoDeCompra;
 import br.com.zup.zupayments.models.Responsavel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
@@ -14,17 +18,23 @@ public class SaidaCadastroPedidoDeCompraDTO {
 
     private Long numeroDePedido;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dataDeVencimento;
     private Double saldo;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dataDePagamento;
 
     @NotBlank(message = "{validacao.nome_completo}")
     private Responsavel responsavel;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING, timezone = "America/Sao_Paulo")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate dataLimiteEnvio;
     private FormaDePagamento formaDePagamento;
 

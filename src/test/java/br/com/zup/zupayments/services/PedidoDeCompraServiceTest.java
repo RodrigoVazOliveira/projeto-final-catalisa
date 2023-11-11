@@ -21,24 +21,29 @@ import java.util.Optional;
 
 @SpringBootTest
 @ContextConfiguration(classes = PedidoDeCompraService.class)
-public class PedidoDeCompraServiceTest {
-
-    @Autowired
-    private PedidoDeCompraService pedidoDeCompraService;
+class PedidoDeCompraServiceTest {
 
     @MockBean
     private PedidoDeCompraRespository pedidoDeCompraRespository;
 
     @MockBean
-    private FornecedorService fornecedorService;
-    private Fornecedor fornecedor;
+    private ResponsavelService responsavelService;
 
     @MockBean
-    private ResponsavelService responsavelService;
+    private FornecedorService fornecedorService;
+
+    @MockBean
+    private NotaFiscalService notaFiscalService;
+
+    @MockBean
+    private EmailService emailService;
+
+    @Autowired
+    private PedidoDeCompraService pedidoDeCompraService;
+
+    private Fornecedor fornecedor;
     private Responsavel responsavel;
-
     private PedidoDeCompra pedidoDeCompra;
-
     private List<PedidoDeCompra> pedidoDeCompras;
 
     @BeforeEach
@@ -89,7 +94,7 @@ public class PedidoDeCompraServiceTest {
     }
 
     @Test
-    public void cadastroDePedidoDeCompraTest(){
+    void cadastroDePedidoDeCompraTest(){
         Mockito.when(pedidoDeCompraRespository.save(Mockito.any(PedidoDeCompra.class))).thenReturn(pedidoDeCompra);
         Mockito.when(responsavelService.procurarResponsavelPorEmail(Mockito.any())).thenReturn(responsavel);
         Mockito.when(fornecedorService.pesquisarFornecedorPorCnpjOuCpf(Mockito.any())).thenReturn(fornecedor);
@@ -100,7 +105,7 @@ public class PedidoDeCompraServiceTest {
     }
 
     @Test
-    public void obterTodosOsPedidoDeCompraTest(){
+    void obterTodosOsPedidoDeCompraTest(){
         Optional<PedidoDeCompra> optionalPedidoDeCompra =Optional.empty();
 
         Mockito.when(pedidoDeCompraRespository.findById(Mockito.anyLong())).thenReturn(optionalPedidoDeCompra);
@@ -112,7 +117,7 @@ public class PedidoDeCompraServiceTest {
     }
 
     @Test
-    public void testarCancelamentoDePedidoDeCompra() {
+    void testarCancelamentoDePedidoDeCompra() {
         Optional<PedidoDeCompra> optionalPedidoDeCompra = Optional.of(pedidoDeCompra);
 
         Mockito.when(pedidoDeCompraRespository.findById(Mockito.anyLong())).thenReturn(optionalPedidoDeCompra);
@@ -124,7 +129,7 @@ public class PedidoDeCompraServiceTest {
     }
 
     @Test
-    public void testarObterPedidosDeCompraResponsavelAtivo() {
+    void testarObterPedidosDeCompraResponsavelAtivo() {
         Mockito.when(pedidoDeCompraRespository.findAllByResponsavelAtivo(Mockito.anyBoolean()))
                 .thenReturn(this.pedidoDeCompras);
         Iterable<PedidoDeCompra> testes = pedidoDeCompraService.obterTodosPedidosDeCompraComResponsavelAtivo(false);
@@ -132,9 +137,8 @@ public class PedidoDeCompraServiceTest {
     }
 
     @Test
-    public void testarObterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(){
-        Mockito.when(pedidoDeCompraRespository.findAllBySaldoGreaterThanAndResponsavelAtivo
-                (Mockito.anyDouble(), Mockito.anyBoolean())).thenReturn(this.pedidoDeCompras);
+    void testarObterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(){
+        Mockito.when(pedidoDeCompraRespository.findAllBySaldoGreaterThanAndResponsavelAtivo(Mockito.anyDouble(), Mockito.anyBoolean())).thenReturn(this.pedidoDeCompras);
         Iterable<PedidoDeCompra> test = pedidoDeCompraService.obterTodosPedidosDeCompraComValorMaiorQueZeroEResponsaveisAtivo(456.7,false, LocalDate.now());
         Assertions.assertEquals(test, this.pedidoDeCompras);
 
