@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @ContextConfiguration(classes = ResponsavelService.class)
-public class ResponsavelServiceTest {
+class ResponsavelServiceTest {
 
     @Autowired
     private ResponsavelService responsavelService;
@@ -34,14 +34,14 @@ public class ResponsavelServiceTest {
     }
 
     @Test
-    public void testarCadastroDeResponsavelOk() {
+    void testarCadastroDeResponsavelOk() {
         Mockito.when(responsavelRepository.save(Mockito.any(Responsavel.class))).thenReturn(responsavel);
         Responsavel testResponsavel = responsavelService.cadastrarResponsavel(responsavel);
         Assertions.assertEquals(testResponsavel, responsavel);
     }
 
     @Test
-    public void testarPesquisarResponsavelPeloEmailOk(){
+    void testarPesquisarResponsavelPeloEmailOk(){
         Optional<Responsavel> optionalResponsavel = Optional.of(responsavel);
         Mockito.when(responsavelRepository.findById(Mockito.anyString())).thenReturn(optionalResponsavel);
         Responsavel testBusca = responsavelService.procurarResponsavelPorEmail("bomdia@zup.com");
@@ -49,7 +49,7 @@ public class ResponsavelServiceTest {
     }
 
     @Test
-    public void testarAtivarEDesativarResponsavelOk() {
+    void testarAtivarEDesativarResponsavelOk() {
         Optional<Responsavel> optionalResponsavel = Optional.of(responsavel);
         Mockito.when(responsavelRepository.findById(Mockito.anyString())).thenReturn(optionalResponsavel);
         Mockito.when(responsavelRepository.save(Mockito.any(Responsavel.class))).thenReturn(responsavel);

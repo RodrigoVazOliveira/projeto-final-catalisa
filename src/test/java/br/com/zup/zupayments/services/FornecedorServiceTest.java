@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @ContextConfiguration(classes = FornecedorService.class)
-public class FornecedorServiceTest {
+class FornecedorServiceTest {
 
     @Autowired
     private FornecedorService fornecedorService;
@@ -44,14 +44,14 @@ public class FornecedorServiceTest {
     }
 
     @Test
-    public void testarCadastroDeFornecedorOk() {
+    void testarCadastroDeFornecedorOk() {
         Mockito.when(fornecedorRepository.save(Mockito.any(Fornecedor.class))).thenReturn(fornecedor);
         Fornecedor testFornecedor = fornecedorService.cadastrarFornecedor(fornecedor);
         Assertions.assertEquals(testFornecedor, fornecedor);
     }
 
     @Test
-    public void testarPesquisarFornecedorPorCnpjOuCpfOk() {
+    void testarPesquisarFornecedorPorCnpjOuCpfOk() {
         Optional<Fornecedor> optionalFornecedor = Optional.of(fornecedor);
         Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
         Fornecedor test = fornecedorService.pesquisarFornecedorPorCnpjOuCpf("23.524.377/0001-45");
@@ -59,7 +59,7 @@ public class FornecedorServiceTest {
     }
 
     @Test
-    public void testarPesquisarFornecedorPorCnpjOuCpfError() {
+    void testarPesquisarFornecedorPorCnpjOuCpfError() {
         Optional<Fornecedor> optionalFornecedor = Optional.empty();
         Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
         Assertions.assertThrows(RuntimeException.class, () -> {
@@ -68,7 +68,7 @@ public class FornecedorServiceTest {
     }
 
     @Test
-    public void testarAtualizarCadastroFornecedor() {
+    void testarAtualizarCadastroFornecedor() {
         Optional<Fornecedor> optionalFornecedor = Optional.of(fornecedor);
         Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
         Mockito.when(fornecedorRepository.save(Mockito.any(Fornecedor.class))).thenReturn(fornecedor);
@@ -81,7 +81,7 @@ public class FornecedorServiceTest {
     }
 
     @Test
-    public void testarAtivarOuDesativarFornecedor() {
+    void testarAtivarOuDesativarFornecedor() {
         Optional<Fornecedor> optionalFornecedor = Optional.of(fornecedor);
         Mockito.when(fornecedorRepository.findById(Mockito.anyString())).thenReturn(optionalFornecedor);
         Mockito.when(fornecedorRepository.save(Mockito.any(Fornecedor.class))).thenReturn(fornecedor);

@@ -5,20 +5,17 @@ import jakarta.validation.constraints.*;
 
 public class CadastrarResponsavelDTO {
 
-    @NotNull(message = "{validacao.campo_obrigatorio}")
     @NotBlank(message = "{validacao.campo_em_branco}")
     @NotEmpty(message = "{validacao.campo_vazio}")
     @Size(max = 255, message = "{validacao.tamanho_campo}")
     @Email(message = "{validacao.email_invalido}")
     private String email;
 
-    @NotNull(message = "{validacao.campo_obrigatorio}")
     @NotBlank(message = "{validacao.campo_em_branco}")
     @NotEmpty(message = "{validacao.campo_vazio}")
     @Size(max = 100, message = "{validacao.tamanho_campo}")
     private String nomeCompleto;
 
-    @NotNull(message = "{validacao.campo_obrigatorio}")
     @NotBlank(message = "{validacao.campo_em_branco}")
     @NotEmpty(message = "{validacao.campo_vazio}")
     @Size(max = 70, message = "{validacao.tamanho_campo}")

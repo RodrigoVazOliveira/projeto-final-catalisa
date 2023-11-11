@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @SpringBootTest
 @ContextConfiguration(classes = NotaFiscalService.class)
-public class NotaFiscalServiceTest {
+class NotaFiscalServiceTest {
 
     @Autowired
     private NotaFiscalService notaFiscalService;
@@ -43,7 +43,7 @@ public class NotaFiscalServiceTest {
     private PedidoDeCompra pedidoDeCompra;
 
     @BeforeEach
-    public void setup(){
+    void setup(){
 
         this.notaFiscalteste = new NotaFiscal();
 
@@ -78,7 +78,7 @@ public class NotaFiscalServiceTest {
     }
 
     @Test
-    public void testarCadastroDeNotaFiscalOk() {
+    void testarCadastroDeNotaFiscalOk() {
         Mockito.when(notaFiscalRepository.save(Mockito.any(NotaFiscal.class))).thenReturn(notaFiscalteste);
         Mockito.when(fornecedorService.pesquisarFornecedorPorCnpjOuCpf(Mockito.anyString())).thenReturn(fornecedor);
         Mockito.when(pedidoDeCompraService.procurarPedidoDeCompraPeloNumeroDePedido(Mockito.any())).thenReturn(pedidoDeCompra);
@@ -89,7 +89,7 @@ public class NotaFiscalServiceTest {
     }
 
     @Test
-    public void testarAtivarOuDesativarNotaFiscal() {
+    void testarAtivarOuDesativarNotaFiscal() {
         notaFiscalteste.setId(1L);
         Optional<NotaFiscal> optionalNotaFiscal = Optional.of(notaFiscalteste);
         Mockito.when(notaFiscalRepository.findById(Mockito.anyLong())).thenReturn(optionalNotaFiscal);
@@ -99,7 +99,7 @@ public class NotaFiscalServiceTest {
     }
 
     @Test
-    public void testarAtivarOuDesativarNotaFiscalError() {
+    void testarAtivarOuDesativarNotaFiscalError() {
         Optional<NotaFiscal> optionalNotaFiscal = Optional.empty();
         Mockito.when(notaFiscalRepository.findById(Mockito.anyLong())).thenReturn(optionalNotaFiscal);
         Assertions.assertThrows(RuntimeException.class, () -> {

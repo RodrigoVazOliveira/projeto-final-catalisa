@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(FornecedorController.class)
 @AutoConfigureMockMvc(addFilters = false)
-public class FornecedorControllerTest {
+class FornecedorControllerTest {
 
     @MockBean
     private FornecedorService fornecedorService;
@@ -62,7 +62,7 @@ public class FornecedorControllerTest {
     }
 
     @Test
-    public void testarCadastroDeFornecedor() throws Exception {
+    void testarCadastroDeFornecedor() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String fornecedorJson = objectMapper.writeValueAsString(cadastroDeFornecedorDTO);
         String respostaJson   = objectMapper.writeValueAsString(fornecedor);
@@ -79,7 +79,7 @@ public class FornecedorControllerTest {
     }
 
     @Test
-    public void ativarOuDesativarFornecedor() throws Exception {
+    void ativarOuDesativarFornecedor() throws Exception {
         String url = "/fornecedores/?cnpjoucpf=23.524.377/0001-45";
         Mockito.doNothing().when(fornecedorService).ativarOuDesativarFornecedor(Mockito.anyString());
 
